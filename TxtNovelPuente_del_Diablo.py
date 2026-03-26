@@ -2,6 +2,10 @@
 #This is a Text based  novel, you will be the main charcater, and make choices
 # This project is made for completion for my porgramming logic and design class.
 
+# ____________________________________________________________________________________________________________________________
+# |                                                                                                                           |
+# | Note this it the main story, edit with caution, and make sure to test the code after every edit, to avoid bugs and errors.|
+# |___________________________________________________________________________________________________________________________|
 
 #  Lee Marc Macalanda  03/17/2026 , under 01-CPE-12 Unibersidad de Dagupan.
 # Engr Sean Gabriel Macapaggal 
