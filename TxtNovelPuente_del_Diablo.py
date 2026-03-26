@@ -6,7 +6,13 @@
 #  Lee Marc Macalanda  03/17/2026 , under 01-CPE-12 Unibersidad de Dagupan.
 # Engr Sean Gabriel Macapaggal 
 
+# |___________________________________________________________________________________________________________________|
+# | This is WEB base (streamlit) but i will also make a console version for those who want to play it on the console  |
+# |___________________________________________________________________________________________________________________|
+
 # The story
+
+import streamlit as st
 import time as t
 def GaLim():
     ascii_art = r"""
