@@ -12,6 +12,37 @@
 
 # The story
 import time as t
+
+
+
+def title_screen():
+    print(r"""
+╔══════════════════════════════════════════════════════════════════════════╗
+║                                                                          ║
+║    ██████╗ ██╗   ██╗███████╗███╗   ██╗████████╗███████╗                 ║
+║    ██╔══██╗██║   ██║██╔════╝████╗  ██║╚══██╔══╝██╔════╝                 ║
+║    ██████╔╝██║   ██║█████╗  ██╔██╗ ██║   ██║   █████╗                   ║
+║    ██╔═══╝ ██║   ██║██╔══╝  ██║╚██╗██║   ██║   ██╔══╝                   ║
+║    ██║     ╚██████╔╝███████╗██║ ╚████║   ██║   ███████╗                 ║
+║    ╚═╝      ╚═════╝ ╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝                 ║
+║                                                                          ║
+║           ██████╗ ███████╗██╗      ██████╗  █████╗ ██████╗              ║
+║           ██╔══██╗██╔════╝██║     ██╔════╝ ██╔══██╗██╔══██╗             ║
+║           ██║  ██║█████╗  ██║     ██║      ███████║██████╔╝             ║
+║           ██║  ██║██╔══╝  ██║     ██║      ██╔══██║██╔══██╗             ║
+║           ██████╔╝███████╗███████╗╚██████╗ ██║  ██║██║  ██║             ║
+║           ╚═════╝ ╚══════╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝            ║
+║                                                                          ║
+║              ~ P U E N T E   D E L   D I A B L O ~                      ║
+║                                                                          ║
+║         A tale of faith, temptation, and an unfinished bridge            ║
+║              Pilapila, Binangonan, Rizal — Philippines                   ║
+║                                                                          ║
+╚══════════════════════════════════════════════════════════════════════════╝
+    """)
+    
+    
+
 def GaLim():
     ascii_art = r"""
 ----::::::-+*******#################%%%%%%###**+++++==+++++==++==============--:::::---=============
@@ -93,6 +124,12 @@ def slow_print(text, delay=0.03):
         print(ch, end='', flush=True)
         t.sleep(delay)
     print()  
+    
+def narrate(text):
+    print()
+    slow_print(f"  ✦ {text}", delay=0.025)
+    print()
+
 def bad_end(reason):
     pause(1)
     print()
@@ -102,11 +139,8 @@ def bad_end(reason):
     print("└─────────────────────────────────────────────────────────────┘")
     pause(1)
     End_main()
-def slow_print(text, delay=0.03):
-    for ch in text:
-        print(ch, end='', flush=True)
-        t.sleep(delay)
-    print()
+    
+
     
  
 def hasty_decision2(prompt, option1, option2, S1, S2, S3, S4, S5, F1, F2, F3, F4, F5, exit_action, go_action, timeout=5):
@@ -230,10 +264,18 @@ def sign():
     print("╚════════════════════════════════╝")
 
 def progress_saved():
-    print("╔════════════════════════════════╗")
-    print("║      Progress Saved            ║")
-    print("╚════════════════════════════════╝")
-    
+    print()
+    print("  ╔════════════════════════════════╗")
+    print("  ║   ✦  Progress Saved  ✦         ║")
+    print("  ╚════════════════════════════════╝")
+
+def chapter_banner(number, title):
+    print()
+    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    print(f"  CHAPTER {number}  —  {title}")
+    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    print()
+    pause(1)
     
 def action_scene(text):
     print("╔══════════════════════════════════════════════════════════════════════════════╗")
@@ -241,9 +283,9 @@ def action_scene(text):
     print("╚══════════════════════════════════════════════════════════════════════════════╝")
 
 def dialogue(text):
-    print("┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐")
-    print(f"│ {text}")
-    print("└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘")
+    print("┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐")
+    slow_print(f"│ {text}")
+    print("└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘")
 
 def End_sc4(): # for final saved point
     delay = 2
@@ -293,7 +335,21 @@ def menuegg():
 # // ______________________________________//
 # ||              Story poper              ||
 # // ______________________________________//
-def menu():
+
+def Start():
+    title_screen()
+    dialogue("You find yourself standing at the edge of a mysterious bridge, shrouded in darkness and mystery.")
+    dialogue("Do you dare to step onto the bridge and uncover its secrets, or do you choose to turn back and avoid the unknown?")
+    user = input("Type 'continue' to step onto the bridge or 'no' to turn back: ")
+    if user == "continue":
+        dialogue("You take a deep breath and step onto the bridge, feeling a sense of anticipation and curiosity.")
+        main()
+    elif user == "no":
+        dialogue("You decide to turn back, but the voice calls you again...")
+        t.sleep(2)
+        Path_Exit()
+    
+def Path_Exit():
     delay = 2
     while True:
         t.sleep(delay)
@@ -326,7 +382,7 @@ def exit_():
             print("The voice fades away as you step back from the bridge. \nYou decide to leave, but the mystery of the bridge lingers in your mind...")
             break
         elif user.lower() == "no":
-            menu()
+            Path_Exit()
         elif user.lower() == "tang ina mo sir":
             ecitegg()
         else:
@@ -334,6 +390,7 @@ def exit_():
             exit()
         
 def main():
+    
     delay = 2
     t.sleep(delay)
     dialogue("Somewhere in the Town of Rizal province of Laguna.")
@@ -350,7 +407,7 @@ def main():
         elif cmd.lower() == "no":
             dialogue("You decide to go back, but the voice calls you again...")
             t.sleep(delay)
-            menu()
+            Path_Exit()
             break
         else:
             print("Invalid input, please try again.")
@@ -429,7 +486,7 @@ def final():
     
 
 if __name__ == "__main__":
-    sc1()
+    Start()
     
 # /// Secret ///
 def show_easter_egg():
