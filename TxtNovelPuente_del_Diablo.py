@@ -338,14 +338,14 @@ def menuegg():
 
 def Start():
     title_screen()
-    dialogue("You find yourself standing at the edge of a mysterious bridge, shrouded in darkness and mystery.")
-    dialogue("Do you dare to step onto the bridge and uncover its secrets, or do you choose to turn back and avoid the unknown?")
+    narrate("You find yourself standing at the edge of a mysterious bridge, shrouded in darkness and mystery.")
+    narrate("Do you dare to step onto the bridge and uncover its secrets, or do you choose to turn back and avoid the unknown?")
     user = input("Type 'continue' to step onto the bridge or 'no' to turn back: ")
     if user == "continue":
-        dialogue("You take a deep breath and step onto the bridge, feeling a sense of anticipation and curiosity.")
+        narrate("You take a deep breath and step onto the bridge, feeling a sense of anticipation and curiosity.")
         main()
     elif user == "no":
-        dialogue("You decide to turn back, but the voice calls you again...")
+        narrate("You decide to turn back, but the voice calls you again...")
         t.sleep(2)
         Path_Exit()
     
@@ -353,10 +353,10 @@ def Path_Exit():
     delay = 2
     while True:
         t.sleep(delay)
-        dialogue("as you leave the bridge, you see a hanging sign on the side of the road.")
+        narrate("as you leave the bridge, you see a hanging sign on the side of the road.")
         sign()
         t.sleep(delay)
-        dialogue("as you read the hanging sign, you see the words 'Puente del Diablo' written on it.")
+        narrate("as you read the hanging sign, you see the words 'Puente del Diablo' written on it.")
         t.sleep(delay)
         print("1. go back?")
         print("2. Leave")
@@ -390,22 +390,22 @@ def exit_():
             exit()
         
 def main():
-    
+    chapter_banner("Prologue", "The Mysterious Bridge")
     delay = 2
     t.sleep(delay)
-    dialogue("Somewhere in the Town of Rizal province of Laguna.")
+    narrate("Somewhere in the Town of Rizal province of Laguna.")
     while True:
         t.sleep(delay)
-        dialogue("You stand at the edge of the bridge. A mysterious voice whispers...")
+        narrate("You stand at the edge of the bridge. A mysterious voice whispers...")
         t.sleep(delay)
         cmd = input("Type 'continue' to proceed or 'no' to go back: ")
         if cmd.lower() == "continue":
-            dialogue("You step onto the bridge, and the voice grows louder, echoing in your mind...")
+            narrate("You step onto the bridge, and the voice grows louder, echoing in your mind...")
             t.sleep(delay)
-            dialogue("Your journey continues.")
+            narrate("Your journey continues.")
             sc1()
         elif cmd.lower() == "no":
-            dialogue("You decide to go back, but the voice calls you again...")
+            narrate("You decide to go back, but the voice calls you again...")
             t.sleep(delay)
             Path_Exit()
             break
@@ -413,58 +413,64 @@ def main():
             print("Invalid input, please try again.")
 
 def sc1():
+    chapter_banner(1, "The Whispering Bridge")
+    pause()
     progress_saved()
     delay = 2
     t.sleep(delay)
-    dialogue("As you walk further on the bridge, you notice the surroundings becoming more eerie.")
+    narrate("As you walk further on the bridge, you notice the surroundings becoming more eerie.")
     t.sleep(delay)
-    dialogue("The voice in your mind grows stronger, urging you to continue.")
+    narrate("The voice in your mind grows stronger, urging you to continue.")
     t.sleep(delay)
     print("1. Keep walking")
     print("2. Turn back")
     print("3. Open your Phone")
     choice = input("Enter your choice: ")
     if choice == "1":
-        dialogue("You decide to keep walking, determined to uncover the secrets of the bridge.")
+        narrate("You decide to keep walking, determined to uncover the secrets of the bridge.")
         t.sleep(delay)
-        dialogue("As you continue, you feel a strange sensation, as if you're being watched...")
+        narrate("As you continue, you feel a strange sensation, as if you're being watched...")
         t.sleep(delay)
-        dialogue("Suddenly, you saw an amminous rock formation that resembles a face,\n and the voice becomes clearer, whispering your name...")
+        narrate("Suddenly, you saw an amminous rock formation that resembles a face,\n and the voice becomes clearer, whispering your name...")
         t.sleep(delay)
         sc2()
     elif choice == "2":
-        dialogue("You decide to turn back, but the voice becomes more insistent, urging you to stay...")
+        narrate("You decide to turn back, but the voice becomes more insistent, urging you to stay...")
         t.sleep(delay)
-        dialogue("As you turn around, you see a shadowy figure standing at the end of the bridge, watching you...")
+        narrate("As you turn around, you see a shadowy figure standing at the end of the bridge, watching you...")
         t.sleep(delay)
         character_shadow()
         t.sleep(delay)
-        dialogue("The figure disappears as you look away, but the voice continues to haunt your thoughts...")
+        narrate("The figure disappears as you look away, but the voice continues to haunt your thoughts...")
         t.sleep(delay)
-        dialogue(" You Bceome insane and you start to see things that aren't there, hearing voices that no one else can hear...")
+        narrate(" You Bceome insane and you start to see things that aren't there, hearing voices that no one else can hear...")
         t.sleep(delay)
-        dialogue("You lose touch with reality, and the world around you becomes a blur of confusion \n You died of insanity")
+        narrate("You lose touch with reality, and the world around you becomes a blur of confusion \n You died of insanity")
         End_main()
     elif choice == "3":
-        dialogue("You decide to open your phone, hoping to find some answers or a way to call for help.")
+        narrate("You decide to open your phone, hoping to find some answers or a way to call for help.")
         t.sleep(delay)
-        dialogue("As you unlock your phone, you see a message notification from an unknown number...")
+        narrate("As you unlock your phone, you see a message notification from an unknown number...")
         t.sleep(delay)
-        dialogue("The message reads: 'i know who you are. . .'")
+        narrate("The message reads: 'i know who you are. . .'")
         t.sleep(delay)
-        dialogue("You feel a chill run down your spine as you read the message, realizing that you're not alone on the bridge...")
+        narrate("You feel a chill run down your spine as you read the message, realizing that you're not alone on the bridge...")
         t.sleep(delay)
-        dialogue("Then out of nowhere, you receive another message, this time with a photo attachment...")
+        narrate("Then out of nowhere, you receive another message, this time with a photo attachment...")
         t.sleep(delay)
         GaLim()
-        dialogue("The photo shows a two figure standing on the bridge, one of them is you, \n and the other is a shadowy figure that resembles the one you saw earlier...")
+        narrate("The photo shows a two figure standing on the bridge, one of them is you, \n and the other is a shadowy figure that resembles the one you saw earlier...")
         hasty_decision2("What do you do?", "Look back and confront", "Ignore and keep Walking", "You keep walking", "Praying", "taking deep breaths", "you found yourself unbalanced","you look around, you saw an amminous rock formation","You glance around","you see nothing","you sign of relief . . . " ,"you felt diizy, the voice gwrowing louder and eriee", "you fell unconscious ",End_main,sc2,timeout=5)
 def sc2():
+    chapter_banner(2, "The Unfinished Mystery")
+    pause()
     progress_saved()
     delay = 2
+    narrate("You felt dizzy all the sudden, and fell unconscious...")
     t.sleep(delay)
-    dialogue("welcome")
-    dialogue("You step deeper into the story, chapter 2 begins...")
+    narrate("You woke up, and you find yourself in a different place. . .")
+    narrate("You felt soft at your back. . .")
+    dialogue("")
     t.sleep(delay)
     dialogue("A new mystery unfolds as you cross deeper into the bridge...")
     t.sleep(delay)
@@ -472,14 +478,21 @@ def sc2():
 
 
 def sc3():
+    chapter_banner(3, "The Devil's Bargain")
+    pause()
     progress_saved()
     
     
 def sc4():
+    chapter_banner(4, "The Final Revelation")
+    pause()
     progress_saved()
     
     
 def final():
+    chapter_banner("Final", "The Bridge's Secret")
+    pause()
+
     progress_saved()
     delay = 2
     
