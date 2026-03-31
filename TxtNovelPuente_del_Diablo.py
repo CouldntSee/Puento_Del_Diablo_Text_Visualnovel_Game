@@ -478,8 +478,57 @@ def sc2():
     narrate("You felt soft at your back. . .")
     dialogue("wait what just happend? Where Am I?")
     t.sleep(delay)
-    dialogue(" You glance around your sorrunding ")
-    dialogue("Confuse how the hard so  ")
+    dialogue("You: " + "Wait a minute, I remember falling unconscious on the bridge. . .")
+    narrate("You get up from the cozy feeling bed, and you see that you're in a small room with stone walls, dimly lit by a flickering candle on a wooden table.")
+    narrate("You glance around your sorrunding ")
+    narrate("Still confuse how dirt road became a comfy bed inside a room, you start to look around the room,\nhoping to find some clues about where you are and how you got there.")
+    narrate("Then you notice a mirror on the wall, and as you look into it, you see a reflection of yourself, but something is off...")
+    narrate("Feeling bit disoriented, you strech to releive the tension of your body. . .")
+    narrate("You get up from the bed, and yawn, as you stabilized your step you wonder when did you even were such a elegant white dress.")
+    dialogue("You: " + "Wait, when did I even get this dress? I don't remember putting it on...")
+    dialogue("You: " + "And why do I feel so... different? Like I'm not myself anymore...")
+    narrate("You start pannicking, trying to piece together what just happned. . .")
+    dialogue("You: " + "Right theres a mirror, maybe I can find some answers there...")
+    narrate("you approach the mirror rushingly, hoping to check on yourself but. . .")
+    dialogue("You: " + "wait. . . who' s this?")
+    Lara()
+    narrate("you see a reflection of a young girl, elegant, her skin is pale as sampaguita, her eyes is brown as the sunflower,\n her hair hold majestic dark as the night that shine like stars,\n her dress even plain, with her holds the beauty of the milky skies.")
+    narrate("Star Struck by this beautiful, you wonder who is this girl.")
+    dialogue("?: " + "Lara!, wake up you doze again. it's already Lunch time.")
+    dialogue("You: " + "Lara? that's no-")
+    narrate("suddenly the door from your room opens")
+    dialogue("?: " + "Hey Lara, you're finally awake! I was getting worried about you, hurry before our lucnh get cold.")
+    dialogue("You: " + "Sorry auntie, coming")
+    narrate("in your mind:" + dialogue("You: " + "Wait, did I just said auntie? but i dont know her. . ."))
+    narrate("You follow your 'Aunite', and you find yourself in a cozy kitchen")
+    narrate("As you enter the kitchen, you are greeted by the warm aroma of freshly cooked food, and the sight of a loving family gathered around the table, sharing a meal together.")
+    dialogue("Auntie: " + "Lara, you want me to do this everyday for you aren't you? Gezz you should be grateful that you have a family that loves you, unlike your parents who left you alone in the world.")
+    dialogue("You: " + "But i don't even know you, and i dont even know who my parents are. . .")
+    dialogue("Middle-age man: " + "Hahaha you never disspoint us to enterain us Lara, you always have a good sense of humor, just like your father.")
+    dialogue("Teenager girl: " + "Geez, you seem you worship so much our heavenly father that you fogot about us, but then, how can i blame ya? \neveryday you have suitor soo envious.")
+    dialogue("Auntie: " + "Stop teasing her, Lara, come one have a seat and lets eat.")
+    narrate("You sit down at the table, and stared at the delicious food that your family had prepared.")
+    narrate("In your mind:" + dialogue("You: " + "That middle-age man must the Uncle, and that teenager girl must be their child."))
+    dialogue("Uncle: " + "Why dozing off, come on lead the prayer Lara")
+    dialogue("Your: " + "Oh yea. .")
+    narrate("You lead the prayer.")
+    narrate("You are suprise casue you are indeed fluent at praying, eventhough you dislike GOD.\n or perhaps Lara is the one who is fluent.")
+    narrate("You  enjoy the simple yet heart felt feast before the table.")
+    dialogue("Uncle: " + "Lara, have you chosen your suitor?")
+    dialogue("You: " + "Me chosing suito?")
+    dialogue("Enenager girl: "+"AS expected to you Lara you still have not picked.")
+    dialogue("You: " + "Umm")
+    dialogue("Enabell: " + "Don't call me 'umm' my name is Enabell. if you're not my cousin I-")
+    dialogue("Auntie: " + "Stop, Lara devoted her life to heavenly father. Lara can you go to our locat church?")
+    dialogue("You:","Why?")
+    dialogue("Auntie:", " Just say hi to our priest John. Enabell go with Lara")
+    dialogue("Enabell:", "But i have plan thi afternoon.")
+    dialogue("Auntie: ", 'No buts Enabell.')
+    narrate('Enabell relucntently agrred to go with you')
+    narrate('You and Enebell set out of your house')
+    narrate('You openned the door and a village thriving welcomes you')
+    village()
+    
     t.sleep(delay)
     sc3()
 
@@ -626,7 +675,7 @@ def village():
 -------------------------------------------------------=--------------------------------------------------------------------------
     """)
     
-def Lara():
+def Lara(): # for sc2
     print(r"""
 .*+========+=..=:                                                             
   =                                             +-               -=      +=                                                       
@@ -1028,6 +1077,7 @@ def Ezekiel():
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%#%####=-*##*#########****#%%%%%##############*************
     """
     print(ascii_art)
+
 def New_Year2026():
     ascii_art = r"""
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
