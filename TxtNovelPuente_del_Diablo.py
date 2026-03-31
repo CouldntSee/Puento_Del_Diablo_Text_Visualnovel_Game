@@ -15,7 +15,7 @@ import time as t
 
 
 
-def title_screen():
+def title_screen(): #It should named Puente DEl Diablo not DelCar.
     print(r"""
 ╔══════════════════════════════════════════════════════════════════════════╗
 ║                                                                          ║
@@ -336,7 +336,7 @@ def menuegg():
 # ||              Story poper              ||
 # // ______________________________________//
 
-def Start():
+def Start(): # i will convert this in While loop since it bugs out when you type the other seletion lol
     title_screen()
     narrate("You find yourself standing at the edge of a mysterious bridge, shrouded in darkness and mystery.")
     narrate("Do you dare to step onto the bridge and uncover its secrets, or do you choose to turn back and avoid the unknown?")
@@ -468,7 +468,8 @@ def sc1():
         GaLim()
         narrate("The photo shows a two figure standing on the bridge, one of them is you, \n and the other is a shadowy figure that resembles the one you saw earlier...")
         hasty_decision2("What do you do?", "Look back and confront", "Ignore and keep Walking", "You keep walking", "Praying", "taking deep breaths", "you found yourself unbalanced","you look around, you saw an amminous rock formation","You glance around","you see nothing","you sign of relief . . . " ,"you felt diizy, the voice gwrowing louder and eriee", "you fell unconscious ",End_main,sc2,timeout=5)
-def sc2():
+        
+def sc2(): 
     chapter_banner(2, "The Unfinished Mystery")
     pause()
     progress_saved()
@@ -508,7 +509,7 @@ def sc2():
     dialogue("Teenager girl: " + "Geez, you seem you worship so much our heavenly father that you fogot about us, but then, how can i blame ya? \neveryday you have suitor soo envious.")
     dialogue("Auntie: " + "Stop teasing her, Lara, come one have a seat and lets eat.")
     narrate("You sit down at the table, and stared at the delicious food that your family had prepared.")
-    narrate("In your mind:" + dialogue("You: " + "That middle-age man must the Uncle, and that teenager girl must be their child."))
+    narrate("In your mind:" , dialogue("You: " + "That middle-age man must the Uncle, and that teenager girl must be their child."))
     dialogue("Uncle: " + "Why dozing off, come on lead the prayer Lara")
     dialogue("Your: " + "Oh yea. .")
     narrate("You lead the prayer.")
@@ -533,19 +534,19 @@ def sc2():
     sc3()
 
 
-def sc3():
+def sc3(): # dont forget to use While loop at choices lol
     chapter_banner(3, "The Devil's Bargain")
     pause()
     progress_saved()
     
     
-def sc4():
+def sc4():# dont forget to use While loop at choices lol
     chapter_banner(4, "The Final Revelation")
     pause()
     progress_saved()
     
     
-def final():
+def final():# dont forget to use While loop at choices lol
     chapter_banner("Final", "The Bridge's Secret")
     pause()
 
@@ -554,8 +555,6 @@ def final():
     
     
 
-if __name__ == "__main__":
-    Start()
     
 # /// Secret ///
 def show_easter_egg():
@@ -742,7 +741,7 @@ def Lara(): # for sc2
   +        #@@*#=*.  #+   *     :*=.@%@@@*@#=   #*            -#.   :=%+@-@-@.@ @.@-@-@*%*+=**%+#=@*@ @        .-=    =%#+    *   
   +        :==-=:#-  =+   :       +-+=*+=:+==.++  +.
 """)
-    
+
 def The_Devil():
     print(r"""
 :-                                            +                                        
@@ -1352,3 +1351,7 @@ def Close_Up():
 ------------------=+*#%%%%%%%=::+####*+###-=*##++*+*#+----=+=**+*%%*++**+=------:-+##+++*#####%#+*###+
 """
     print(ascii_art)
+    
+
+if __name__ == "__main__": # Reminder to excecute everythin this thing should be at the very last line of the code lol or else oit wouldnt get called.
+   sc2()
