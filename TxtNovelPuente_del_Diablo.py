@@ -287,20 +287,20 @@ def dialogue(text):
     slow_print(f"│ {text}")
     print("└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘")
 
-def End_sc4(): # for final saved point
+def End_sc4(): # for final saved point (working)
     delay = 2
 
-def End_sc3(): # for sc4 saved point
+def End_sc3(): # for sc4 saved point (Working)
     delay = 2
     
-def End_sc2(): # for sc3 saved point
+def End_sc2(): # for sc3 saved point (working)
     delay = 2
 
-def End_sc1(): # for sc2 saved point
+def End_sc1(): # for sc2 saved point (working)
     delay = 2
     
 
-def End_main():
+def End_main(): #done
     delay = 2
     print("||_______________________________||")
     print("||                               ||")
@@ -433,6 +433,13 @@ def sc1():
         t.sleep(delay)
         narrate("Suddenly, you saw an amminous rock formation that resembles a face,\n and the voice becomes clearer, whispering your name...")
         t.sleep(delay)
+        dialogue("You: " + "who are you? show yourself.")
+        narrate("The sorrounding suddenly become more earriee silence as if wondeing what your next move is.")
+        narrate("Then you glance towards the amminous rock. . .")
+        dialogue("You: " + "don't tell m-")
+        narrate("You collased on your own on the ground")
+        t.sleep(delay)
+        narrate("To be contiue. . .")
         sc2()
     elif choice == "2":
         narrate("You decide to turn back, but the voice becomes more insistent, urging you to stay...")
@@ -466,13 +473,13 @@ def sc2():
     pause()
     progress_saved()
     delay = 2
-    narrate("You felt dizzy all the sudden, and fell unconscious...")
     t.sleep(delay)
     narrate("You woke up, and you find yourself in a different place. . .")
     narrate("You felt soft at your back. . .")
-    dialogue("")
+    dialogue("wait what just happend? Where Am I?")
     t.sleep(delay)
-    dialogue("A new mystery unfolds as you cross deeper into the bridge...")
+    dialogue(" You glance around your sorrunding ")
+    dialogue("Confuse how the hard so  ")
     t.sleep(delay)
     sc3()
 
