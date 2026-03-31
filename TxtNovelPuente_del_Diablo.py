@@ -13,7 +13,11 @@
 # The story
 import time as t
 
-
+def thinkblock(text):
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    print('|                                                  In your Mind                                                             |')
+    slow_print(f"|{text}")
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
 def title_screen(): #It should named Puente DEl Diablo not DelCar.
     print(r"""
@@ -500,7 +504,7 @@ def sc2():
     narrate("suddenly the door from your room opens")
     dialogue("?: " + "Hey Lara, you're finally awake! I was getting worried about you, hurry before our lucnh get cold.")
     dialogue("You: " + "Sorry auntie, coming")
-    narrate("in your mind:" + dialogue("You: " + "Wait, did I just said auntie? but i dont know her. . ."))
+    thinkblock("You: " + "Wait, did I just said auntie? but i dont know her. . .")
     narrate("You follow your 'Aunite', and you find yourself in a cozy kitchen")
     narrate("As you enter the kitchen, you are greeted by the warm aroma of freshly cooked food, and the sight of a loving family gathered around the table, sharing a meal together.")
     dialogue("Auntie: " + "Lara, you want me to do this everyday for you aren't you? Gezz you should be grateful that you have a family that loves you, unlike your parents who left you alone in the world.")
@@ -509,7 +513,7 @@ def sc2():
     dialogue("Teenager girl: " + "Geez, you seem you worship so much our heavenly father that you fogot about us, but then, how can i blame ya? \neveryday you have suitor soo envious.")
     dialogue("Auntie: " + "Stop teasing her, Lara, come one have a seat and lets eat.")
     narrate("You sit down at the table, and stared at the delicious food that your family had prepared.")
-    narrate("In your mind:" , dialogue("You: " + "That middle-age man must the Uncle, and that teenager girl must be their child."))
+    thinkblock("You: " + "That middle-age man must the Uncle, and that teenager girl must be their child.")
     dialogue("Uncle: " + "Why dozing off, come on lead the prayer Lara")
     dialogue("Your: " + "Oh yea. .")
     narrate("You lead the prayer.")
