@@ -325,8 +325,35 @@ def End_main(): #done
         dialogue("The mystery of the bridge remains unsolved...")
 
 
+def sc2_Nun(user1):
+    while True:
+        if user1.lower() == 'yes':
+            dialogue('You: '+ "Sister Jean, can I know something?")
+            dialogue('Jean: '+ "Ara-ara, sure.")
+            choices = input('About me/Chapel/Father/Thank you: ')
+            if choices.lower() == 'about me':
+                print('About me')
+            elif choices.lower() == 'chapel':
+                print('Chapel')
+            elif choices.lower() == 'father':
+                print('father')
+            elif choices.lower() == 'thank you':
+                print('your welcome')
+                break
+            else:
+                dialogue("Jean" + "Speak up honey.")
+        elif user1.lower() == 'no':
+            dialogue('Jean: '+ "Are you sure dear?")
+            l1 = input('Yes/No: ')
+            if l1.lower() == 'yes':
+                user1 = 'yes'
+            elif l1.lower() == 'no':
+                dialogue("Jean"+"Okay honey.")
+                break
+        else:
+            user1 = input('Yes/No?: ')
 
-def sc2_QuestionEnabell(user):
+def sc2_QuestionEnabell(user): #done
     while True:
         if user.lower() == 'yes':
             dialogue('You:' + 'Ena, can I ask something?')
@@ -379,7 +406,7 @@ def Start(): # i will convert this in While loop since it bugs out when you type
         t.sleep(2)
         Path_Exit()
     
-def Path_Exit():
+def Path_Exit():#done
     delay = 2
     while True:
         t.sleep(delay)
@@ -398,11 +425,11 @@ def Path_Exit():
             exit()
             break
         elif choice == "3":
-            menuegg()
+            Close_Up()
         else:
             print("Invalid choice, please try again.")
         
-def exit_():
+def exit_():#done
     delay = 2
     while True:
         t.sleep(delay)
@@ -413,13 +440,13 @@ def exit_():
             break
         elif user.lower() == "no":
             Path_Exit()
-        elif user.lower() == "tang ina mo sir":
-            ecitegg()
+        elif user.lower() == "happy newyear":
+            New_Year2026()
         else:
             print("Invalid choice, please try again.")
             exit()
         
-def main():
+def main():#done
     chapter_banner("Prologue", "The Mysterious Bridge")
     delay = 2
     t.sleep(delay)
@@ -442,7 +469,7 @@ def main():
         else:
             print("Invalid input, please try again.")
 
-def sc1():
+def sc1():#done
     chapter_banner(1, "The Whispering Bridge")
     pause()
     progress_saved()
@@ -562,12 +589,59 @@ def sc2():
     narrate("As you open the door, the Gentle breeze of afternoon brush to your skin. ")
     narrate("The Earthy scent of your coruing envelope your noustril.")
     narrate("You felt calm, restored and somewhat Familiar to this place as if. . .")
-    dialogue("You: " + "Wow, I can see the whole village here.") #outside
-    dialogue("Enabell:" + "I can't get enough how beautiful our village are.") #outside
+    dialogue("You: " + "Wow, I can see the whole village here.")
+    dialogue("Enabell:" + "I can't get enough how beautiful our village are.")
     dialogue("This statement peak your interest once more, do you want to ask something?")
     user = input("Yes/No: ") 
     sc2_QuestionEnabell(user)
-    
+    narrate("As the both of you traverse your way down the hill you enter a forrest. ")
+    narrate(" ")
+    narrate(" ")
+    narrate("The Two of you quickly arrived in the village.")
+    dialogue("You: " + 'The path was way too bumpy and long.')
+    dialogue("Enabell:" + "have you not get used to it? hahahaha.")
+    narrate("The two of you playfully teasing each other.")
+    narrate("But as the two of you, make debut inside the vilage square.")
+    narrate("It seems the village had froezen. ")
+    narrate("Everyone gazzing towards the both of you.")
+    dialogue("Enabell:" + "Everytime I'm with you, the world around us seems to stop \n just to glaze at you.")
+    dialogue("You:" + "Well, that's what you get if we're fatefully serving him.")
+    dialogue("Enabell:" + "Wow ms. Holy maiden.")
+    dialogue("Male:" + "Umm, Ms. Lara have you received my affection Letter.")
+    narrate("Soon Male sorroundes the two of you.")
+    narrate("Desperately trying to get your attention with their advances.")
+    narrate("You are like Field of flowers, under the swarm of bees of mens.")
+    narrate("Someone grab your hand and yank you out of the swarm of men. ")
+    dialogue('You:' + 'Puch who-.')
+    dialogue('Enabell: '+ "Houyy, Geez come on now. Let's finish what my mother tasked us to finished. ")
+    dialogue("The Group of men: "+"Where's Lara?? my lovess!!")
+    dialogue('Group of Men:' + "There's she iss!! running!! away quickly.")
+    narrate("With Enabell guidnace, the two of you swiftly outrun the swarm.")
+    narrate("After endless of pursuit, the both of you outrun and hid in the side alley.")
+    narrate("The both of you trying to grasp for air.")
+    dialogue('Enabell: '+ "Lara, You should really hide your beauty hahaha.")
+    dialogue('You: '+ "Shut up Ena, not funny.")
+    dialogue('Enabell: '+ "Haha, I bet you do lets go and finish so we can go home. ")
+    dialogue('You: '+ "True, its getting dark.")
+    narrate('As the two of you arrived at church stede.')
+    narrate('You felt cold wind welcomes you at the entrance of Church. ')
+    dialogue('Enabell: '+ "Mom instruct me to buy some foods, so go alone inside the Church. ")
+    dialogue('You: '+ "But. . . ")
+    dialogue('Enabell: '+ "Dont worry, i'll swing by this church after I check my shopping list.")
+    narrate("Enabell departs and you continue inside the church")
+    narrate("You enter the chruch. you are welcome by few people of different across ages and gender,\n solomeny praying. ")
+    narrate("You walk beside the altar, and a nun approaches you.")
+    dialogue("Nun:" + 'Hi Lora, how are you?')
+    dialogue('You: '+"I'm doing fine sister, me and Anabell just outrun my suitors.\n how about you sister?")
+    dialogue('Nun: '+ "As usual are we? hahaha.")
+    dialogue('You: '+ "Sister, may I know where's Father")
+    dialogue('Nun: '+ "ohh my, another session?.")
+    dialogue('You: '+ "My mother told me to find him.")
+    dialogue('Nun: '+ "He's inside, of the usual office, I will accompanny you. ")
+    narrate("You thanked her, and introduce herself as Jean.")
+    narrate('As the both of you walk the silent corridor.')
+    dialogue('Nun: '+ "Have any question before we arrived?")
+    user1 = input("Yes/No: ")
     t.sleep(delay)
     sc3()
 
@@ -1115,7 +1189,7 @@ def Ezekiel():
     """
     print(ascii_art)
 
-def New_Year2026():
+def New_Year2026(): #Done
     ascii_art = r"""
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1325,7 +1399,7 @@ def Kaldag():
     """
     print(ascii_art)
 
-def Close_Up():
+def Close_Up(): #Done
     ascii_art = r"""
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
