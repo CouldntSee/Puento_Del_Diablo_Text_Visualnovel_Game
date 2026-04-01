@@ -325,16 +325,42 @@ def End_main(): #done
         dialogue("The mystery of the bridge remains unsolved...")
 
 
-def endegg():
-    input("You found the easter egg! Press Enter to continue...")
-    
-def ecitegg():
-    input("You found the easter egg! Press Enter to continue...")
 
-def menuegg():
-    input("You found the easter egg! Press Enter to continue...")
-
-
+def sc2_QuestionEnabell(user):
+    while True:
+        if user.lower() == 'yes':
+            dialogue('You:' + 'Ena, can I ask something?')
+            dialogue("Enabell:" + "What do you want to know?")
+            choices1 = input('History / Suitors / the bridge / nevermind: ')
+            if choices1.lower() == 'history':
+                dialogue('Enabell: '"Our villiage is very old, full of secrets and life")
+                dialogue('Enabell: ' + 'Just becareful Lara to whoever you choose.')
+                narrate('You just nodded to her.')
+            elif choices1.lower() == 'suitors':
+                dialogue('Enabell: '+"Suitors? hahaha you have many. I envy that.")
+                dialogue('You: '+"How? for me its a cruse. . . I just want to served god")
+                narrate("You are shock, your mouth just move on its on.")
+                t.sleep(2)
+                dialogue('Enabell: '+"Not the crazy amount of your suitor. your resolve to serve our heavenly father.")
+                narrate("A warm surge inside your body, conforting and just warm sensation. . .")
+                narrate("You don't k n ow what to say.")
+            elif choices1.lower() == 'the bridge':
+                dialogue('Enabell: '+"Brigde?")
+                dialogue('You: '+"Yes!! there's uncomplete bridge that I saw. .")
+                dialogue('Enabell: '+"Well, there's no new brigde being constrcucted that I know off\n you probably dreaming again Lara.")
+                narrate("Yet you still feel uneasy and grew warry.")
+            elif choices1.lower() == 'nevermind':
+                dialogue('Enabell:' + 'I cant really understand you sometimes')
+                dialogue('Enabell:' + 'Anyway try this and shwo this to a priest')
+                narrate("Enabell gave you paper, you peak inside and saw 'doton'.")
+                dialogue('You: '+"The Priest? why?")
+                narrate("Enabell just chuckle and wave her hand dismissively.")
+                break
+            else:
+                dialogue("Enabell:" + "I can't hear you very well, speak up")
+        elif user.lower() == 'no':
+            narrate("You two continue to your journey, confident in what you have\n understood.")
+            break
 
 # // ______________________________________//
 # ||              Story poper              ||
@@ -484,7 +510,7 @@ def sc2():
     dialogue("wait what just happend? Where Am I?")
     t.sleep(delay)
     dialogue("You: " + "Wait a minute, I remember falling unconscious on the bridge. . .")
-    narrate("You get up from the cozy feeling bed, and you see that you're in a small room with stone walls, dimly lit by a flickering candle on a wooden table.")
+    narrate("You get up from the cozy feeling bed, and you see that you're\n in a small room with stone walls, dimly lit by a flickering candle on a wooden table.")
     narrate("You glance around your sorrunding ")
     narrate("Still confuse how dirt road became a comfy bed inside a room, you start to look around the room,\nhoping to find some clues about where you are and how you got there.")
     narrate("Then you notice a mirror on the wall, and as you look into it, you see a reflection of yourself, but something is off...")
@@ -506,14 +532,14 @@ def sc2():
     dialogue("You: " + "Sorry auntie, coming")
     thinkblock("You: " + "Wait, did I just said auntie? but i dont know her. . .")
     narrate("You follow your 'Aunite', and you find yourself in a cozy kitchen")
-    narrate("As you enter the kitchen, you are greeted by the warm aroma of freshly cooked food, and the sight of a loving family gathered around the table, sharing a meal together.")
-    dialogue("Auntie: " + "Lara, you want me to do this everyday for you aren't you? Gezz you should be grateful that you have a family that loves you, unlike your parents who left you alone in the world.")
+    narrate("As you enter the kitchen, you are greeted by the warm aroma of freshly cooked food, and the sight of a loving\n family gathered around the table, sharing a meal together.")
+    dialogue("Auntie: " + "Lara, you want me to do this everyday for you aren't you? Gezz you should be grateful that you have\n a family that loves you, unlike your parents who left you alone in the world.")
     dialogue("You: " + "But i don't even know you, and i dont even know who my parents are. . .")
     dialogue("Middle-age man: " + "Hahaha you never disspoint us to enterain us Lara, you always have a good sense of humor, just like your father.")
-    dialogue("Teenager girl: " + "Geez, you seem you worship so much our heavenly father that you fogot about us, but then, how can i blame ya? \neveryday you have suitor soo envious.")
+    dialogue("Teenager girl: " + "Geez, you seem you worship so much our heavenly father that you fogot about us, but then,\n how can i blame ya? \neveryday you have suitor soo envious.")
     dialogue("Auntie: " + "Stop teasing her, Lara, come one have a seat and lets eat.")
-    narrate("You sit down at the table, and stared at the delicious food that your family had prepared.")
-    thinkblock("You: " + "That middle-age man must the Uncle, and that teenager girl must be their child.")
+    narrate("You sit down at the table, and stared at the delicious food \nthat your family had prepared.")
+    thinkblock("You: " + "That middle-age man must the Uncle, and that \nteenager girl must be their child.")
     dialogue("Uncle: " + "Why dozing off, come on lead the prayer Lara")
     dialogue("Your: " + "Oh yea. .")
     narrate("You lead the prayer.")
@@ -525,14 +551,22 @@ def sc2():
     dialogue("You: " + "Umm")
     dialogue("Enabell: " + "Don't call me 'umm' my name is Enabell. if you're not my cousin I-")
     dialogue("Auntie: " + "Stop, Lara devoted her life to heavenly father. Lara can you go to our locat church?")
-    dialogue("You:","Why?")
-    dialogue("Auntie:", " Just say hi to our priest John. Enabell go with Lara")
-    dialogue("Enabell:", "But i have plan thi afternoon.")
-    dialogue("Auntie: ", 'No buts Enabell.')
+    dialogue("You:" +"Why?")
+    dialogue("Auntie:" + " Just say hi to our priest John. Enabell go with Lara")
+    dialogue("Enabell:" + "But i have plan thi afternoon.")
+    dialogue("Auntie: " + 'No buts Enabell.')
     narrate('Enabell relucntently agrred to go with you')
     narrate('You and Enebell set out of your house')
     narrate('You openned the door and a village thriving welcomes you')
     village()
+    narrate("As you open the door, the Gentle breeze of afternoon brush to your skin. ")
+    narrate("The Earthy scent of your coruing envelope your noustril.")
+    narrate("You felt calm, restored and somewhat Familiar to this place as if. . .")
+    dialogue("You: " + "Wow, I can see the whole village here.") #outside
+    dialogue("Enabell:" + "I can't get enough how beautiful our village are.") #outside
+    dialogue("This statement peak your interest once more, do you want to ask something?")
+    user = input("Yes/No: ") 
+    sc2_QuestionEnabell(user)
     
     t.sleep(delay)
     sc3()
@@ -561,7 +595,7 @@ def final():# dont forget to use While loop at choices lol
 
     
 # /// Secret ///
-def show_easter_egg():
+def kiss():
     ascii_art = r"""
 ...................................................................................................
 .                                                                  ........                         
@@ -620,7 +654,7 @@ def show_easter_egg():
     """
     print(ascii_art)
     
-def village():
+def village():#done of using for demonstation of village.
     print(r"""
 ----------------------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------======--------------------------------------------------
@@ -857,7 +891,7 @@ def mayor():
     """
     print(ascii_art)
     
-def Doton():
+def Doton():#done for sc2 interaction with enabell
     ascii_art = r"""
 =====+======+=+++*****###%%%#********+******************************+++++++++++++++++++=------------
 ++==+=======++**###%%%%%######%%#***++***************************************+++++++++++++=---------
@@ -937,7 +971,7 @@ def Doton():
 +++-:.........:****=..:-====--------:::::::::...........:---=+++***:...""" 
     print(ascii_art)
 
-def THE_autor():
+def THE_author():
     ascii_art = r"""
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
