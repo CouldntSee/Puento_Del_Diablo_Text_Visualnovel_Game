@@ -324,8 +324,8 @@ def End_main(): #done
         dialogue("You perished alongside the bridge...")
         dialogue("The mystery of the bridge remains unsolved...")
 
-
-def sc2_Nun(user1):
+#sc2 Materials
+def sc2_Nun(user1):#done
     while True:
         if user1.lower() == 'yes':
             dialogue('You: '+ "Sister Jean, can I know something?")
@@ -389,6 +389,7 @@ def sc2_QuestionEnabell(user): #done
             narrate("You two continue to your journey, confident in what you have\n understood.")
             break
 
+def Roam_church():
 # // ______________________________________//
 # ||              Story poper              ||
 # // ______________________________________//
@@ -597,6 +598,7 @@ def sc2():
     narrate("As the both of you traverse your way down the hill you enter a forrest. ")
     narrate(" ")
     narrate(" ")
+   #The Arriavl in the Village
     narrate("The Two of you quickly arrived in the village.")
     dialogue("You: " + 'The path was way too bumpy and long.')
     dialogue("Enabell:" + "have you not get used to it? hahahaha.")
@@ -627,6 +629,7 @@ def sc2():
     narrate('You felt cold wind welcomes you at the entrance of Church. ')
     dialogue('Enabell: '+ "Mom instruct me to buy some foods, so go alone inside the Church. ")
     dialogue('You: '+ "But. . . ")
+    #The separation
     dialogue('Enabell: '+ "Dont worry, i'll swing by this church after I check my shopping list.")
     narrate("Enabell departs and you continue inside the church")
     narrate("You enter the chruch. you are welcome by few people of different across ages and gender,\n solomeny praying. ")
@@ -642,6 +645,34 @@ def sc2():
     narrate('As the both of you walk the silent corridor.')
     dialogue('Nun: '+ "Have any question before we arrived?")
     user1 = input("Yes/No: ")
+    sc2_Nun(user1)
+    narrate("As you and Sister Jean continue walking, you can't help but feel a sense of unease, as if something is lurking in the shadows, watching your every move...")
+    dialogue('You: ' + "Sister Jean, do you feel like we're being watched?")
+    dialogue('Jean: ' + "Oh, don't be silly, it's just your imagination.")
+    narrate("But the feeling of being watched only grows stronger, and you can't shake\n the sense of dread that something is waiting for you in the darkness...")
+    narrate('You and Sister Jean finally arrive at the office, and you see Father John sitting at his desk, surrounded by books and papers.')
+   #Father dialogs
+    dialogue('Father John: ' + "Ah, Lara, it's good to see you. What brings you here today?")
+    dialogue('You: ' + "Father John, my mother sent me to find you. She said you might be able to help me with something.")
+    dialogue('Father John: ' + "Of course, I'm here to help. What do you need?")
+    dialogue('You: ' + "I... I don't know how to say this, but I feel like there's something wrong with me. Like I'm not myself anymore.")
+    dialogue('Father John: ' + "I see. With your god given beauty, it's not suprising that you have many suitors.\n Are you perhaps turing into Age?")
+    dialogue('You: ' + "Why did you asked father?")
+    dialogue('Father John: ' + "Well, it's just that, you know, there's a legend a long time ago. . .")
+    narrate("The Father seems a bit hesistant to say the legend, but still continue to tell you the story. . .")
+    dialogue('Father John: ' + "The legend says that, there was a beautiful maiden who lived in this village long time ago, and she was so beautiful that") 
+             #many suitors came to court her, but she was very devout and wanted to serve God, so she rejected all of them. One day, a mysterious figure appeared to her and offered her a deal. He said that if she agreed to be with him, he would give her eternal beauty and youth, but if she refused, he would curse her and her descendants to be forever alone and unloved.")
+    dialogue('Father John: ' + "Many suitors came to court her, but she was very devout and wanted to serve God, so she rejected all of them.")
+    dialogue('Father John: ' + "That's the Story of our Patron Catherine. She devoted her life under servetude to our heavenly Father.")
+    dialogue('You: ' + "So, whats the connection with me and the Legend?")
+    dialogue('Father John: ' + "Well, Lara. Accroding to the scripture, A women that devoted her life solely to God, will be under constant eyes of devil,\n trying to lure thy soul to earthly pleasure, this is like a trial for the soul, to test your resolve and devotion to our heavenly Father.")
+    dialogue('Father John: ' + "Knowing you possesd unbound beauty and Servitude for our heavenly Father, it;s not suprising that demons are trying to lure you.\n be resilinece to whoever you choose to spend your life with.")
+    dialogue('You: ' + "So, what should I do Father?")
+    dialogue('Fayther John: ' + 'Well, Lara, You have to follow your heart, becasue only you with the guide of heavenly will, can choose what best for you.')
+    dialogue('Father John: ' + 'anway feel free to ask me anything else, or if you need help with anything else, I am here to help you.')
+    dialogue('You: ' + "Thank you Father, I will keep that in mind.")
+    dialogue('Father John: ' + "You're Welcome Lara, Feel free to roam around as I will discuss something with Sister Jean.")
+    user2 = input("Do you want to roam around the church? (yes/no): ") # Roam spot =
     t.sleep(delay)
     sc3()
 
