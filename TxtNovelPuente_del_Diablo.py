@@ -389,7 +389,439 @@ def sc2_QuestionEnabell(user): #done
             narrate("You two continue to your journey, confident in what you have\n understood.")
             break
 
-def Roam_church():
+def check_item(inventory, target):
+    """Check if item is in inventory. No 'in' keyword used."""
+    index = False
+    found = False
+    while index < len(inventory):
+        if inventory[index] == target:
+            found = True
+            index = len(inventory)   # early exit
+        else:
+            index = index + True
+    return found
+
+def hard_remove(inventory, target):
+    """Return a new list with the first occurrence of target removed."""
+    new_list = []
+    index    = False
+    while index < len(inventory):
+        if inventory[index] != target:
+            new_list.append(inventory[index])
+        index = index + True
+    return new_list
+
+def show_inventory(inventory):
+    """Print everything currently in the inventory."""
+    print("\n--- Backpack ---")
+    index = False
+    while index < len(inventory):
+        print("  - " + inventory[index])
+        index = index + True
+    if len(inventory) == False:
+        print("  (empty)")
+    print("----------------")
+
+
+PAUSE = 2.0
+SHORT = 1.0
+LONG  = 3.0
+
+# ── Timed countdown display ───────────────────────────────────────────────────
+def timed_countdown(seconds):
+    remaining = int(seconds)
+    while remaining > False:
+        print("  [" + str(remaining) + "]", end="\r", flush=True)
+        t.sleep(SHORT)
+        remaining = remaining - True
+    print("     ", end="\r")
+
+# ── Shown when player tries to leave too early ────────────────────────────────
+def conviction_warning(reason):
+    print()
+    print("  +----------------------------------------------------------+")
+    print("  |  !! " + reason)
+    print("  +----------------------------------------------------------+")
+    print()
+    t.sleep(PAUSE)
+
+# ── Confession booth riddle ───────────────────────────────────────────────────
+# GATE: player must have events["has_lobby_hint"] == True before entering.
+# RIDDLE answer is B (echo -- something that rings/repeats without a voice).
+# REWARD: adds "bell_room_key" to inventory, sets events["found_bell_key"].
+def puzzle_confession_booth(game_state):
+    inventory = game_state["inventory"]
+    events    = game_state["events"]
+
+    print("\n" + "="*60)
+    print("  The Confession Booth")
+    print("="*60)
+    narrate("You step inside. It smells of cedar and old paper.")
+    narrate("A faded note is pinned beneath a small crucifix.")
+    t.sleep(PAUSE)
+    dialogue("Note: 'Only the one who listens to silence may open what rings above.'")
+    t.sleep(PAUSE)
+    narrate("Below the note is a wooden panel with three carved symbols:")
+    print()
+    print("      [ Dove ]        [ Bell ]        [ Book ]")
+    print("      (  A  )         (  B  )         (  C  )")
+    print()
+    narrate("An inscription reads:")
+    slow_print("    I speak without a mouth and hear without ears.", delay=0.04)
+    slow_print("    I have no body, but I come alive with wind.", delay=0.04)
+    slow_print("    What am I?", delay=0.04)
+    print()
+
+    solved   = False
+    attempts = False        # False == 0
+
+    while solved == False:
+        print("\n  Attempts remaining: " + str(3 - attempts))
+        print("  Enter A, B, or C.  You have 15 seconds.")
+        print()
+        start   = t.time()
+        answer  = input("  Your answer: ").strip().upper()
+        elapsed = t.time() - start
+
+        if elapsed > 15:
+            narrate("You hesitated too long. The panel resets.")
+            attempts = attempts + True
+        elif answer == "B":
+            slow_print("  * The panel slides open with a soft click...", delay=0.05)
+            t.sleep(PAUSE)
+            narrate("Inside a hollow sits an old iron key. A tiny bell is etched on its head.")
+            narrate("You obtained the Bell Room Key!")
+            inventory.append("bell_room_key")
+            events["found_bell_key"] = True
+            solved = True
+        else:
+            narrate("Nothing happens. The panel holds firm.")
+            attempts = attempts + True
+
+        if solved == False:
+            if attempts >= 3:
+                narrate("The panel goes cold and locks itself.")
+                dialogue("You: Maybe I need to think about this more carefully...")
+                thinkblock("Lara: 'Listens to silence'... something about sound. What answers without a voice?")
+                t.sleep(LONG)
+                narrate("The panel warms again. You may try once more.")
+                attempts = False    # reset
+
+    game_state["inventory"] = inventory
+    game_state["events"]    = events
+    return game_state
+
+# ── Bell room ─────────────────────────────────────────────────────────────────
+# GATE: "bell_room_key" must be in inventory.
+# SETS: events["bell_room_visited"] = True  <-- conviction gate checks this
+#       events["bell_warned"]       = True  <-- sc3 can read this
+# KEY is consumed on entry.
+def room_bell_room(game_state):
+    inventory = game_state["inventory"]
+    events    = game_state["events"]
+
+    print("\n" + "="*60)
+    print("  The Bell Room")
+    print("="*60)
+
+    if check_item(inventory, "bell_room_key") == False:
+        narrate("A heavy iron lock seals the door.")
+        dialogue("You: I need a key for this. . .")
+        thinkblock("Lara: Someone in the lobby mentioned a hidden key.")
+        t.sleep(PAUSE)
+        return game_state
+
+    narrate("You insert the key into the lock.")
+    slow_print("  * The lock turns...", delay=0.06)
+    t.sleep(PAUSE)
+    slow_print("  * The door groans open, revealing a narrow spiral staircase.", delay=0.04)
+    t.sleep(PAUSE)
+    narrate("You climb carefully. Each step creaks beneath your weight.")
+    timed_countdown(LONG)
+
+    print("\n" + "="*60)
+    print("  At the Top  --  The Bell")
+    print("="*60)
+    narrate("A massive bronze bell hangs in the centre of the tower.")
+    narrate("Afternoon light cuts through the slats in golden lines.")
+    t.sleep(PAUSE)
+    narrate("Carved into the base of the bell, barely visible under dust:")
+    slow_print("  * 'He who rings me calls not the hour, but the truth.'", delay=0.06)
+    print()
+    t.sleep(PAUSE)
+    dialogue("You: What does that mean... 'calls the truth'?")
+    thinkblock("Lara: The bridge. The shadow. Father John's words. It is all connected...")
+    t.sleep(PAUSE)
+    narrate("A cold wind rushes through the slats -- but there is no storm outside.")
+    narrate("The bell sways. Just slightly. Without anyone touching it.")
+    t.sleep(LONG)
+    dialogue("You: I need to leave. Now.")
+
+    inventory = hard_remove(inventory, "bell_room_key")
+    events["bell_room_visited"] = True
+    events["bell_warned"]       = True
+
+    game_state["inventory"] = inventory
+    game_state["events"]    = events
+    return game_state
+
+# ── Basement ──────────────────────────────────────────────────────────────────
+# GATE: events["bell_room_visited"] must be True.
+# SETS: events["found_ledger_hint"] = True
+def room_basement(game_state):
+    events = game_state["events"]
+
+    print("\n" + "="*60)
+    print("  The Basement")
+    print("="*60)
+
+    if events.get("bell_room_visited", False) == False:
+        narrate("A heavy wooden door blocks the stairwell. It will not budge.")
+        thinkblock("Lara: I am not ready to go down there yet.")
+        t.sleep(PAUSE)
+        return game_state
+
+    narrate("The basement door swings open -- as if it was never truly locked.")
+    t.sleep(PAUSE)
+    narrate("Cool, dark room. Stone shelves. The faint smell of incense.")
+    narrate("One shelf holds a leather-bound ledger. The spine reads:")
+    slow_print("    'Puente Del Diablo -- Construction Records, 1887'", delay=0.05)
+    t.sleep(SHORT)
+    dialogue("You: This is about the bridge!")
+    t.sleep(PAUSE)
+    narrate("You reach for it -- and the door above slams shut.")
+    t.sleep(LONG)
+    narrate("Footsteps. Someone walking across the floor above you.")
+    t.sleep(PAUSE)
+    narrate("You press yourself against the shelf. Heart hammering.")
+    timed_countdown(PAUSE)
+    narrate("Silence. They are gone.")
+    dialogue("You: I should come back to this. Not now.")
+
+    game_state["events"]["found_ledger_hint"] = True
+    return game_state
+
+# ── Lobby ─────────────────────────────────────────────────────────────────────
+# The elderly woman NPC gives the hint that unlocks the confession booth.
+# SETS: events["has_lobby_hint"] = True  (when player picks option 3)
+def room_lobby(game_state):
+    inventory = game_state["inventory"]
+    events    = game_state["events"]
+
+    print("\n" + "="*60)
+    print("  The Church Lobby")
+    print("="*60)
+    narrate("Quiet. Soft light through stained glass. Candles flicker near the altar.")
+
+    lobby_active = True
+    while lobby_active == True:
+        print()
+        print("  1. Altar")
+        print("  2. Sacristy door")
+        print("  3. Talk to the people    <- hint is here")
+        print("  4. Bulletin Board")
+        print("  5. The Painting")
+        print("  6. The Vase")
+        print("  7. Go back")
+        print()
+        choice1 = input("  Your choice: ").strip()
+
+        if choice1 == "1":
+            narrate("You light a candle near the altar. The flame holds perfectly still.")
+            thinkblock("Lara: The bell room is directly above this altar...")
+
+        elif choice1 == "2":
+            narrate("The sacristy door is ajar. Priests prepare for evening mass.")
+            narrate("You decide not to disturb them.")
+
+        elif choice1 == "3":
+            narrate("An elderly woman in a blue shawl looks up at you with kind eyes.")
+            dialogue("Elderly woman: Ah, you must be Lara. I have seen you with your auntie.")
+            dialogue("You: Yes po. Do you know anything special about this church?")
+            dialogue("Elderly woman: The bell above has not rung in forty years.")
+            dialogue("Elderly woman: They say whoever unlocks that room will hear something meant only for them.")
+            dialogue("You: How does one get up there?")
+            t.sleep(SHORT)
+            dialogue("Elderly woman: The key was hidden where people confess their sins.")
+            dialogue("Elderly woman: But the booth does not simply give it up.")
+            dialogue("Elderly woman: 'Only the one who listens to silence may open what rings above.'")
+            dialogue("Elderly woman: Remember that, anak.")
+            narrate("She turns back to her rosary.")
+            events["has_lobby_hint"] = True
+            thinkblock("Lara: 'Listens to silence...' -- I should check the confession booth.")
+            t.sleep(SHORT)
+            narrate("A young man beside her nods at you.")
+            dialogue("Young man: Be careful in that bell room if you manage to get up there.")
+
+        elif choice1 == "4":
+            narrate("Among the flyers, one faded notice:")
+            slow_print("    'Bell room access RESTRICTED. See Father John for inquiries.'", delay=0.04)
+            thinkblock("Lara: Restricted. There must be something worth seeing up there.")
+
+        elif choice1 == "5":
+            narrate("A large painting depicts workers building a stone bridge -- clearly unfinished.")
+            slow_print("    Plaque: 'Puente Del Diablo, c. 1887 -- Abandoned.'", delay=0.04)
+            t.sleep(PAUSE)
+            dialogue("You: This is the bridge. The same one from my vision. . .")
+            events["saw_bridge_painting"] = True
+
+        elif choice1 == "6":
+            narrate("A tall ceramic vase holds fresh white sampaguita. The scent is calming.")
+            if check_item(inventory, "Ceramic Vase") == False:
+                take = input("\n  Take the Ceramic Vase? (yes/no): ").strip().lower()
+                if take == "yes":
+                    inventory.append("Ceramic Vase")
+                    narrate("You carefully wrap the vase in your shawl.")
+            else:
+                narrate("You already have the vase.")
+
+        elif choice1 == "7":
+            lobby_active = False
+        else:
+            narrate("You pause, unsure what caught your attention.")
+
+    game_state["inventory"] = inventory
+    game_state["events"]    = events
+    return game_state
+
+# ── Roam_church (main hub) ────────────────────────────────────────────────────
+# CONVICTION GATE: player cannot choose Leave (7) until bell_room_visited == True.
+# Menu status tags update every loop so player always knows what step is next.
+def Roam_church(user, game_state):
+    events    = game_state["events"]
+    inventory = game_state["inventory"]
+
+    if user.strip().lower() == "no":
+        dialogue("You: I think I have seen enough. I should head back to Enabell.")
+        narrate("You feel you lack something. . .")
+        if events.get("bell_room_visited", False) == False:
+            conviction_warning("Something nags at you. You feel you are leaving something unfinished.")
+            thinkblock("Lara: The old woman's words -- 'the bell above has not rung in forty years.'")
+        return game_state
+
+    narrate("You walk towards the bulletin board near the entrance.")
+    dialogue("You: Hmm -- places I can look around!")
+
+    User_Exploring = True
+    conviction_met = False
+
+    while User_Exploring == True:
+
+        conviction_met = events.get("bell_room_visited", False)
+        has_hint       = events.get("has_lobby_hint",    False)
+        booth_done     = events.get("found_bell_key",    False)
+        has_key        = check_item(inventory, "bell_room_key")
+
+        # Status tags shown next to each locked option
+        if booth_done == True:
+            booth_tag = "[done]                                      |"
+        elif has_hint == True:
+            booth_tag = "[unlocked -- go try it!]                    |"
+        else:
+            booth_tag = "[locked -- talk to someone in lobby first]  |"
+
+        if events.get("bell_room_visited", False) == True:
+            bell_tag = "[done]                                       |"
+        elif has_key == True:
+            bell_tag = "[unlocked -- you have the key!]              |"
+        else:
+            bell_tag = "[locked -- need Bell Room Key]               |"
+
+        if conviction_met == True:
+            leave_tag = "[ready]                                      |"
+        else:
+            leave_tag = "[not yet -- visit the bell room first]       |"
+
+        print()
+        print("  +------------------------------------------------------------+")
+        print("  |  Where do you go?                                          |")
+        print("  |  1. Library                                                |")
+        print("  |  2. Lobby                                                  |")
+        print("  |  3. Basement                                               |")
+        print("  |  4. Confession Booth  " + booth_tag +                     '|')
+        print("  |  5. Bell Room         " + bell_tag +                      '|')
+        print("  |  6. Check inventory                                        |")
+        print("  |  7. Leave             " + leave_tag +                     '|')
+        print("  +------------------------------------------------------------+")
+        print()
+        choice = input("  Your choice: ").strip()
+
+        if choice == "1":
+            narrate("Rows of religious texts and historical records stretch before you.")
+            dialogue("You: Wow, this place is amazing!")
+            t.sleep(PAUSE)
+            narrate("You browse the shelves for anything about the bridge.")
+            timed_countdown(PAUSE)
+            narrate("You find a passage: an unfinished bridge built by monks, circa 1887.")
+            dialogue("You: This must be the same bridge!")
+            narrate("The pages explaining why it was abandoned are torn out.")
+            dialogue("You: Of course they are. . .")
+            thinkblock("Lara: The painting in the lobby and this book both say 1887. The basement ledger may have more.")
+            events["read_library_book"] = True
+
+        elif choice == "2":
+            game_state["events"]    = events
+            game_state["inventory"] = inventory
+            game_state = room_lobby(game_state)
+            events     = game_state["events"]
+            inventory  = game_state["inventory"]
+
+        elif choice == "3":
+            game_state["events"]    = events
+            game_state["inventory"] = inventory
+            game_state = room_basement(game_state)
+            events     = game_state["events"]
+            inventory  = game_state["inventory"]
+
+        elif choice == "4":
+            if booth_done == True:
+                narrate("You already retrieved the key. There is nothing more inside.")
+            elif has_hint == False:
+                narrate("You approach the booth, but stop yourself.")
+                thinkblock("Lara: I feel like I am missing something. I should talk to someone first.")
+                conviction_warning("You need more information before going in there.")
+            else:
+                game_state["events"]    = events
+                game_state["inventory"] = inventory
+                game_state = puzzle_confession_booth(game_state)
+                events     = game_state["events"]
+                inventory  = game_state["inventory"]
+
+        elif choice == "5":
+            game_state["events"]    = events
+            game_state["inventory"] = inventory
+            game_state = room_bell_room(game_state)
+            events     = game_state["events"]
+            inventory  = game_state["inventory"]
+
+        elif choice == "6":
+            show_inventory(inventory)
+
+        elif choice == "7":
+            if conviction_met == False:
+                conviction_warning("You cannot bring yourself to leave yet.")
+                if has_hint == False:
+                    thinkblock("Lara: I have not spoken to anyone yet. I should check the lobby.")
+                elif booth_done == False:
+                    thinkblock("Lara: The old woman's words... I need to find the key in the confession booth.")
+                elif has_key == True:
+                    thinkblock("Lara: I have the key -- the bell room stairs are waiting.")
+                else:
+                    thinkblock("Lara: I still have not visited the bell room.")
+                narrate("You stop yourself at the doorway and turn back.")
+            else:
+                slow_print("  * You take one last look at the church before stepping outside.", delay=0.04)
+                t.sleep(PAUSE)
+                dialogue("You: Goodbye, Father John. Sister Jean. Thank you.")
+                narrate("You step into the fading afternoon light to find Enabell.")
+                narrate("Whatever the bell whispered stays close -- like a second heartbeat.")
+                User_Exploring = False
+        else:
+            narrate("You continue to think carefully about your options. . .")
+
+    game_state["inventory"] = inventory
+    game_state["events"]    = events
+    return game_state
 # // ______________________________________//
 # ||              Story poper              ||
 # // ______________________________________//
@@ -673,13 +1105,20 @@ def sc2():
     dialogue('You: ' + "Thank you Father, I will keep that in mind.")
     dialogue('Father John: ' + "You're Welcome Lara, Feel free to roam around as I will discuss something with Sister Jean.")
     user2 = input("Do you want to roam around the church? (yes/no): ") # Roam spot =
+    Roam_church(user2)
+    game_state = Roam_church(user2, game_state)
     t.sleep(delay)
     sc3()
 
 
 def sc3(): # dont forget to use While loop at choices lol
-    chapter_banner(3, "The Devil's Bargain")
+    chapter_banner(3, "Lara's Bargain") #The night when the devil in disquise try to take Lara as his bride.+ the bidge dairing construction before the sunrise.
+    narrate("As the sun falls and  the night creeps in. you and Enabell arrived home safely")
     pause()
+    narrate( 'As the two of you enter the house, you are greated by the warm aroma of home-cooked food.')
+    narrate("you helped Enabell to set her shopping bags down, and you both start to prepare dinner together.")
+    
+    
     progress_saved()
     
     
