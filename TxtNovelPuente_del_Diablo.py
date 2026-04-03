@@ -1117,7 +1117,15 @@ def sc3(): # dont forget to use While loop at choices lol
     pause()
     narrate( 'As the two of you enter the house, you are greated by the warm aroma of home-cooked food.')
     narrate("you helped Enabell to set her shopping bags down, and you both start to prepare dinner together.")
-    
+    dialogue("Enabell: " + "Lara, I know you don't like to eat with us, but can you at least stay for dinner?")
+    user3 = input("Do you want to stay for dinner? (yes/no): ")
+    if user3 == "yes":
+        narrate("You decide to stay for dinner and enjoy a delicious meal with Enabell.")
+    else:
+        narrate("You politely decline the invitation and head to your room.")
+    narrate("As you eat, you can't help but feel a sense of unease, as if something is lurking in the shadows, watching your every move...")
+    narrate("Then, the silence is broken by a suddned knock on the main door.")
+    dialogue('You: ' + "Who could that be at this hour?")
     
     progress_saved()
     
