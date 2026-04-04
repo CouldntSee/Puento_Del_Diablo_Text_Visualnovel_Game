@@ -1,0 +1,7 @@
+# Ignore Python bytecode cache directories
+__pycache__/
+*.py[cod]
+
+# Ignore editor temporary files
+*.swp
+*.swo

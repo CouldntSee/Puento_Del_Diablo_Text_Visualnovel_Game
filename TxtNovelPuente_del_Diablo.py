@@ -576,7 +576,25 @@ def scene_sc1():
     st.markdown("---")
     st.markdown("**What do you do?**")
 
-    if st.button("🚶  Keep walking", key="sc1_walk"):
+    if "sc1_state" not in st.session_state:
+        st.session_state["sc1_state"] = "start"
+    if "sc1_phone_choice" not in st.session_state:
+        st.session_state["sc1_phone_choice"] = None
+
+    if st.session_state["sc1_state"] == "start":
+        if st.button("🚶  Keep walking", key="sc1_walk"):
+            st.session_state["sc1_state"] = "walk"
+            st.rerun()
+
+        elif st.button("↩  Turn back", key="sc1_back"):
+            go_to("path_exit")
+
+        elif st.button("📱  Open your Phone", key="sc1_phone"):
+            st.session_state["sc1_state"] = "phone"
+            st.session_state["sc1_phone_choice"] = None
+            st.rerun()
+
+    elif st.session_state["sc1_state"] == "walk":
         narrate("You decide to keep walking, determined to uncover the secrets of the bridge.")
         narrate("Suddenly, you see an ominous rock formation that resembles a face...")
         narrate("The voice becomes clearer, whispering your name...")
@@ -584,18 +602,11 @@ def scene_sc1():
         narrate("The surroundings go eerily silent. Then you glance at the rock...")
         dialogue("You", "Don't tell m—")
         narrate("You collapse on your own on the ground. To be continued...")
-        if st.button("▶  Continue to Chapter 2", key="sc1_to_sc2"):
+        if st.button("▶  Continue to Chapter 2", key="sc1_walk_to_ch2"):
+            st.session_state["sc1_state"] = "start"
             go_to("sc2")
 
-    elif st.button("↩  Turn back", key="sc1_back"):
-        narrate("You decide to turn back, but the voice becomes more insistent...")
-        narrate("As you turn around, you see a shadowy figure standing at the end of the bridge.")
-        st.markdown('<div class="ascii-art">   (###)   \n   /|||\\\n   /|||\\ </div>', unsafe_allow_html=True)
-        narrate("The figure disappears as you look away, but the voice haunts your thoughts...")
-        narrate("You lose touch with reality. The world becomes a blur of confusion. You died of insanity.")
-        bad_end("You turned back and lost your mind to the shadows of Puente Del Diablo.")
-
-    elif st.button("📱  Open your Phone", key="sc1_phone"):
+    elif st.session_state["sc1_state"] == "phone":
         narrate("You unlock your phone and see a message from an unknown number...")
         dialogue("Unknown", "i know who you are. . .")
         narrate("Then another message arrives — a photo attachment.")
@@ -606,19 +617,32 @@ def scene_sc1():
 
         col1, col2 = st.columns(2)
         with col1:
-            if st.button("👁️  Look back and confront", key="sc1_confront"):
+            if st.session_state["sc1_phone_choice"] is None:
+                if st.button("👁️  Look back and confront", key="sc1_phone_confront"):
+                    st.session_state["sc1_phone_choice"] = "confront"
+                    st.rerun()
+            elif st.session_state["sc1_phone_choice"] == "confront":
                 narrate("You spin around to confront whatever is behind you...")
                 narrate("You glance around... you see nothing. A sigh of relief.")
                 narrate("But then dizziness strikes — the voice grows louder and eerier.")
                 narrate("You fell unconscious.")
-                if st.button("▶  Wake up in Chapter 2", key="sc1_wake"):
+                if st.button("▶  Wake up in Chapter 2", key="sc1_phone_confront_ch2"):
+                    st.session_state["sc1_state"] = "start"
+                    st.session_state["sc1_phone_choice"] = None
                     go_to("sc2")
+
         with col2:
-            if st.button("🚶  Ignore and keep walking", key="sc1_ignore"):
+            if st.session_state["sc1_phone_choice"] is None:
+                if st.button("🚶  Ignore and keep walking", key="sc1_phone_ignore"):
+                    st.session_state["sc1_phone_choice"] = "ignore"
+                    st.rerun()
+            elif st.session_state["sc1_phone_choice"] == "ignore":
                 narrate("You keep walking. Praying. Taking deep breaths.")
                 narrate("You find yourself unbalanced near the ominous rock formation.")
                 narrate("Then you fell unconscious.")
-                if st.button("▶  Wake up in Chapter 2", key="sc1_wake2"):
+                if st.button("▶  Wake up in Chapter 2", key="sc1_phone_ignore_ch2"):
+                    st.session_state["sc1_state"] = "start"
+                    st.session_state["sc1_phone_choice"] = None
                     go_to("sc2")
 
 
@@ -682,7 +706,7 @@ def scene_sc2():
         dialogue("You", "The priest? Why?")
         narrate("Enabell just chuckled and waved her hand dismissively.")
 
-    if st.button("▶  Continue to the village square", key="sc2_village"):
+    if st.button("▶  Continue to the village square", key="sc2_to_village_fixed"):
         go_to("sc2_village")
 
 
@@ -703,7 +727,7 @@ def scene_sc2_village():
     dialogue("Enabell", "Mom told me to buy some food. Go alone inside. I'll swing by after.")
     narrate("Enabell departs. You continue inside the church.")
 
-    if st.button("▶  Enter the church", key="sc2v_enter"):
+    if st.button("▶  Enter the church", key="sc2v_enter_fixed"):
         go_to("sc2_church")
 
 
@@ -719,7 +743,7 @@ def scene_sc2_church():
     narrate("As the both of you walk the silent corridor...")
     dialogue("Jean", "Any questions before we arrive?")
 
-    jean_choice = st.radio("Ask Sister Jean:", ["About me", "About the Chapel", "About Father", "Thank you, let's go"], key="sc2_jean", index=3)
+    jean_choice = st.radio("Ask Sister Jean:", ["About me", "About the Chapel", "About Father", "Thank you, let's go"], key="sc2_jean_fixed", index=3)
 
     if jean_choice == "About me":
         dialogue("Jean", "You are a kind soul, Lara. Devoted, beautiful, and full of grace.")
@@ -769,10 +793,10 @@ def scene_sc2_father():
 
     col1, col2 = st.columns(2)
     with col1:
-        if st.button("🏛️  Yes, explore the church", key="sc2f_roam"):
+        if st.button("🏛️  Yes, explore the church", key="sc2f_roam_fixed"):
             go_to("roam_church")
     with col2:
-        if st.button("▶  No, head straight to sc3", key="sc2f_skip"):
+        if st.button("▶  No, head straight to sc3", key="sc2f_skip_fixed"):
             go_to("sc3")
 
 
