@@ -214,6 +214,12 @@ def bad_end(reason):
             st.rerun()
 
 def good_end(reason):
+    st.markdown("""
+    <audio autoplay controls style="width:100%;">
+        <source src="https://www.dropbox.com/scl/fi/d2zhlegh8f5dh5h6wtlna/Puente-Del-Diablo_-Tagumpay.mp3?rlkey=o7yqabl91y45jmitr7vo3ar7x&dl=1" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    """, unsafe_allow_html=True)
     st.markdown(f"""
     <div class="good-end-box">
         <h2>~ GOOD END ~</h2>
@@ -1305,8 +1311,13 @@ def main():
     # Sidebar — always available
     with st.sidebar:
         st.markdown("### 🎵 Background Music")
-        st.audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", format="audio/mp3")
-        st.markdown("[Source: SoundHelix sample audio](https://www.soundhelix.com/audio-examples)")
+        st.markdown("""
+        <audio autoplay loop controls style="width:100%;">
+            <source src="https://www.dropbox.com/scl/fi/7rrxoziza6e2orvoz4ply/Church-Puente-Del-Diablo.mp3?rlkey=0vc3lzafg4m7r999rqp4354ba&dl=1" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+        """, unsafe_allow_html=True)
+        st.markdown("[🎵 Church - Puente Del Diablo]")
         st.markdown("---")
         st.markdown("### 📊 Game Progress")
         progress_value = get_progress() / 100
