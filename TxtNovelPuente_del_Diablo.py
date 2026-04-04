@@ -1,1231 +1,1113 @@
-# Welcome to the Bridge of the Devil
-#This is a Text based  novel, you will be the main charcater, and make choices
-# This project is made for completion for my porgramming logic and design class.
-
-
-#  Lee Marc Macalanda  03/17/2026 , under 01-CPE-12 Unibersidad de Dagupan.
-# Engr Sean Gabriel Macapaggal 
-
-# |___________________________________________________________________________________________________________________|
-# | This is WEB base (streamlit) but i will also make a console version for those who want to play it on the console  |
-# |___________________________________________________________________________________________________________________|
-
-# The story
+# ============================================================
+#  PUENTE DEL DIABLO  —  Web Edition
+#  Original Story & Design : Lee Marc Macalanda
+#                            01-CPE-12, Unibersidad de Dagupan
+#                            03/17/2026
+#  Supervising Instructor   : Engr. Sean Gabriel Macapaggal
+#  Streamlit Co-Converter   : Claude (Anthropic) — April 2026
+#
+#  "A tale of faith, temptation, and an unfinished bridge"
+#   Pilapila, Binangonan, Rizal — Philippines
+# ============================================================
 
 import streamlit as st
-import time as t
+
+# ── Page config ──────────────────────────────────────────────
+st.set_page_config(
+    page_title="Puente Del Diablo",
+    page_icon="🌉",
+    layout="centered",
+    initial_sidebar_state="collapsed",
+)
+
+# ── Global CSS ────────────────────────────────────────────────
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=IM+Fell+English:ital@0;1&display=swap');
+
+html, body, [class*="css"] {
+    background-color: #0d0d0d;
+    color: #d4c9a8;
+    font-family: 'Crimson Text', serif;
+}
+
+.stApp { background-color: #0d0d0d; }
+
+h1, h2, h3 { color: #c9a84c; font-family: 'IM Fell English', serif; }
+
+.stButton > button {
+    background-color: #1a1208;
+    color: #c9a84c;
+    border: 1px solid #c9a84c;
+    border-radius: 4px;
+    font-family: 'Crimson Text', serif;
+    font-size: 1.05rem;
+    padding: 0.5rem 1.2rem;
+    transition: all 0.2s;
+    width: 100%;
+    margin-bottom: 6px;
+}
+.stButton > button:hover {
+    background-color: #c9a84c;
+    color: #0d0d0d;
+}
+
+.narrate-box {
+    background: #110e08;
+    border-left: 3px solid #c9a84c;
+    padding: 1rem 1.4rem;
+    border-radius: 4px;
+    margin: 0.6rem 0;
+    font-size: 1.08rem;
+    line-height: 1.75;
+    color: #d4c9a8;
+}
+
+.dialogue-box {
+    background: #0a0a0a;
+    border: 1px solid #3a3020;
+    border-left: 4px solid #8b6914;
+    padding: 0.8rem 1.2rem;
+    border-radius: 4px;
+    margin: 0.4rem 0;
+    font-size: 1.05rem;
+    color: #e8dfc0;
+    font-style: italic;
+}
+
+.think-box {
+    background: #080c08;
+    border: 1px dashed #3a5a3a;
+    border-left: 4px solid #4a8a4a;
+    padding: 0.7rem 1.2rem;
+    border-radius: 4px;
+    margin: 0.4rem 0;
+    font-size: 1rem;
+    color: #a8c8a8;
+}
+
+.chapter-banner {
+    background: linear-gradient(135deg, #1a1208, #0d0d0d);
+    border: 1px solid #c9a84c;
+    border-radius: 6px;
+    padding: 1.2rem 2rem;
+    text-align: center;
+    margin: 1rem 0;
+}
+.chapter-banner h2 { margin: 0; font-size: 1.5rem; }
+.chapter-banner p  { margin: 0.3rem 0 0; color: #8b6914; font-style: italic; }
+
+.bad-end-box {
+    background: #1a0000;
+    border: 2px solid #8b0000;
+    border-radius: 6px;
+    padding: 1.5rem;
+    text-align: center;
+    margin: 1rem 0;
+}
+.bad-end-box h2 { color: #cc3333; }
+
+.good-end-box {
+    background: #001a00;
+    border: 2px solid #006600;
+    border-radius: 6px;
+    padding: 1.5rem;
+    text-align: center;
+    margin: 1rem 0;
+}
+.good-end-box h2 { color: #44cc44; }
+
+.title-art {
+    font-family: monospace;
+    font-size: 0.55rem;
+    line-height: 1.15;
+    color: #8b6914;
+    white-space: pre;
+    overflow-x: auto;
+}
+
+.ascii-art {
+    font-family: monospace;
+    font-size: 0.45rem;
+    line-height: 1.1;
+    color: #5a5040;
+    white-space: pre;
+    overflow-x: auto;
+    margin: 0.5rem 0;
+}
+
+.progress-badge {
+    display: inline-block;
+    background: #1a1208;
+    border: 1px solid #c9a84c;
+    color: #c9a84c;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.inventory-box {
+    background: #0f0c06;
+    border: 1px solid #4a3a10;
+    border-radius: 4px;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    color: #a89060;
+}
+
+.warning-box {
+    background: #1a0f00;
+    border: 1px solid #8b5a00;
+    border-left: 4px solid #ff8c00;
+    border-radius: 4px;
+    padding: 0.7rem 1.2rem;
+    margin: 0.4rem 0;
+    color: #ffb347;
+}
+
+hr { border-color: #3a3020; }
+
+.stTextInput input {
+    background: #1a1208;
+    color: #d4c9a8;
+    border: 1px solid #4a3a10;
+    font-family: 'Crimson Text', serif;
+}
+</style>
+""", unsafe_allow_html=True)
 
 
-def GaLim():
-    ascii_art = r"""
-----::::::-+*******#################%%%%%%###**+++++==+++++==++==============--:::::---=============
-:::::::::-+******#####**++++++++***###%%%%%%%##*+==============================--::::---============
-::::::::-+******###**+========---=====+*#%%%%%##*+==============================--:::---------======
-:::::--=+******#**+========-------------=+*%%#####+===========================---=--:::::-------====
-=======+******#*+========-----------------=+#%%%%##+=========================----===-::::---::--====
-=----=+*****#**+=======---------------------=+#%%%##+===-------------========-----====-::---::--====
-=====+*******++========----------::-----------=*#####+-:::::-----------======-----=====-----::--====
-=====*#####*+==========---------::::-------::::-*#####+::::::----------======-----=======--:::--====
-====+*#####+=============---------::-------:::::-*####*=::::::----------=====-:::-------:::.....:---
-===-=*####*+=----====----------------------:::::-+**###+-:::::-------========-:...:::::::::......:::
-=====*####*+=-==========---------------===---:::-=**###*=-------------::::::::.:..::::::::::.....:::
-===--=####*+=+**#####**++=========++******++=----=+####*:.....:::::::::::::::::::::::::::::::::..:::
-===---*###++*********##***++===+++****++=++=++=--=+####+:....::::::::::::::::::::::::::::::::::::::-
----:::=###+++++++++++*******++++*****++===========+####+:.::::::::::::::::::::::::::::::::::::::::--
--:::::-*################%%%%############*##*#####**####=.:::::::::::::::::::::::::::::::::::::::::-=
--::::::+**#******+*###**+*#%%####++++++***+****#**+##*+:.:::::::::::::::::::::::::::::::::::::::::--
---:::::-*##++********+++++*##*##*====++++++++==+#*--**+:.:::::::::::::::::::::::::::::::::::::::::--
---::::::=#*=-=+++*****++++*#+==**======+=======+#=--+*+:.:::::::::::::::::::::::::::::::::::::::::--
---::::::-+*+=====+++++++++#*=---++===--========+*---+=-::::::::------:::::::::::::::::::::::::::::--
---:::::::-=*==========+++*#+=---=*+====----====*+---==-=====++++++++-::::=**#**+=---=*+=-::::::::::-
---::::::::=+*========++++#*+++===-=+====----==**=---==+*************--*%%%%%%%######%%%%#+-::::::::-
---::::::::-=+***++=+++*##++##***#*=+*********+=-----==++*+*****+****+#%%%%%%%%%%%%%%%%%%%#*-::::::=*
---::::::::-====+++**************+**+=+++++====------=-=********+****#%%##*****####%%%###%%%*-:::-*%%
--::::::..:-=====++=======+++=====------------------=++**+++=====++*#%%+=+++=======+#%%#*#%%%*++=+%%%
---=+---:::=+=====+================-----=======-----=+*++*===+**#*+*%%*=============*%%#**#%*=**=-+**
----=-----=**+===+++++++++****#******++=========---=**+==++++-===+**#%+=++==========+%%#*=+#+**#+=+**
----===+++**+==+++++++*####*++++++====++*+============++*+++===++=+*#*+***##*+*##**+=*#*=======*#+-=*
-----=+**+++==++++++*************#**++============++++++*#++*++++***+*#**###%%####*#*++====:=+=*#+:::
-==+*#+-==+===++++**************++=========+++===+%#%%#*+++=:-+++**-:=+=++*#++*++++*-=+=+=:..:-*#*-::
-+++##++======+++++*****++++===++===-=====++++++==###%###**+=+++=+#-:-=+***+==+***+======:..::.:..---
-==*##+========+++******+++++++++++=====+++***++==##**#####+=*#+-=#-::==+++****+++=====++:.:::::.....
-*+####**=====+++++*#+************************+==*##*=-=+***++*+++*:.:-=+++*++++++===++==::.:::::::..
-#==**##=-+===+++*#%%*+**##%%%##########*****+==*####=:-####+*+*#**::.:-+++***+++++=:--===-:.:::::::.
-%#+==-:::++++++*#%@@%*****####%%%#####******+++#####=-:+%%##**#%%%*-::-=++++++++++=::---=--.:::::...
-*:..::-=::-*++*#%@@@%%#**############******+++#####+-:-+%%%#########*=-*+++****++=+:.::-=--:::::::..
-:::.:::++-=+#%@%%@@@@%%#################**++*#%###*--:=*%%%%###%%%%####***++*+++++-......:-:::::::::
-....:=+*##%%%@@%%%@@@@%%%%#############**+*#%%####=-:-=#%%%%###%%%###########*++-::..:..::...::--:::
-=+#%%%%%%%%%%@@%%%%@@@%%%%%%%#########*++*%%%%%%%+---=*%%%%%%##%%%%%############*=:..::.:::.....::::
-%%%%%%%%%%%%@@@%%%%@@@@%%%%%%%######**++*%%%%%#%*--:-=%%%%%%%#%%%%%%%#############*+:::::::.:::::..:
-%%%%%%%%%%%@@@@@%@@@@@@@@%%%%%%%###*++*#%%%%%%%#--::-+%%%%%%%#%%%%%%%%########%#####*=::::::::::::.:
-%%%%%%%%%%%@@@@@@@@@@@@@@@@@%%%##*+*#%%%@%%%#%#=----=#%%%%%%%%%%%%%%%%%%%####%%#######*-::::::::::::
-%%%%%%%%%%%%@@@@%#%@@@@@@@@@%%#**#@@@@*#@@%#%%*--:--*%%%%%%%%%%%%%%%%%%%%%%%%%%########*+:::::::::::
-%%%%%%%%%%@%%%@@%#+#%*@@@@@@@%#%@@@@@@@@@@@%%*---:-=%%%%%%%%%%%%%%%%%%%%%%%%%%%%#%%######*=:::::::::
-%%%%%%%%%%%%%%@@@%+=++#@@@@@@@@@@@@@@@@@@@@@#==-:--#%%%%%%%%%%%%%%%%%%%%%%%%%%%%#%%%##%%###+::::::::
-%%%%%%%%%%%%%%%%%%*=--=%@@@@@@@@@@@@@%%@%%@%+=-:--*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%##%%####-:::::::
-%%%%%%%%%%%%%%%%%%#=---*%%@@@%##@%%%%%%%%%%*=-::=+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%###+:::::::
-%%%%%%%%%%%%%%%%%%%=---=%%%@@%*#%%%%%%%%%%#+=-:--#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%###*-::::::
-%%%%%%%%%%%%%%%%%%%#----*%%%%@@%%%%%%%%%%%+=-:-=#%%%%%%%%%%%%%%%%%%%%%%%%%%%%@%%%%%%%%%%%%%%#+::::::
-%%%%%%%%%%%%%%%%%%%%*---=%%%%%%%%%%%%%%%%*=---=+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#=:::::
-%%%%%%%%%%%%%%%%%%%%%+---*%%%%%%%%%%%%%%%+=:--=#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@%%%%%%%%%%%%%#-::::
-%%%%%%%%%%%%%%%%%%%%%#=--=%%%%%%%%%%%%%%+=-:-=#%%%%%%%%%%%%%%%%%%%%%%%%%%%@%%@%@%%%%%%%%%%%%%%%*----
-%%%%%%%%%%%%%%%%%%%%%%#===#%%%%%%%%%%%%#+=---*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@%%%%%%%%%%%%%%%%=--:
-%%%%%%%%%%%%%%%%%%%%%%%*==*%%%%%%%%%%%%+=--=*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@%%%%%%%%%%%%%%%%%#-::
-%%%%%%%%%%%%%%%%%%%%%%%%*+*#%%%%%%%%%%#+---=%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@%%%%%%%%%%%%%%%%%%+::
-%%%%%%%%%%%%%%%%%%%%%%%%%%*#%@@@%%%%%%*=--=%@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@%%%%%%%%%%%%%%%%%%%#-:
-%%%%%%%%%%%%%%%%%%%%%%%%@@%*#%%%%%%@%%+--=#@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@%%%%%%%%%%%%%%%%%%%%*-
-%%%%%%%%%%%%%%%%%%%%%%%%%%@@%#%@@@%@%#=-=#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@%%%%%%%%%%%%%%%%%%%%%=
-%%%%%%%%%%%%%%%%%@%%%%%%%%@@@%%%@@@@%*==*%@@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@%@@%%%%%%%%%%%%%%%@%*
-%%%%%%%%%%%%%%%%%%%%%%%%%%@@@*#%%@@@%==*%@@@@@%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@%@%%%%%%%%%%%@%@%%
-%%%%%%%%%%%%%%%%%%%@@%%%%%@@@##%%%@@#+*%@%@@%%#%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@%%%%%%%%%%%%@@%%
-%%%%%%%%%%%%%%%%@%%%%%%%%%@@@@@%%%%@*+%@@@@@@%@%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@%%%%%%%%%%%@@@@@%
-%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@%%%%%*%@@@@@@@@%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@%%%%%%%%%%%%@@@@@
-%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@%%%%#%@@@@@@@@%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@%%%%%%%%%%%@@@@@@
-%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@%%%#%@@@@@@@@%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@%%%%%%%%%%%@@@@@@
-%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@%%%%%@@@@@@@@%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@@%@@@%%%%%%%@@@@@@
-    """
-    print(ascii_art)
-   
-# ______________________________________  
-#            GAmit lang
-# ________________________________________
-def pause(seconds=1.5):
-    t.sleep(seconds)
-    
-def slow_print(text, delay=0.03):
-    for ch in text:
-        print(ch, end='', flush=True)
-        t.sleep(delay)
-    print()  
+# ── Helper render functions ───────────────────────────────────
+
+def narrate(text):
+    st.markdown(f'<div class="narrate-box">✦ {text}</div>', unsafe_allow_html=True)
+
+def dialogue(speaker, text):
+    st.markdown(f'<div class="dialogue-box"><strong>{speaker}</strong> — {text}</div>', unsafe_allow_html=True)
+
+def thinkblock(text):
+    st.markdown(f'<div class="think-box">💭 <em>{text}</em></div>', unsafe_allow_html=True)
+
+def chapter_banner(number, title, subtitle=""):
+    st.markdown(f"""
+    <div class="chapter-banner">
+        <h2>Chapter {number} — {title}</h2>
+        {"<p>" + subtitle + "</p>" if subtitle else ""}
+    </div>""", unsafe_allow_html=True)
+
 def bad_end(reason):
-    pause(1)
-    print()
-    print("┌─────────────────────────────────────────────────────────────┐")
-    print("│                        ~ BAD END ~                          │")
-    slow_print(f"│  {reason}")
-    print("└─────────────────────────────────────────────────────────────┘")
-    pause(1)
-    End_main()
-def slow_print(text, delay=0.03):
-    for ch in text:
-        print(ch, end='', flush=True)
-        t.sleep(delay)
-    print()
-    
- 
-def hasty_decision2(prompt, option1, option2, S1, S2, S3, S4, S5, F1, F2, F3, F4, F5, exit_action, go_action, timeout=5):
-    print("╔════════════════════════════════════════════════════════════╗")
-    print(f"║ {prompt}")
-    print("╚════════════════════════════════════════════════════════════╝")
-    print(f"1. {option1}")
-    print(f"2. {option2}")
-    print("\nType your choice now! Countdown:")
+    st.markdown(f"""
+    <div class="bad-end-box">
+        <h2>~ BAD END ~</h2>
+        <p>{reason}</p>
+    </div>""", unsafe_allow_html=True)
+    st.markdown("---")
+    narrate("The bridge claimed another soul. But perhaps fate allows a second chance...")
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("⟳  Try sc4 again", key="bad_retry"):
+            go_to("sc4")
+    with col2:
+        if st.button("↩  Return to start", key="bad_start"):
+            st.session_state.clear()
+            st.rerun()
 
-    start = t.time()
-    choice = input("Enter choice number: ")
+def good_end(reason):
+    st.markdown(f"""
+    <div class="good-end-box">
+        <h2>~ GOOD END ~</h2>
+        <p>{reason}</p>
+    </div>""", unsafe_allow_html=True)
+    st.markdown("""
+    <div style="text-align:center; margin-top:2rem; color:#c9a84c;">
+        <h3>Thank you for playing!</h3>
+        <p><em>Stay tuned for more adventures — Web Release with multiple endings coming soon!</em></p>
+        <p style="font-size:0.85rem; color:#5a5040;">Beta Version · Interactive Storytelling · Puente Del Diablo</p>
+    </div>""", unsafe_allow_html=True)
 
-    success_story = [
-        f"{S1}...",
-        f"{S2}...",
-        f"{S3}...",
-        f"{S4}...",
-        f"{S5}..."
-    ]
+def conviction_warning(text):
+    st.markdown(f'<div class="warning-box">⚠️ {text}</div>', unsafe_allow_html=True)
 
-    fail_story = [
-        f"{F1}...",
-        f"{F2}...",
-        f"{F3}...",
-        f"{F4}...",
-        f"{F5}..."
-    ]
-
-    for i in range(timeout, 0, -1):
-        if choice == "2":
-            print(f"{i} - {success_story[timeout - i]}")
-        elif choice == "1":
-            print(f"{i} - {fail_story[timeout - i]}")
-        else:
-            print(f"{i} - Confusion grips you...")
-        t.sleep(1)
-
-    if choice == "1":
-        exit_action()
-        return option1
-    elif choice == "2":
-        go_action()
-        return option2
-    else:
-        if t.time() - start > timeout:
-            print("")
-            return "DEFAULT"
-        print("Invalid choice! You have died!")
-        return "DEFAULT"
-    
-def hasty_decision1(prompt, option1, option2, S1, S2, S3, S4, S5, F1, F2, F3, F4, F5, exit_action, go_action, timeout=5):
-    print("╔════════════════════════════════════════════════════════════╗")
-    print(f"║ {prompt}")
-    print("╚════════════════════════════════════════════════════════════╝")
-    print(f"1. {option1}")
-    print(f"2. {option2}")
-    print("\nType your choice now! Countdown:")
-
-    start = t.time()
-    choice = input("Enter choice number: ")
-
-    success_story = [
-        f"{S1}...",
-        f"{S2}...",
-        f"{S3}...",
-        f"{S4}...",
-        f"{S5}..."
-    ]
-
-    fail_story = [
-        f"{F1}...",
-        f"{F2}...",
-        f"{F3}...",
-        f"{F4}...",
-        f"{F5}..."
-    ]
-
-    for i in range(timeout, 0, -1):
-        if choice == "1":
-            print(f"{i} - {success_story[timeout - i]}")
-        elif choice == "2":
-            print(f"{i} - {fail_story[timeout - i]}")
-        else:
-            print(f"{i} - Confusion grips you...")
-        t.sleep(1)
-
-    if choice == "2":
-        exit_action()
-        return option1
-    elif choice == "1":
-        go_action()
-        return option2
-    else:
-        if t.time() - start > timeout:
-            print("")
-            return "DEFAULT"
-        print("Invalid choice! You have died!")
-        return "DEFAULT"
-
-    
-
-def background_forest():
-    print("🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲",
-          "🌲        DARK FOREST         🌲",
-          "🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲", sep="\n")
-
-# Character template
-def character_player():
-    print("   (o_o)   ",   
-          "    /|\\    ",   
-          "    / \\    ", sep="\n")
-
-def character_shadow():
-    print( "   (###)   ",  
-          "   /|||\\   ",  
-          "   /|||\\   ", sep="\n")
-def sign():
-    print("╔════════════════════════════════╗")
-    print("║      Puente del Diablo         ║")
-    print("╚════════════════════════════════╝")
+def ascii_display(art):
+    st.markdown(f'<div class="ascii-art">{art}</div>', unsafe_allow_html=True)
 
 def progress_saved():
-    print("╔════════════════════════════════╗")
-    print("║      Progress Saved            ║")
-    print("╚════════════════════════════════╝")
-    
-    
-def action_scene(text):
-    print("╔══════════════════════════════════════════════════════════════════════════════╗")
-    print(f"║ ⚔️ {text}")
-    print("╚══════════════════════════════════════════════════════════════════════════════╝")
+    st.markdown('<span class="progress-badge">✦ Progress Saved</span>', unsafe_allow_html=True)
 
-def dialogue(text):
-    print("┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐")
-    print(f"│ {text}")
-    print("└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘")
+def show_inventory():
+    inv = st.session_state.get("inventory", [])
+    if inv:
+        items = " · ".join(f"📦 {i}" for i in inv)
+        st.markdown(f'<div class="inventory-box">{items}</div>', unsafe_allow_html=True)
 
-def End_sc4(): # for final saved point
-    delay = 2
+def go_to(scene):
+    st.session_state["scene"] = scene
+    st.rerun()
 
-def End_sc3(): # for sc4 saved point
-    delay = 2
-    
-def End_sc2(): # for sc3 saved point
-    delay = 2
+def check_item(target):
+    return target in st.session_state.get("inventory", [])
 
-def End_sc1(): # for sc2 saved point
-    delay = 2
-    
+def add_item(item):
+    if "inventory" not in st.session_state:
+        st.session_state["inventory"] = []
+    if item not in st.session_state["inventory"]:
+        st.session_state["inventory"].append(item)
 
-def End_main():
-    delay = 2
-    print("||_______________________________||")
-    print("||                               ||")
-    print("||         THE END               ||")
-    print("||                               ||")
-    print("||_______________________________||")
-    t.sleep(delay)
-    dialogue("you facied to unconver the mystery of the bridge.")
-    t.sleep(delay)
-    user = input(" try again?")
-    if user.lower() == "yes":
-        t.sleep(delay)
-        dialogue("you woke up again.. feeling a bit disoriented, \nbut determined to uncover the secrets of the bridge once more.")
-        main()
-    elif user.lower() == "no":
-        t.sleep(delay)
-        dialogue("You perished alongside the bridge...")
-        dialogue("The mystery of the bridge remains unsolved...")
+def remove_item(item):
+    if item in st.session_state.get("inventory", []):
+        st.session_state["inventory"].remove(item)
+
+def set_event(key, val=True):
+    if "events" not in st.session_state:
+        st.session_state["events"] = {}
+    st.session_state["events"][key] = val
+
+def get_event(key):
+    return st.session_state.get("events", {}).get(key, False)
 
 
-def endegg():
-    input("You found the easter egg! Press Enter to continue...")
-    
-def ecitegg():
-    input("You found the easter egg! Press Enter to continue...")
+# ── ASCII Art strings ─────────────────────────────────────────
 
-def menuegg():
-    input("You found the easter egg! Press Enter to continue...")
+GALIM_ART = r"""
+----::::::-+*******#################%%%%%%###**+++++==+++++==++==
+:::::::::-+******#####**++++++++***###%%%%%%%##*+============--::
+::::::::-+******###**+========---=====+*#%%%%%##*+============--:
+:::::--=+******#**+========-------------=+*%%#####+===========---
+=======+******#*+========-----------------=+#%%%%##+==========---
+=----=+*****#**+=======---------------------=+#%%%##+===--------=
+=====+*******++========----------::-----------=*#####+-:::------=
+=====*#####*+==========---------::::-------::::-*#####+::::::---=
+====+*#####+=============---------::-------:::::-*####*=:::::----
+===-=*####*+=----====----------------------:::::-+**###+-:::-----
+"""
+
+LARA_ART = r"""
+.*+========+=..=:
+  =                            +-               -=      +=
+  +                          *:                .=-==      -*+.
+  +                        *-            *.%%#         %:     :@
+  =                      --                    =.        +      -=
+  +                     --   -*     .*:#:@-%:-   .+-         .*
+  +                    :-          ..  @=@*@*%-  -==           :
+  +                   :=    -      .   @.#:*:=:     -           %
+  +                               =*=   +:      @  --
+  +                               *+-  :-     =.= #
+"""
+
+DEVIL_ART = r"""
+                                 :@@*==                    +*##%.
+                                #@=  .-          -+    +=   =.  =@@
+                               ##-   .-         %#:     *%       .%@
+                               %#    .+        =@#  .@@@@@@@.    @@=
+                               -@*:    -      * #%  :=#-@-+=*=#.  #@ *
+                               .-+@=:-  =.   =%  %**=#-@=#=**#*=%-@.@
+                               #=:#=  =. +. .##%@@+  ::-**+:-=+*=-=@%:
+                               =*-%@@#-+*=....=+%@+%#@+%=%++-++#+#=+:@
+"""
+
+VILLAGE_ART = r"""
+------------------------------=========-------------------------------
+----------------------------+=----------=+---------------------------
+--------------------====++=+-------------==-------------------------
+-------------------------------------------------==--------+++=+++++
+--------------------------=+++=------------------=+=====-----------=
+-------------------------++==++====----===-----=====++---------------
+"""
 
 
+# ════════════════════════════════════════════════════════════
+#  SCENE RENDERERS
+# ════════════════════════════════════════════════════════════
 
-# // ______________________________________//
-# ||              Story poper              ||
-# // ______________________________________//
-def menu():
-    delay = 2
-    while True:
-        t.sleep(delay)
-        dialogue("as you leave the bridge, you see a hanging sign on the side of the road.")
-        sign()
-        t.sleep(delay)
-        dialogue("as you read the hanging sign, you see the words 'Puente del Diablo' written on it.")
-        t.sleep(delay)
-        print("1. go back?")
-        print("2. Leave")
-        t.sleep(delay)
-        choice = input("Enter your choice: ")
-        if choice == "1":
-            main()
-        elif choice == "2":
-            exit()
-            break
-        elif choice == "3":
-            menuegg()
+def scene_title():
+    st.markdown("""
+    <div style="text-align:center; padding: 2rem 0 1rem;">
+        <div class="title-art">
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║   PUENTE DEL DIABLO                                              ║
+║                                                                  ║
+║        ~ P U E N T E   D E L   D I A B L O ~                    ║
+║                                                                  ║
+║    A tale of faith, temptation, and an unfinished bridge         ║
+║         Pilapila, Binangonan, Rizal — Philippines                ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+        </div>
+    </div>""", unsafe_allow_html=True)
+
+    st.markdown("---")
+    narrate("You find yourself standing at the edge of a mysterious bridge, shrouded in darkness and mystery.")
+    narrate("Do you dare to step onto the bridge and uncover its secrets, or do you choose to turn back?")
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("🌉  Step onto the bridge", key="title_continue"):
+            go_to("prologue")
+    with col2:
+        if st.button("↩  Turn back", key="title_no"):
+            go_to("path_exit")
+
+    st.markdown("---")
+    st.markdown("""
+    <div style="text-align:center; font-size:0.8rem; color:#4a3a20;">
+        Original Story: Lee Marc Macalanda · 01-CPE-12 · Unibersidad de Dagupan<br>
+        Supervisor: Engr. Sean Gabriel Macapaggal<br>
+        Streamlit Conversion: Claude (Anthropic) · April 2026
+    </div>""", unsafe_allow_html=True)
+
+
+def scene_prologue():
+    chapter_banner("Prologue", "The Mysterious Bridge", "Somewhere in the province of Rizal, Laguna")
+    progress_saved()
+    narrate("You stand at the edge of the bridge. A mysterious voice whispers in the dark...")
+    narrate("The bridge stretches before you, old and weathered, disappearing into the mist.")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("▶  Continue forward", key="pro_cont"):
+            go_to("sc1")
+    with col2:
+        if st.button("↩  Go back", key="pro_back"):
+            go_to("path_exit")
+
+
+def scene_sc1():
+    chapter_banner(1, "The Whispering Bridge")
+    progress_saved()
+    narrate("As you walk further on the bridge, the surroundings become more eerie.")
+    narrate("The voice in your mind grows stronger, urging you to continue.")
+    narrate("You feel a strange sensation — as if you're being watched.")
+    st.markdown("---")
+    st.markdown("**What do you do?**")
+
+    if st.button("🚶  Keep walking", key="sc1_walk"):
+        narrate("You decide to keep walking, determined to uncover the secrets of the bridge.")
+        narrate("Suddenly, you see an ominous rock formation that resembles a face...")
+        narrate("The voice becomes clearer, whispering your name...")
+        dialogue("You", "Who are you? Show yourself.")
+        narrate("The surroundings go eerily silent. Then you glance at the rock...")
+        dialogue("You", "Don't tell m—")
+        narrate("You collapse on your own on the ground. To be continued...")
+        if st.button("▶  Continue to Chapter 2", key="sc1_to_sc2"):
+            go_to("sc2")
+
+    elif st.button("↩  Turn back", key="sc1_back"):
+        narrate("You decide to turn back, but the voice becomes more insistent...")
+        narrate("As you turn around, you see a shadowy figure standing at the end of the bridge.")
+        st.markdown('<div class="ascii-art">   (###)   \n   /|||\\\n   /|||\\ </div>', unsafe_allow_html=True)
+        narrate("The figure disappears as you look away, but the voice haunts your thoughts...")
+        narrate("You lose touch with reality. The world becomes a blur of confusion. You died of insanity.")
+        bad_end("You turned back and lost your mind to the shadows of Puente Del Diablo.")
+
+    elif st.button("📱  Open your Phone", key="sc1_phone"):
+        narrate("You unlock your phone and see a message from an unknown number...")
+        dialogue("Unknown", "i know who you are. . .")
+        narrate("Then another message arrives — a photo attachment.")
+        ascii_display(GALIM_ART)
+        narrate("The photo shows two figures on the bridge. One is you. The other is a shadow.")
+        st.markdown("---")
+        st.markdown("**⏱ What do you do? Choose quickly!**")
+
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("👁️  Look back and confront", key="sc1_confront"):
+                narrate("You spin around to confront whatever is behind you...")
+                narrate("You glance around... you see nothing. A sigh of relief.")
+                narrate("But then dizziness strikes — the voice grows louder and eerier.")
+                narrate("You fell unconscious.")
+                if st.button("▶  Wake up in Chapter 2", key="sc1_wake"):
+                    go_to("sc2")
+        with col2:
+            if st.button("🚶  Ignore and keep walking", key="sc1_ignore"):
+                narrate("You keep walking. Praying. Taking deep breaths.")
+                narrate("You find yourself unbalanced near the ominous rock formation.")
+                narrate("Then you fell unconscious.")
+                if st.button("▶  Wake up in Chapter 2", key="sc1_wake2"):
+                    go_to("sc2")
+
+
+def scene_sc2():
+    chapter_banner(2, "The Unfinished Mystery", "A village from another time")
+    progress_saved()
+
+    narrate("You wake up in a different place. You feel soft sheets beneath you.")
+    dialogue("You", "Wait — what just happened? Where am I?")
+    narrate("You get up from the bed. You're in a small room with stone walls, lit by a flickering candle.")
+    narrate("You notice a mirror on the wall. As you look into it, something is off...")
+
+    ascii_display(LARA_ART)
+
+    narrate("You see the reflection of a young girl — elegant, pale as sampaguita, eyes brown as sunflower.")
+    narrate("Her hair is dark as the night that shines like stars. You wonder — who is this girl?")
+    dialogue("?", "Lara! Wake up, you dozed again. It's already lunch time.")
+    dialogue("You", "Lara? That's not—")
+    narrate("The door opens. A woman enters.")
+    dialogue("Auntie", "Hurry before our lunch gets cold!")
+    dialogue("You", "Sorry auntie, coming.")
+    thinkblock("Wait — did I just say 'auntie'? I don't even know her...")
+
+    narrate("You follow her into a cozy kitchen. A warm family sits around the table.")
+    dialogue("Uncle", "Come on, lead the prayer Lara.")
+    narrate("You lead the prayer — and you are surprised how fluent you are.")
+    narrate("After lunch, your Auntie makes a request.")
+    dialogue("Auntie", "Lara, can you go to our local church? Just say hi to Father John. Enabell, go with her.")
+    dialogue("Enabell", "But I have plans this afternoon!")
+    dialogue("Auntie", "No buts, Enabell.")
+
+    narrate("Enabell reluctantly agrees. You and Enabell set out from the house.")
+    ascii_display(VILLAGE_ART)
+    narrate("A gentle afternoon breeze brushes your skin. The village is thriving and beautiful.")
+    dialogue("Enabell", "I can never get enough of how beautiful our village is.")
+
+    st.markdown("---")
+    st.markdown("**Do you want to ask Enabell something?**")
+    enabell_choice = st.radio("Ask about:", ["History", "Suitors", "The bridge", "Nevermind"], key="sc2_enabell", index=3)
+
+    if enabell_choice == "History":
+        dialogue("Enabell", "Our village is very old, full of secrets and life.")
+        dialogue("Enabell", "Just be careful Lara, to whoever you choose.")
+        narrate("You just nodded to her.")
+    elif enabell_choice == "Suitors":
+        dialogue("Enabell", "Suitors? Hahaha you have many. I envy that.")
+        dialogue("You", "How? For me it's a curse. I just want to serve God.")
+        narrate("You are shocked — your mouth just moved on its own.")
+        dialogue("Enabell", "Not the amount of suitors — your resolve to serve our Heavenly Father.")
+        narrate("A warm surge inside your body... comforting and just warm.")
+    elif enabell_choice == "The bridge":
+        dialogue("Enabell", "Bridge?")
+        dialogue("You", "Yes! There's an incomplete bridge that I saw.")
+        dialogue("Enabell", "There's no new bridge being constructed. You're probably dreaming again, Lara.")
+        narrate("Yet you still feel uneasy and grew wary.")
+    elif enabell_choice == "Nevermind":
+        dialogue("Enabell", "I can't really understand you sometimes.")
+        dialogue("Enabell", "Anyway, try this and show it to a priest.")
+        narrate("Enabell gave you a paper. You peek inside and saw 'doton'.")
+        add_item("Doton Note")
+        dialogue("You", "The priest? Why?")
+        narrate("Enabell just chuckled and waved her hand dismissively.")
+
+    if st.button("▶  Continue to the village square", key="sc2_village"):
+        go_to("sc2_village")
+
+
+def scene_sc2_village():
+    narrate("The two of you arrive in the village square.")
+    dialogue("You", "The path was way too bumpy and long.")
+    dialogue("Enabell", "Have you not gotten used to it? Hahahaha.")
+    narrate("As you enter the square, everyone gazes towards both of you.")
+    dialogue("Enabell", "Everytime I'm with you, the world seems to stop just to gaze at you.")
+    narrate("Soon men surround the two of you, desperately trying to get your attention.")
+    narrate("You are like a field of flowers under a swarm of bees.")
+    narrate("Someone grabs your hand and yanks you out of the swarm!")
+    dialogue("Enabell", "Hey!! Come on, let's finish what my mother asked us to do.")
+    narrate("With Enabell's guidance, you outrun the swarm and hide in a side alley.")
+    dialogue("Enabell", "Lara, you should really hide your beauty! Hahaha.")
+    dialogue("You", "Shut up Ena, not funny.")
+    narrate("As the two of you arrive at the church, a cold wind welcomes you.")
+    dialogue("Enabell", "Mom told me to buy some food. Go alone inside. I'll swing by after.")
+    narrate("Enabell departs. You continue inside the church.")
+
+    if st.button("▶  Enter the church", key="sc2v_enter"):
+        go_to("sc2_church")
+
+
+def scene_sc2_church():
+    narrate("You enter the church, welcomed by people of different ages solemnly praying.")
+    narrate("You walk toward the altar, and a nun approaches you.")
+    dialogue("Nun", "Hi Lara, how are you?")
+    dialogue("You", "Fine sister. Me and Enabell just outran my suitors. How about you?")
+    dialogue("Nun", "As usual are we? Hahaha.")
+    dialogue("You", "Sister, may I know where Father is?")
+    dialogue("Nun", "He's in his usual office. I will accompany you.")
+    narrate("You thank her. She introduces herself as Sister Jean.")
+    narrate("As the both of you walk the silent corridor...")
+    dialogue("Jean", "Any questions before we arrive?")
+
+    jean_choice = st.radio("Ask Sister Jean:", ["About me", "About the Chapel", "About Father", "Thank you, let's go"], key="sc2_jean", index=3)
+
+    if jean_choice == "About me":
+        dialogue("Jean", "You are a kind soul, Lara. Devoted, beautiful, and full of grace.")
+        dialogue("Jean", "God clearly has a special plan for you.")
+    elif jean_choice == "About the Chapel":
+        dialogue("Jean", "This chapel has stood for over a hundred years.")
+        dialogue("Jean", "They say it was built in response to a deal made at the bridge...")
+        thinkblock("The bridge again. Everything leads back to it.")
+    elif jean_choice == "About Father":
+        dialogue("Jean", "Father John has been here for thirty years. A wise man.")
+        dialogue("Jean", "He knows the old legends better than anyone.")
+
+    if st.button("▶  Arrive at Father John's office", key="sc2c_office"):
+        go_to("sc2_father")
+
+
+def scene_sc2_father():
+    narrate("You and Sister Jean finally arrive at the office.")
+    narrate("Father John sits at his desk, surrounded by books and papers.")
+    dialogue("Father John", "Ah, Lara. It's good to see you. What brings you here today?")
+    dialogue("You", "Father, my mother sent me. I feel like something is wrong with me. Like I'm not myself.")
+    dialogue("Father John", "I see. The legend speaks of this...")
+    narrate("The Father seems hesitant, but continues.")
+    dialogue("Father John", "There was a beautiful maiden in this village long ago who devoted her life to God.")
+    dialogue("Father John", "Many suitors came, but she rejected them all. That is the story of our Patron Catherine.")
+    dialogue("You", "What's the connection between me and the legend?")
+    dialogue("Father John", "A woman devoted solely to God will be under the constant eyes of the devil — trying to lure her soul to earthly pleasure. This is a trial of faith.")
+    dialogue("Father John", "Be resilient to whoever you choose to spend your life with.")
+    dialogue("You", "So what should I do, Father?")
+    dialogue("Father John", "Follow your heart, Lara. Only you, with God's guidance, can choose what's best.")
+
+    if check_item("Doton Note"):
+        st.markdown("---")
+        dialogue("Father John", "Oh — do you have something for me? Enabell usually sends me a note.")
+        dialogue("You", "Yes, she gave me a paper with 'doton' written on it.")
+        dialogue("Father John", "Ah yes! Thank you, Lara.")
+        remove_item("Doton Note")
+        set_event("gave_note_to_priest")
+        narrate("You hand the Doton Note to Father John.")
+
+    set_event("spoke_to_father")
+    show_inventory()
+
+    dialogue("Father John", "Feel free to roam around the church while I discuss something with Sister Jean.")
+    st.markdown("---")
+    st.markdown("**Do you want to roam around the church?**")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("🏛️  Yes, explore the church", key="sc2f_roam"):
+            go_to("roam_church")
+    with col2:
+        if st.button("▶  No, head straight to sc3", key="sc2f_skip"):
+            go_to("sc3")
+
+
+# ── Church Roam System ────────────────────────────────────────
+
+def scene_roam_church():
+    st.markdown("### 🏛️ Exploring the Church")
+    progress_saved()
+    show_inventory()
+
+    has_hint   = get_event("has_lobby_hint")
+    booth_done = get_event("found_bell_key")
+    bell_done  = get_event("bell_room_visited")
+    has_key    = check_item("bell_room_key")
+
+    # Status indicators
+    def tag(done, locked_msg):
+        if done: return "✅"
+        return f"🔒 *{locked_msg}*"
+
+    st.markdown(f"""
+    | Location | Status |
+    |---|---|
+    | 📚 Library | Available |
+    | 🪑 Lobby | Available |
+    | 🪜 Basement | {tag(bell_done, "visit bell room first")} |
+    | 🙏 Confession Booth | {tag(booth_done, "get hint from lobby first")} |
+    | 🔔 Bell Room | {tag(bell_done, "need Bell Room Key")} |
+    """)
+
+    st.markdown("---")
+    st.markdown("**Where do you go?**")
+
+    cols = st.columns(2)
+    with cols[0]:
+        if st.button("📚  Library", key="roam_lib"):
+            go_to("roam_library")
+        if st.button("🪜  Basement", key="roam_base"):
+            go_to("roam_basement")
+        if st.button("🔔  Bell Room", key="roam_bell"):
+            go_to("roam_bell_room")
+
+    with cols[1]:
+        if st.button("🪑  Lobby", key="roam_lobby"):
+            go_to("roam_lobby")
+        if st.button("🙏  Confession Booth", key="roam_booth"):
+            if booth_done:
+                st.info("You already retrieved the key. Nothing more inside.")
+            elif not has_hint:
+                conviction_warning("You sense you need more information first. Try talking to someone in the lobby.")
+            else:
+                go_to("roam_booth")
+        if st.button("🎒  Check Inventory", key="roam_inv"):
+            show_inventory()
+
+    st.markdown("---")
+    if st.button("🚪  Leave the church", key="roam_leave"):
+        if not bell_done:
+            conviction_warning("You cannot bring yourself to leave yet. Something unfinished pulls you back.")
+            if not has_hint:
+                thinkblock("Lara: I haven't spoken to anyone yet. I should check the lobby.")
+            elif not booth_done:
+                thinkblock("Lara: The old woman's words... I need to find the key in the confession booth.")
+            elif has_key:
+                thinkblock("Lara: I have the key — the bell room stairs are waiting.")
+            else:
+                thinkblock("Lara: I still haven't visited the bell room.")
         else:
-            print("Invalid choice, please try again.")
-        
-def exit_():
-    delay = 2
-    while True:
-        t.sleep(delay)
-        user = input("Are you sure you want to leave? (yes/no): ")
-        if user.lower() == "yes":
-            t.sleep(delay)
-            print("The voice fades away as you step back from the bridge. \nYou decide to leave, but the mystery of the bridge lingers in your mind...")
-            break
-        elif user.lower() == "no":
-            menu()
-        elif user.lower() == "tang ina mo sir":
-            ecitegg()
+            go_to("sc3")
+
+
+def scene_roam_library():
+    st.markdown("### 📚 The Library")
+    narrate("Rows of bookshelves filled with religious texts and historical records stretch before you.")
+    dialogue("You", "Wow, this place is amazing!")
+    narrate("You browse the shelves, searching for anything about the bridge.")
+    narrate("You find a passage: an unfinished bridge built by monks, circa 1887.")
+    dialogue("You", "This must be the same bridge!")
+    narrate("The pages explaining why it was abandoned are torn out.")
+    dialogue("You", "Of course they are...")
+    thinkblock("Lara: The painting and this book both say 1887. The basement ledger may have more.")
+    set_event("read_library_book")
+
+    if st.button("↩  Back to church", key="lib_back"):
+        go_to("roam_church")
+
+
+def scene_roam_lobby():
+    st.markdown("### 🪑 The Church Lobby")
+    narrate("Quiet. Soft light filters through stained glass. Candles flicker near the altar.")
+
+    lobby_action = st.radio("What do you look at?", [
+        "🕯️  Altar",
+        "🚪  Sacristy door",
+        "👥  Talk to the people  ← hint here",
+        "📋  Bulletin Board",
+        "🖼️  The Painting",
+        "🌸  The Vase",
+        "↩  Go back"
+    ], key="lobby_action")
+
+    if lobby_action == "🕯️  Altar":
+        narrate("You light a candle near the altar. The flame holds perfectly still despite a faint draft.")
+        thinkblock("Lara: The bell room is directly above this altar...")
+
+    elif lobby_action == "🚪  Sacristy door":
+        narrate("The sacristy door is ajar. Priests prepare vestments for evening mass.")
+        narrate("You decide not to disturb them.")
+
+    elif lobby_action == "👥  Talk to the people  ← hint here":
+        narrate("An elderly woman in a blue shawl looks up at you with kind eyes.")
+        dialogue("Elderly woman", "Ah, you must be Lara. I have seen you with your auntie.")
+        dialogue("You", "Yes po. Do you know anything special about this church?")
+        dialogue("Elderly woman", "The bell above has not rung in forty years.")
+        dialogue("Elderly woman", "They say whoever unlocks that room will hear something meant only for them.")
+        dialogue("You", "How does one get up there?")
+        dialogue("Elderly woman", "The key was hidden where people confess their sins.")
+        dialogue("Elderly woman", "But the booth does not simply give it up.")
+        dialogue("Elderly woman", "'Only the one who listens to silence may open what rings above.'")
+        dialogue("Elderly woman", "Remember that, anak.")
+        narrate("She turns back to her rosary.")
+        set_event("has_lobby_hint")
+        thinkblock("Lara: 'Listens to silence...' — I should check the confession booth.")
+        narrate("A young man beside her nods at you.")
+        dialogue("Young man", "Be careful in that bell room if you manage to get up there.")
+
+    elif lobby_action == "📋  Bulletin Board":
+        narrate("Among the flyers, one faded notice:")
+        st.code("Bell room access RESTRICTED. See Father John for inquiries.")
+        thinkblock("Lara: Restricted. There must be something worth seeing up there.")
+
+    elif lobby_action == "🖼️  The Painting":
+        narrate("A large painting depicts workers building a stone bridge — clearly unfinished.")
+        st.code("Plaque: 'Puente Del Diablo, c. 1887 — Abandoned.'")
+        dialogue("You", "This is the bridge. The same one from my vision...")
+        set_event("saw_bridge_painting")
+
+    elif lobby_action == "🌸  The Vase":
+        narrate("A tall ceramic vase holds fresh white sampaguita. The scent is calming.")
+        if not check_item("Ceramic Vase"):
+            if st.button("Take the Ceramic Vase", key="take_vase"):
+                add_item("Ceramic Vase")
+                narrate("You carefully wrap the vase in your shawl.")
+                show_inventory()
         else:
-            print("Invalid choice, please try again.")
-            exit()
-        
+            narrate("You already have the vase tucked in your shawl.")
+
+    elif lobby_action == "↩  Go back":
+        if st.button("↩  Return to church", key="lobby_back"):
+            go_to("roam_church")
+
+
+def scene_roam_booth():
+    st.markdown("### 🙏 The Confession Booth")
+    narrate("You step inside the small wooden confession booth. It smells of cedar and old paper.")
+    narrate("A faded note is pinned beneath a small crucifix.")
+    dialogue("Note", "'Only the one who listens to silence may open what rings above.'")
+    narrate("Below the note is a wooden panel with three carved symbols:")
+
+    st.markdown("""
+    <div style="text-align:center; font-family:monospace; font-size:1.1rem; padding:1rem; background:#0a0a0a; border-radius:4px; margin:0.5rem 0;">
+        [ Dove ]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ Bell ]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ Book ]<br>
+        &nbsp;&nbsp;(  A  )&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(  B  )&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(  C  )
+    </div>""", unsafe_allow_html=True)
+
+    narrate("An inscription reads:")
+    st.markdown("""
+    <div class="narrate-box" style="font-style:italic;">
+    I speak without a mouth and hear without ears.<br>
+    I have no body, but I come alive with wind.<br>
+    What am I?
+    </div>""", unsafe_allow_html=True)
+
+    attempts = st.session_state.get("booth_attempts", 0)
+    st.markdown(f"**Attempts remaining: {3 - attempts}**")
+
+    answer = st.radio("Choose your answer:", ["A — The Dove", "B — The Bell", "C — The Book"], key=f"booth_ans_{attempts}")
+
+    if st.button("🔓  Submit answer", key=f"booth_submit_{attempts}"):
+        if "B" in answer:
+            narrate("The wooden panel slides open with a soft click...")
+            narrate("Inside a hollow sits an old iron key. A tiny bell is etched onto its head.")
+            narrate("✨ You obtained the Bell Room Key!")
+            add_item("bell_room_key")
+            set_event("found_bell_key")
+            show_inventory()
+            if st.button("↩  Back to church", key="booth_done_back"):
+                go_to("roam_church")
+        else:
+            st.session_state["booth_attempts"] = attempts + 1
+            narrate("Nothing happens. The panel holds firm.")
+            if attempts + 1 >= 3:
+                narrate("The panel goes cold and locks itself.")
+                dialogue("You", "Maybe I need to think about this more carefully...")
+                thinkblock("Lara: 'Listens to silence'... something about sound. What answers without a voice?")
+                narrate("After a moment the panel warms again. You may try once more.")
+                st.session_state["booth_attempts"] = 0
+                st.rerun()
+
+    if st.button("↩  Leave the booth", key="booth_leave"):
+        go_to("roam_church")
+
+
+def scene_roam_bell_room():
+    st.markdown("### 🔔 The Bell Room")
+
+    if not check_item("bell_room_key"):
+        narrate("A heavy iron lock seals the bell room door.")
+        dialogue("You", "I need a key for this...")
+        thinkblock("Lara: Someone in the lobby mentioned a hidden key. I should ask around more.")
+        if st.button("↩  Back to church", key="bell_no_key_back"):
+            go_to("roam_church")
+        return
+
+    narrate("You insert the iron key into the lock.")
+    narrate("The lock turns... the door groans open, revealing a narrow spiral staircase.")
+    narrate("You climb carefully. Each step creaks beneath your weight.")
+    narrate("━━━ ━━━ ━━━ climbing... ━━━ ━━━ ━━━")
+
+    st.markdown("### ⛪ At the Top — The Bell")
+    narrate("A massive bronze bell hangs in the centre of the tower room.")
+    narrate("Afternoon light cuts through the slats in golden lines.")
+    narrate("Carved into the base of the bell, barely visible under dust:")
+    st.markdown("""
+    <div class="narrate-box" style="text-align:center; font-style:italic; font-size:1.1rem;">
+        'He who rings me calls not the hour, but the truth.'
+    </div>""", unsafe_allow_html=True)
+
+    dialogue("You", "What does that mean... 'calls the truth'?")
+    thinkblock("Lara: The bridge. The shadow. Father John's words. It is all connected...")
+    narrate("A cold wind rushes through the slats — but outside there is no storm.")
+    narrate("The bell sways. Just slightly. Without anyone touching it.")
+    dialogue("You", "I need to leave. Now.")
+
+    remove_item("bell_room_key")
+    set_event("bell_room_visited")
+    set_event("bell_warned")
+    show_inventory()
+
+    if st.button("↩  Descend and return to church", key="bell_done_back"):
+        go_to("roam_church")
+
+
+def scene_roam_basement():
+    st.markdown("### 🪜 The Basement")
+
+    if not get_event("bell_room_visited"):
+        narrate("A heavy wooden door blocks the basement stairwell. It will not budge.")
+        thinkblock("Lara: I am not ready to go down there yet.")
+        if st.button("↩  Back to church", key="base_locked_back"):
+            go_to("roam_church")
+        return
+
+    narrate("The basement door swings open — as if it was never truly locked.")
+    narrate("Cool, dark room. Stone shelves. The faint smell of incense.")
+    narrate("One shelf holds a leather-bound ledger. The spine reads:")
+    st.code("'Puente Del Diablo — Construction Records, 1887'")
+    dialogue("You", "This is about the bridge!")
+    narrate("You reach for it — and the door above slams shut.")
+    narrate("Footsteps. Someone walking across the floor above you.")
+    narrate("You press yourself against the shelf. Heart hammering...")
+    narrate("Silence. They are gone.")
+    dialogue("You", "I should come back to this. Not now.")
+    set_event("found_ledger_hint")
+
+    if st.button("↩  Return to church", key="base_done_back"):
+        go_to("roam_church")
+
+
+# ── Chapter 3 ─────────────────────────────────────────────────
+
+def scene_sc3():
+    chapter_banner(3, "Lara's Bargain", "The night the devil came calling")
+    progress_saved()
+
+    bell_warned  = get_event("bell_warned")
+    ledger_found = get_event("found_ledger_hint")
+
+    narrate("As the sun falls and the night creeps in, you and Enabell arrive home safely.")
+    narrate("As the two of you enter the house, you are greeted by the warm aroma of home-cooked food.")
+    narrate("You help Enabell with her shopping bags, and you both start to prepare dinner together.")
+    dialogue("Enabell", "Lara, I know you don't like to eat with us, but can you at least stay for dinner?")
+
+    stay = st.radio("Do you want to stay for dinner?", ["Yes, stay for dinner", "No, head to your room"], key="sc3_dinner")
+
+    if "Yes" in stay:
+        narrate("You decide to stay for dinner and enjoy a delicious meal with Enabell.")
+    else:
+        narrate("You politely decline and head to your room.")
+
+    narrate("As you eat, you can't help but feel a sense of unease, as if something is lurking in the shadows...")
+    narrate("Then, the silence is broken by a sudden knock on the main door.")
+    dialogue("You", "Who could that be at this hour?")
+    narrate("Slow melodic music plays from outside. A serenade fills the air...")
+    narrate("You and Enabell walk towards the door. Outside — a swarm of men holding flowers, serenading you.")
+    dialogue("Men 1", "Lara, I have been in love with you since the day I saw you. Will you be my girlfriend?")
+    dialogue("Men 2", "Lara, I can't stop thinking about you. Will you go out with me?")
+    dialogue("Men 3", "Lara, you are the most beautiful girl I have ever seen. Will you be mine?")
+    narrate("You are overwhelmed. Your mouth moves on its own...")
+    dialogue("You", "I will pick one... as long as you promise to build a bridge linking our village to the next province.")
+    narrate("The men look at each other. They all argue it's impossible...")
+    narrate("But then, one steps forward. A stranger you have never seen before.")
+    narrate("Tall, dark hair, piercing eyes that seem to look right through you.")
+    dialogue("Stranger", "Consider it done, my wife.")
+    narrate("Everyone is shocked. You feel a deep sense of unease...")
+    dialogue("You", "Enough. Words are just words. Everyone go home. I will wait for sunrise.")
+    narrate("Everyone goes home. You are left alone with an unsettling feeling.")
+
+    if bell_warned:
+        thinkblock("Lara: The bell. 'He who rings me calls not the hour, but the truth.' That stranger... he is not human.")
+    if ledger_found:
+        thinkblock("Lara: The construction records. 1887. This bridge was attempted before. And it was stopped.")
+
+    if st.button("▶  Continue to Chapter 4", key="sc3_next"):
+        go_to("sc4")
+
+
+# ── Chapter 4 ─────────────────────────────────────────────────
+
+def scene_sc4():
+    chapter_banner(4, "The Serenade of the Stranger", "When demons come to collect")
+    progress_saved()
+
+    narrate("The night creeps in. You sleep peacefully... but you are awoken by a loud noise outside.")
+    narrate("You look out your window. Fellow villagers are also awoken from the sound.")
+    narrate("A man rushes to your house, yelling.")
+    dialogue("Man", "Where is Lara?!")
+    narrate("You and Enabell exchange a glance.")
+    dialogue("You", "Who are you? What do you want?")
+    dialogue("Man", "There are demons building a bridge outside!")
+    dialogue("You", "What? What do you mean?")
+    dialogue("Man", "No time to explain — just come to the village square and see for yourself.")
+    narrate("You and Enabell quickly rush to the village square.")
+    narrate("You see a group of demons building a bridge — just like the one you requested.")
+    narrate("Everyone is hysterical, kneeling and praying, begging for mercy.")
+    narrate("The demons continue to build, their voices blending into a symphony of construction.")
+
+    st.markdown("---")
+    st.markdown("**⚔️ What do you do?**")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("🙏  Pray for the demons to stop", key="sc4_pray"):
+            narrate("You kneel down and pray, but the demons only grow stronger and more aggressive.")
+            bad_end("You just prayed and did nothing. The demons finished the bridge and dragged you to the underworld.")
+        if st.button("⚔️  Try to confront the demons", key="sc4_confront"):
+            narrate("You try to confront the demons, but they are too powerful.")
+            bad_end("You confronted the demons without the necessary relics. They finished the bridge and dragged you down.")
+    with col2:
+        if st.button("🌅  Hide and wait for sunrise", key="sc4_hide"):
+            narrate("You hide, but the demons are relentless and find you before dawn.")
+            bad_end("You tried to hide but the demons found you. The bridge was finished at dawn.")
+        if st.button("⛪  Rush to the church", key="sc4_church"):
+            narrate("You rush to the church, seeking refuge. Sister Jean is there, but Father John is not.")
+            go_to("confront_demon")
+
+
+def scene_confront_demon():
+    st.markdown("### ⛪ Inside the Church — Sister Jean")
+
+    if "relics" not in st.session_state:
+        st.session_state["relics"] = False
+    if "conviction_flag" not in st.session_state:
+        st.session_state["conviction_flag"] = False
+
+    dialogue("You", "Sister Jean, please help me stop the demons!")
+    dialogue("Sister Jean", "Ara-Ara dear, I will do my best. How can I help?")
+
+    relics = st.session_state["relics"]
+    conviction = st.session_state["conviction_flag"]
+
+    col1, col2 = st.columns(2)
+    with col1:
+        if not relics:
+            if st.button("🏺  Ask Jean to gather relics", key="cd_relics"):
+                narrate("Sister Jean agrees and gathers relics and holy items from the church.")
+                st.session_state["relics"] = True
+                st.rerun()
+        else:
+            st.success("✅ Relics gathered")
+
+    with col2:
+        if not conviction:
+            if st.button("🔔  Ask Jean to ring the bell", key="cd_bell"):
+                narrate("Sister Jean agrees to ring the church bell continuously.")
+                st.session_state["conviction_flag"] = True
+                st.rerun()
+        else:
+            st.success("✅ Bell conviction ready")
+
+    st.markdown("---")
+    if relics and conviction:
+        if st.button("⚔️  Proceed to the final battle!", key="cd_battle"):
+            go_to("final_confrontation")
+    elif st.button("⚔️  Proceed to battle (without preparation)", key="cd_battle_unprepared"):
+        narrate("You decide to proceed to the battle without full preparation...")
+        go_to("final_confrontation")
+
+
+def scene_final_confrontation():
+    st.markdown("### ⚔️ The Final Confrontation")
+
+    relics = st.session_state.get("relics", False)
+    conviction = st.session_state.get("conviction_flag", False)
+
+    narrate("You confront the demons with whatever you have gathered from the church.")
+    ascii_display(DEVIL_ART)
+
+    st.markdown("**What is your final approach?**")
+
+    if st.button("🏺  Use the relics to banish the demons", key="fc_relics"):
+        narrate("You use the relics to banish the demons. At first it doesn't seem to work...")
+        if relics and conviction:
+            narrate("With Sister Jean's continuous ringing of the church bell, the demons start to weaken!")
+            narrate("The holy resonance of the bell, combined with the relics, creates an unbearable force...")
+            narrate("The demons scream and retreat — dragged back to the underworld!")
+            good_end("You successfully banished the demons back to the underworld. The bridge is safe. You saved the village and uncovered the mystery of Puente Del Diablo.")
+        else:
+            narrate("The demons laugh at you. Without the full conviction of the bell, the relics are not enough.")
+            bad_end("You tried to use the relics but lacked the bell's conviction. The demons finished the bridge.")
+
+    elif st.button("🗣️  Try to reason with the demons", key="fc_reason"):
+        narrate("You try to reason with the demons, but they are not interested in talking.")
+        bad_end("You tried to reason with the demons, but they overwhelmed you. The bridge was finished.")
+
+    elif st.button("💀  Sacrifice yourself", key="fc_sacrifice"):
+        narrate("You sacrifice yourself to stop the demons, but it is not enough.")
+        bad_end("You sacrificed yourself, but the demons continued their work on the bridge.")
+
+
+# ── Path Exit / Menu ──────────────────────────────────────────
+
+def scene_path_exit():
+    narrate("As you leave the bridge, you see a hanging sign on the side of the road.")
+    st.markdown("""
+    <div style="text-align:center; font-family:monospace; padding:1rem; background:#0a0a0a; border:1px solid #3a3020; border-radius:4px; margin:0.5rem 0; color:#c9a84c;">
+    ╔════════════════════════════════╗<br>
+    ║      Puente del Diablo         ║<br>
+    ╚════════════════════════════════╝
+    </div>""", unsafe_allow_html=True)
+    narrate("The words 'Puente del Diablo' stare back at you.")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("↩  Go back to the bridge", key="pe_back"):
+            go_to("prologue")
+    with col2:
+        if st.button("🚪  Leave", key="pe_leave"):
+            st.session_state.clear()
+            st.rerun()
+
+
+# ════════════════════════════════════════════════════════════
+#  SCENE ROUTER
+# ════════════════════════════════════════════════════════════
+
+SCENES = {
+    "title":                scene_title,
+    "prologue":             scene_prologue,
+    "sc1":                  scene_sc1,
+    "sc2":                  scene_sc2,
+    "sc2_village":          scene_sc2_village,
+    "sc2_church":           scene_sc2_church,
+    "sc2_father":           scene_sc2_father,
+    "roam_church":          scene_roam_church,
+    "roam_library":         scene_roam_library,
+    "roam_lobby":           scene_roam_lobby,
+    "roam_booth":           scene_roam_booth,
+    "roam_bell_room":       scene_roam_bell_room,
+    "roam_basement":        scene_roam_basement,
+    "sc3":                  scene_sc3,
+    "sc4":                  scene_sc4,
+    "confront_demon":       scene_confront_demon,
+    "final_confrontation":  scene_final_confrontation,
+    "path_exit":            scene_path_exit,
+}
+
 def main():
-    delay = 2
-    t.sleep(delay)
-    dialogue("Somewhere in the Town of Rizal province of Laguna.")
-    while True:
-        t.sleep(delay)
-        dialogue("You stand at the edge of the bridge. A mysterious voice whispers...")
-        t.sleep(delay)
-        cmd = input("Type 'continue' to proceed or 'no' to go back: ")
-        if cmd.lower() == "continue":
-            dialogue("You step onto the bridge, and the voice grows louder, echoing in your mind...")
-            t.sleep(delay)
-            dialogue("Your journey continues.")
-            sc1()
-        elif cmd.lower() == "no":
-            dialogue("You decide to go back, but the voice calls you again...")
-            t.sleep(delay)
-            menu()
-            break
+    # Init state
+    if "scene" not in st.session_state:
+        st.session_state["scene"] = "title"
+    if "inventory" not in st.session_state:
+        st.session_state["inventory"] = []
+    if "events" not in st.session_state:
+        st.session_state["events"] = {}
+
+    scene = st.session_state["scene"]
+
+    # Sidebar — always available
+    with st.sidebar:
+        st.markdown("### 🎒 Inventory")
+        inv = st.session_state.get("inventory", [])
+        if inv:
+            for item in inv:
+                st.markdown(f"- {item}")
         else:
-            print("Invalid input, please try again.")
+            st.markdown("*Empty*")
 
-def sc1():
-    progress_saved()
-    delay = 2
-    t.sleep(delay)
-    dialogue("As you walk further on the bridge, you notice the surroundings becoming more eerie.")
-    t.sleep(delay)
-    dialogue("The voice in your mind grows stronger, urging you to continue.")
-    t.sleep(delay)
-    print("1. Keep walking")
-    print("2. Turn back")
-    print("3. Open your Phone")
-    choice = input("Enter your choice: ")
-    if choice == "1":
-        dialogue("You decide to keep walking, determined to uncover the secrets of the bridge.")
-        t.sleep(delay)
-        dialogue("As you continue, you feel a strange sensation, as if you're being watched...")
-        t.sleep(delay)
-        dialogue("Suddenly, you saw an amminous rock formation that resembles a face,\n and the voice becomes clearer, whispering your name...")
-        t.sleep(delay)
-        sc2()
-    elif choice == "2":
-        dialogue("You decide to turn back, but the voice becomes more insistent, urging you to stay...")
-        t.sleep(delay)
-        dialogue("As you turn around, you see a shadowy figure standing at the end of the bridge, watching you...")
-        t.sleep(delay)
-        character_shadow()
-        t.sleep(delay)
-        dialogue("The figure disappears as you look away, but the voice continues to haunt your thoughts...")
-        t.sleep(delay)
-        dialogue(" You Bceome insane and you start to see things that aren't there, hearing voices that no one else can hear...")
-        t.sleep(delay)
-        dialogue("You lose touch with reality, and the world around you becomes a blur of confusion \n You died of insanity")
-        End_main()
-    elif choice == "3":
-        dialogue("You decide to open your phone, hoping to find some answers or a way to call for help.")
-        t.sleep(delay)
-        dialogue("As you unlock your phone, you see a message notification from an unknown number...")
-        t.sleep(delay)
-        dialogue("The message reads: 'i know who you are. . .'")
-        t.sleep(delay)
-        dialogue("You feel a chill run down your spine as you read the message, realizing that you're not alone on the bridge...")
-        t.sleep(delay)
-        dialogue("Then out of nowhere, you receive another message, this time with a photo attachment...")
-        t.sleep(delay)
-        GaLim()
-        dialogue("The photo shows a two figure standing on the bridge, one of them is you, \n and the other is a shadowy figure that resembles the one you saw earlier...")
-        hasty_decision2("What do you do?", "Look back and confront", "Ignore and keep Walking", "You keep walking", "Praying", "taking deep breaths", "you found yourself unbalanced","you look around, you saw an amminous rock formation","You glance around","you see nothing","you sign of relief . . . " ,"you felt diizy, the voice gwrowing louder and eriee", "you fell unconscious ",End_main,sc2,timeout=5)
-def sc2():
-    progress_saved()
-    delay = 2
-    t.sleep(delay)
-    dialogue("welcome")
-    dialogue("You step deeper into the story, chapter 2 begins...")
-    t.sleep(delay)
-    dialogue("A new mystery unfolds as you cross deeper into the bridge...")
-    t.sleep(delay)
-    sc3()
+        st.markdown("---")
+        st.markdown("### 📖 Progress")
+        scene_labels = {
+            "title": "Title Screen", "prologue": "Prologue",
+            "sc1": "Chapter 1", "sc2": "Chapter 2",
+            "sc2_village": "Chapter 2", "sc2_church": "Chapter 2",
+            "sc2_father": "Chapter 2", "roam_church": "Chapter 2 — Church",
+            "sc3": "Chapter 3", "sc4": "Chapter 4",
+            "confront_demon": "Chapter 4", "final_confrontation": "Final",
+        }
+        st.markdown(f"**{scene_labels.get(scene, scene)}**")
 
+        st.markdown("---")
+        if st.button("🔄  Restart game", key="sidebar_restart"):
+            st.session_state.clear()
+            st.rerun()
 
-def sc3():
-    progress_saved()
-    
-    
-def sc4():
-    progress_saved()
-    
-    
-def final():
-    progress_saved()
-    delay = 2
-    
-    
+        st.markdown("---")
+        st.markdown("""
+        <div style="font-size:0.75rem; color:#4a3a20;">
+        <strong>Puente Del Diablo</strong><br>
+        Story: Lee Marc Macalanda<br>
+        Web: Claude (Anthropic)<br>
+        01-CPE-12 · Unibersidad de Dagupan
+        </div>""", unsafe_allow_html=True)
+
+    # Render current scene
+    renderer = SCENES.get(scene, scene_title)
+    renderer()
+
 
 if __name__ == "__main__":
-    sc1()
-    
-# /// Secret ///
-def show_easter_egg():
-    ascii_art = r"""
-...................................................................................................
-.                                                                  ........                         
-.                      ....................:::::::::::--------==========++-                         
-.                      .=+++++++++++++++++++++++++++++++++++++++++++++++++-                         
-.                      .++++++++++++++++++++++++++++++++++++++++++++++++++-.                        
-.                      .++++++++++++++++++++++++++**++++++++=+++++++++++++=.                        
-.                      .++++++++++++++++++++++++#%@@%*+++++++++++++++++++++.                        
-.                      :*++++++==+++++++++++++++%@@@@%+++++++++++++++++++++.                        
-.                      -*+++++++===+++++++++++++%@@@@%%+++++++++++++++==+++-                        
-.                     .=*+++++++++++++++++++++++%@@@@@%#+++++==+++++++++=++=.                       
-.                     .+*+++++++******++++++++++%@@@@@@%*+++=--=++++++++++++.                       
-.                     .+**+++++*********+++++++#%@@@@@@@%*+=-==+++++++++++++:                       
-.                     :+**+++++*-=---+++*++++++%@@@@@@@%#+====++++++++++++++-                       
-.                     :+**+++++***++++*#*+++++*%@@@@@%%#%%%*+++=++++++++++++=.                      
-.                    .=+*+++++++*#**###*++++++%@@@@%*--==-------=++++++++++++.                      
-.                    .=+++++++++++*##**++++++#%@@@@=@@%-%%#*+++++++++++++++++:                      
-.                    .+++==+++++++++++++++++*%@@@@#+@@%++%@@@@%*+++++++++++++-.                     
-.                    :++++++++++++++++++++++%@@@@@-=@@@#:-+%@@@%#*+++++++++++=.                     
-.                    :+++++++++++++++++++++%@@@@%--:%@@#:-=--=*%@%*+++++++++++.                     
-.                    -++++++++++++++++++++%@@@%+::--=%%+:-===--=#%@%*+++++++++:                     
-.                   .=++++++++++++++++++*%%@#+-::-==-+%-===-----=#%@@%*+++++++-.                    
-.                   .=+++++++++++++++++*#%%#=::::-===-=+=-=====+*%@@@@@%*+++++=.                    
-.                   .=++++++++++++++++*#%%%#-::-+=+==-:=+++++*#%@@@@@@@@@#*+++=.                    
-.                   .=+++++++++++++++#%%%%%%#=-==+*++--=##%%@@@@@@@@@@@@@@@#++=.                    
-.                   .=++++++++++++++#@%%%%%%@@%*====--=*@@@@@@@@@@@@@@@@@@@@@*=.                    
-.                   .=++++++++++++*%%%%%%##*%@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%@@%=.                    
-.                   .=++++++++=++*%@*==++=+*#%@@@@@@@@@@%%*+#@%*:::+%*::::+@@#*.                    
-.                   .=++++++++++*%@@%%##%*--*-::%*::::-#::-*+*=:+%=:--::-+%@@#*..                   
-.                   .=++++++++++#@@@%+:--::*%+::%:::=*%#:::-=+-::-:-+#*=-::%@#*.                    
-.                   .=+++++++++*@@@@@+:::-#%@*::%#+-:::+##*=:=+:-==-*+---:+@@#*..                   
-.                   .=+++*+++++#%@@@@+::-::=%#-:#+===:-*-:::=#%#***#%@%#*##@@##.                    
-.                   .=+++##+++*#%@@@@*::*#=-=#*+*%#**#@@@@@@@@@@@@@@@@@@@@@@@##.                    
-.                   .=+++#*+++##%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%@@@@@@@##..                   
-.                   .=+=++*+++%#@@@@@@@@@@@@@#%%%%%%#######****##*+*#%@@@@@@@##..                   
-.                   .=+*+#*++*%#%@@@@@@@@@@@%+*##**++=#**++*****++*##%@@@@@@@%#.                    
-.                   .-+*+**++*##%@@@@@@@@@@#++*#############%%%%%@@@@@@@@@@@@%*.                    
-.                   .-+++**+++*#%@@@@@@@@@%#*#%%#@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+.                    
-.                   .-+++#*+++-*%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+=.                    
-.                   .=+++**+++==#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%++*+.                    
-.                   .=+++**+++=--*%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%#*#%**.                    
-.                   .=+++#*++++==+*#%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%####**+++:                    
-.                   .=+++**++++==*****###%%%@@@@@@@@@@@@@@%%%%##*==+*##**==++*+:                    
-.                   .=++*#+++++=+**==##****++***#%%%%#+=----=+**+==+*+==-==*#*=:                    
-.                   :=++**+++++*##*=*+=+=-=+*++++**##*==--===++**+*###*++***++=-.                   
-.                   :=++*#++++++***+*+=--=+*#%#==++#**+==++++++*###**###*+++++=-.                   
-.                   :=++**+++++++**======+++*%#=+++####*++===+********++++++++=-.                   
-.                   :=++*#+++++++++++++===+++##+=-+*#*+++*####**++++++++++++++=-                    
-.                   .=++#*+++++++++++++++++++***++*****++++++++++++++++++****++.                    
-.                    :=+++++++++++++*****####***+*++*++++++++++++++*********++-.                    
-.                    ..-++++++++++++**+++=--=+==+:=-*+++++++++++***********=-..                     
-.                      ..-+++++=+++++**=-=====+++---*++*******++==-::.......                        
-.                        ..-+++++++++====****##**+++==--::.......                                   
-.                          ..:=++***++++==--:::.....                                                
-.                            ............     
-    """
-    print(ascii_art)
-    
-def village():
-    print(r"""
-----------------------------------------------------------------------------------------------------------------------------------
---------------------------------------------------------------------------======--------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------------
-------------------------------=========-------------------------------==---------------========+----------------------------------
-----------------------------+=----------=+-----------------------------------------+----------------------------------------------
---------------------====++=+-------------==--------------------------===-------------------==+==----------------------------------
--------------------------------------------------==--------+++=+++++==+++**+++=-------=+++++===========---------------------------
---------------------------=+++=------------------=+====-----------------------=++++=----------------------------------------------
--------------------------++==++====----===-----=====++----------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------=====-----------------------
----------------=---------------------------------------------------------------------------------=+=------------------------------
----------------+==--------------------------------------------------------------------------=====------------=---======-----------
----------------=-------------------------------====-------------------------------------------=====-----------=--==--==-----------
----------------=----------------------------==-----=+=----------------------------------------------======------------------------
----------------==---------------------==----------+---=++=------------------------------------------------------------------------
---------------=++=-------------=+==-----------------=------==---------------------------------------------------------------------
---------------=--+----------=+-----------------------==------=+++=------------------------=+=-----+=------------------------------
--------------==--==----------------=----=+==-----------==----------+=-------------------+----==------+=---------------------------
-------------==----==-------------------------------------=-----------=+++------------==-------------------=+----------------------
------------=====-=+=+------+=---------==-----+-----------+=++-------------=-+++=-----------------=-----------=++=-----------------
-----------=+===-===-=+----=++-----------==-----==+-----------======--==--------==------------------=---------------=++====--------
------------=+=======+=---+++**=-----------==-----==------------------===-----------===----------------=-----------=++++=----------
------------=+=+===+==---++==*===-------------=-----==-==--------------====------------==--------------=-----------==*++=----------
-----+--=+=-=+======++++--=+=*+==---------------=------==-----------------====-+++=-----------------------=-------+++++++=---------
-----+=+++*++=------+*+**+++=++=+=+---+=-+*=-==--------=-----------------------*+++++++*+============--------=+=--==+**+===+=------
-----+++==*+==---=---+++*=+***+==+++*++++=++**++===-===++--=------------------=*++=------------------==-----=+++=+*+*++*++*+=------
-----=========---=---==---===========++=--==---=--+++=-===*+==----=+=--------++*+=--------------------==----++=++=---==---==++-----
-----+++-=+===---=--===--=--=--=--=-=+++====+++*++----**+=+-+*+++=+++++===++=*+--=+-+==+=+==+=+==+=+=+=-+==+=++*+++==++==+****=----
-----+=+==*++=----==---------------==--+++=-=+=++++===*+==+=++=+++=--++*++++*+-++==+---------------------+*+++**++*****==-++=------
-----+====+++=---===+-++-++-++-==-=--+=-=++=---++=+-+++=-------=+======++=++-+=+=++-==-=-=--=-=----=-==-=-+=+-=*=++=+++++=++++=----
-----++++=+++=--==---------------=--=+=---++++--=+**+--==--------=====+*+++--+=++=+--=---------------------=+++*++*+++++++++++=----
-----+++=-=+---====-==-==-==-==-+----------++==---++-++==++++++++++==++***=-----------=+++++++=======++++++++-=+-=+=+++++==+=------
-----+++++++--++================----====---++==+=+==-----+*+++++++++++++=*=---=*++=---=++-===------------=+-==+*++*==+===+*+++-----
-----=+++======++===============---=*+++=--==----=-------==--=-=++====-==*----+*+++---=+=--++=-==+--++=--=*=+==+=++++++=====+------
-----++*+==+++=++=+--+--++-----=---+**+*=--=*+=--=-===========----==+++==*---++*+++---=+=-=++=-==+--+++---+-++++==+=+++++==+++-----
-----+=++=+*++=+=--------------=---+**++=--====++=====-------==+=========+=--+=++=+--==+=-----------------+-++=+=++=+++===++++-----
-----==+++++==-------==========+=-===------------------==------------==------------------====-------------------====+*+=-----------
------=+-=+++====-===+==--------------===----------+-------------==------------+==+----------==+==--=+=------------=**+--=+=-------
-----==+====------++=--------------------=-----=+-------------==------------=======-===++---==------======---------=++=------------
-----++*+=+=++=--=++==-=+=++==----===-------==---===--------=--------+======------===----===--------===-----======++---------------
-----*=+=--=+++++=++=+=+*=++=+-------===---=-----------=+=--=--------==-----------------++----===+++**+**===------+=---=====-------
-----+++*++-=+=++=++=++=---------==--------==-------==-=-----===------------===+-------+*+----------=+=-------=++=+=---------------
-----+=+===+**+++=++=+++-----------=----------===-----------------===----==-----====--=+*+----------=+=--------**=+=----=+===------
-----+=++==-------+++=--------===----------------===-----------------===-------------+++**++++++==+=+++====----*+=+=--===----=-----
-----++++--------------+--------------------==-----+--------------------===-------------+=----------++========+++=+=---------------
------------===========----===-------------------===----------==------=------====-------------------==-------+++====--===----------
---------------------------+=+---------------===----------------------------------===---------==---=====-------=-------------------
------===------------+++==++=+++=-----===-----------------------------------------------===------------====------==----------------
--------------------=*++*=+*=++++--===------------------===-----==---------------------------===----------------=++=---------------
-------------------------------------------=====--------------------------------------------------=++=-----------------------------
-----------------------++=-----------------------=------------=+=====++=---------------==-===------------====----------------------
---------------------------======------------------+=---------------------------------------------------------===------------------
----------------------------------=====----------------=----------------------------==-==----------------------------==------------
--------------------------------------------------------=--------------------------------------------------------------------------
-    """)
-    
-def Lara():
-    print(r"""
-.*+========+=..=:                                                             
-  =                                             +-               -=      +=                                                       
-  +                                           *:                .=-==      -*+.                                                   
-  +                                         *-            *.%%#         %:     :@                                                 
-  =                                       --                    =.        +      -=                                               
-  =                                     .     *=      #%#:#.                :                                                     
-  +                                    --   -*     .*:#:@-%:-   .+-         .*     -*                                             
-  +                                   :-          ..  @=@*@*%-  -==           :      -                                            
-  +                                  :=    -      .   @.#:*:=:     -           %     ==                                           
-  +                                      +.     .:  %              -=:          *:                                                
-  +                               =*=   +:      @  --              .-+.   .      ++     *.                                        
-  +                               *+-  :-     =.= #                  :-   *        #    .=                                        
-  +                                ::        *.:                          #=                                                      
-  =                             :+ :. =-    - =+                       .+ -   :     :%    =:                                      
-  =                             *  -:-=      =-                         =  *. *      --    =:                                     
-  +                             *  -#=       =-                       +@@:  *.#       =.   .:                                     
-  +                            :   +.        .                  .*##+.   -. =  %       -:   :                                     
-  +                                     =   +++*@+@*@*          -. .+*@=%.#-#  #        .   +:                                    
-  +                          -#        -.   #:=.= +.#             *@@@@@@%@*#   #           ::                                    
-  +                         *-+       :-   %@#@@@@@@@=@         :@%++*@#@=+  -  *=+          *-                                   
-  +                        :  -      =-    =@%@-@#**%:@-        -#:   :+=     + = ++        .   .                                 
-  +                       -+  +     .     #:   ..   . ..                      %   * #       -.  :+                                
-  +                       *  *-    =:    -@#                                  @   *  +      -.   .-                               
-  +                      %   %    +     ##@@:                                 @ %-  :#*     ::    -=                              
-  +                     @       :     .--=*+#                                 @    =#  =:   .@=    .-                             
-  =                    :   +-  *     +%##+#*@:            =   *+                   +@-#=:   .%=     .+                            
-  =                   -+  :% # *    =*##@*@#@@                                %   @:@-%++   .=:    : #                            
-  =                   :=  @ # :*  -   *#@*@#@%*                               @-@-@:@-%++   .=@@   =:#                            
-  =                   :=   %    -*--  -=. -:-:*.         .*+%%+-++=         #+# + + - ::=   .- *   =.                             
-  =                       %    .*.*  :=-+:%#@*@%*       -+-    .#=         .%.@ @:@-@=*     .- =   =.                             
-  =                   -:  @   .:  *  -* :#@#@*@*@#-       ++#+*+.        .* @.@ @:@-@=*     -. =   =.                             
-  =                   .  .@   %   +  .-  .%=+-#-*.%:                    :   @ % % #.#*         =   -                              
-  =                    #%    :     :-      -#*%+%-@:@%               :*     %:@.@:@      -=. +=+                                  
-  +                    #@   .*   * :-  -= ==##%=*.@@@-@-@-          =.      +*@.@.@*    :- :-=-+::                                
-  +                     *@   *   * :-        +*:  @#@-@#  .= ====:-.         +@.@ @=   =@*++:.-+*%#:                              
-  +                      %.  *                  +:      =                    .%   .   .   -.   : .*@:                             
-  =                       -  -    =   .=.  .*@@#@-@-@.@.#                     @:@=@  -@+%--.   .  * #:                            
-  =                       #@.     =    -#-++%+@#@+@-@.@:*                      %@=@=@%@+%.    **=.*  %                            
-  =                     += :%     :*   -==@==:*=*:#.# # -                       +%@:@+#=#+:  = ==:*  %                            
-  =                    #.      :       .- =*.:-..   : = =                         --*-+.=*. :..* .+  +                            
-  =                   *.       *.      .=+  +@%+#   . @-@                           ++*:.:+*##+:  =  *.                           
-  =                  #          -.    -:  :  .*+* %   @-@                         +-  .=%#%%@#+   =  =.                           
-  =                  *          .=    =@: *=   *.                                           :#+++= .=                             
-  =                  +      #.   @:    -.  +    %                    =:                            =    *     ==                  
-  =               **:+     @.          -*:  -   ::                  --   +@@@@@@@@@@@@@@#=%%#.    :   @:@-@+@=%  -@*              
-  +             =-**.:    @ %     :@:  -@-  -    .*                -=                           :=  +.@:@-@:=       :+            
-  +                  .=   @ %     :@-  :#.  =    .*                                                 : . :             -+          
-  +           .-@*@+@:%.  @ -     :%:  -         .*                                           =- :@*@:@:@-*             =         
-  +           -*@%@*@. .  =  -    -=            :*                                           --  =%*@:@.@:                        
-  +           .-***-#   #    #    =  :+   -.   :=                                               *++=@ @ .                =        
-  +          -=+====- +.%    #   =.  -. :-    +=                                           :=  :*--:% %                  -.       
-  +          +%@##*** @:     # .*    -:-=   ++                                            := .*##+#*@:@=*                =-       
-  +          +%%*##**  -*   #.:+      .  *#+##.                                              -%##+**@:@                    *      
-  +                    *+  :*                                                           .+                                 +      
-  +          #####%+++-:  +-       -#=+=-*-+ +-+-                                      .+  :%#%*%+@#@.%                    +      
-  +        -%%####%*+ *           =#*-*=-+:= +-=-                     :+=         .#%%#- .**%#@*@*@*@                             
-  +        -*=--===-%-          .:  =.-. :   . .                   :            ++      ===-==+-+-=:*      .                #     
-  +        -*+++=*=*=           ==-  .-.:.-                      ::        ---.      :-.+++-==*=*:#-=     =                 *     
-  =        =%####**-   .     = @@#:  -+==:-                              -+         @-@=%##=**@*@=@+*     @             =-        
-  =        =%#####.    #   :* .#    ---#*::                ..  .        :    -@.#:@-@=%=@#*=+*@*%=@+#   * @          .*#+:   =    
-  =         .    +.   :   .=   :    .     ==               ..      .*-     :* - - : . . .     . . . . .            :+*=      :    
-  +        #@@*#=+   #=   #    %.*=.@%@@@-   =#=           ..     =.    *=@-@.@ @:@-@-@+%**=**%*%=@#@ @         .#@+       +-     
-  +        #@@*#=*.  #+   *     :*=.@%@@@*@#=   #*            -#.   :=%+@-@-@.@ @.@-@-@*%*+=**%+#=@*@ @        .-=    =%#+    *   
-  +        :==-=:#-  =+   :       +-+=*+=:+==.++  +.
-""")
-    
-def The_Devil():
-    print(r"""
-:-                                            +                                        
-                                           -.+                                         -*                                         
-                                          -=-=                                         .+--                                       
-                                     *@+-:.--                                            =.:-#%+                                  
-                                   .=-:-=::.                                              :.-+=+#:                                
-                                 :@@*==                                                       +*##%.                           .  
-                                #@=  .-               -+                     +=               =.  =@@                          .  
-                               ##-   .-              %#:                      *%              .    .%@                         .  
-                               %#    .+             =@#    .  @@@@@@@@@:      @@=             +.    *@                         .  
-                               -@*:    -           * #%  :=#-@-+-+=+=*=#.@:-  #@ *           =   :* =*                         .  
-                               .-+@=:-  =.         =%  %**=#-@=#=**#+*=%-@.@ @= %-.         =  -.-@+**                         .  
-                               #=:#=  =.   +.   .##%@@+  ::-**+:-=+*=-=@%: -  -@@#+%-   .+   .. .=%-+@                            
-                               =*-%@@#-+*=. ....  =+%@+%#@+%=%++-++#+#=+:@ @:@@@#== ..:   .-=+-*@@@-++                            
-                        +        =@*#%+++*+=*+%**-%-#=@@%@+%:@#@#*#@@@#@#@=@=@@+*-*#=*+*+++==*%%@*++        =                     
-                     -=. ..       :-*+#%#+%##++++%@@=+*=.*=@*@%@%*+*##=@+@-@ #+@-@@#**++#+%%#*@==#=       .. :=:               .  
-                   -:  =+           -**#*%+*-#@*@@@=@+-%#@%@@@#@@%@@@%%@%@#@+@ #@=@@*@%+:*-=#%%%=           *-  :-             .  
-                 .:                     .#=:@@* @@++#+@%*@@@@@@#*#*%#%%@@@#@+@*+=%*%@-+:=-#%.                :    -.           .  
-                   =%@+                  -:  %+.@@=-@#+##%#@%@%@%@#%%@=%*@#@.@.@#@#++.%#. ::                 .*@*-             .  
-                   =+%+                   :+-  *@:@:@@@@@@@@%@@%*##%%@@@@@@@%@@@@+*@%.  .@=                  .+%+=             .  
-              .- #:=+#:-                  :#@* *@.@.@%@@@. @#@#%*#+*#%*@%@: @@@@%##-*=.=@@-                  .=%++-%.=         .  
-              : .%#*+*:-                   -*%.   @=@*     -%#+#=*+*%#:*@:     =#** =  @%=:                   :%+=*@= :        .  
-               =+###=*  +                  +@*  @+%:@.@      :@@#*+*@=+       @=*:#-#  +@=                  =  %=*@%#-.-       .  
-            -  %#%**=@% @                    :+  =@*#*@*       -%##%**       =@=+*#+: =-                    # @@=*@@%+ -:      .  
-               =-*.=-%-  +                     .*:@+##*=.=+*+= -#@@@#*+*+* =.%+%-+*=%.                     +  #%=-.*==            
-          -  +**** --@ * .=                     =.@=*@%@@@@@#@%@@@@@@@@@%@+@=@#@%#@.=                     #  ==@+: =++=. --       
-         - .%%=*%  @+% #   =                    -:@=#%##@@*@#@%@@@@@@@@@@@=@%@-@+*#--                    -   #+%*@ .@+=*. -       
-           -++:+: =@-% @:#- #                  #-# .##+%*-=@*@#@@@@@@@#@+%#++@+@*: # +=                -@::+.@=#-@- =+=+#         
-          =#=+#+ *:@:@.@# *:+%-             =.   %@.+*%@.@.=#*=@%@@@@@*%+::@@#*@= @@.   =             .*- @ @@-#-#:- =%+@#        
-         ++*+%: -@-@:@.@:@.%* ##    ++      -%@@@@@@ =*#@@% +:#: .==:=% # #@@@@# @@#@@%@:      =-     % @:-%**-#-*-@. :==-=       
-           --#.:=*.*.* *.-%#@@% .@@@@. =@@-   .   @@@  *%@@@@          .@@@@#@ :%@@       =@@# .@=@@: *@@@%=**:*.=.@* :-. -       
-         *=#*@:.-%-@+@:@:%=*#+%@#        .=.#=@:@@@#@@==+@@@@*-*=: .:#-#+@%@.%%@@@@%#%@+*:-.       :##@.@-%+**=%=%-%- :#++-    .  
-        -@+#*@:.-%:@=@.@:%=+#=%=@@@%*@@@@%@*@=@-@:@:@@@* #*@*@= .: :::--*@@@ %#@#:#*%+@=%#@@@@@@@*@@@-@ @.#+**=%=#-%- -#**-    .  
-         . . =..:- = + * ==@#:-      +#*#+#*%-@-@*%+*%#@@=:%+@%@@@@@@@%@=@-=@@@%+*@*#:@*%%@@@#%=      : @@%-==.- : =:.:-.         
-         *:+-#...*.%:@.*=.          :=:+@%@#@%@#@*@#@@@@@@+**@@@@@@@@@@@*@:@@@@@@@@%@#@@@@@@@+-*.          :=@:%:#-*=-:=-=.       
-         *:+-#:-:*.%:%-            :%*=  :@+@-@:@:@#%++%@@%+.**@@@@@%%**:+%@@@%@#@@@@#%-%*#-  -*#             -#-#-#=#++-=.       
-         : : :+%:+ #.   -.*  :+ .=-+*-%+:.  +=@ @.@-#==#+@@@%+  :==-.  .%@%@+%+@%*#+%+%-=  ::+#==+--. =-  %*@.  :%:+:#+. .        
-         =*%+=+@-**    *:  .#*@#@=@=%+#+*#%=.  :@:@+##**=%=@@@@=     -@@%@=@-@-%**#**    +##@##*%=@+@*@+@  ::-    *-:@*=:+        
-        -*=%*#*@=      +=@@#@#@+@=@=%+#+#*%*@@#  :*-**#%@@@@@@@@@@@@@@@@@@%@%@@%=++  .*@@*@@@@@*#=@=@=@%@+@%+@*=    .:=*:+.       
-         --*=*-:-@=   :@#@+*@#@-@=%-#+#+*+#=@+@@@- - .*+-%+@*@#@@@@@@@%@@@:@ %+  ::#@@@*@%@%@%*%@+@*@%@=@.%+#%    ++%+=+.=        
-             =-- +.%:#:%+*++*:%.%:#-#=#*#%@:#.% @.@-@+ --  #:#:*=***=*+. -@+ @-=#=#=#=@=#=%#@*+=*-# % @-@=*=-*=@-#-#--=*:*        
-            *@#%@@@@@@@@@@@#@@@%   *@@@.   =@*@#@=@#@@%%@@@@@@%@@*@@@@@@#@+@=@@@#*@@@@@*@:   +@@@:  +@@@@@%@@@@@@@@@@@@+@@:       
-            ==-%@@@@@@@@%@@@@@+     -@%      +@=@%@+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@=     -%@.     %@@@@@@@@@@%#@@@@#++%    .  
-             .:-%@:@:%.@@@@-%*.-     :*         %%#:++=+-#:#:%-+=*=+=*-%.@.@ %:#==+@%        .+      = *@-@@@%#@%#@%@@@@@@@*
-                .:-%@:@:%.@@@@-%*.-     :*         %%#:++=+-#:#:%-+=*=+=*-%.@.@ %:#==+@%        .+      = *@-@@@%#@%#@%@@@@@
-    """)
-    
-def mayor():
-    ascii_art = r"""
----:..............................::-:..............................................................
-................................=***#%%#*+-:.............................................:-=====-...
-.............................:+*####**+####*=............................................:====--:...
-............................=#####*+---=+####*:..........................................:::-------:
-...........................+#####*=--:--=*##%%*:............................::::::----:::::::.......
-..........................-######+=-:::-=+*#%%%*-::::::::::::------=+++:-::::::.....................
-.................::::--...=#%#**+=+*******##%%%#-:.........::::=**#*+++++-.............::::::------=
-.................======...:#%+*****+*+*+****#%%#-.........:=+*#######*+*###*-::-----===++*###%%%%%%%
-..........................:+*-=+---=+-++===++#%#=...:..:++++#%%%%###%%#**#%%%##%%%%%%%%%%%%%%%%%%%%%
-...........................-+---=+*+***+#**++*##+:..:...=**%%%%%%#%%#*+===+#%%%%%%%%%%%%%%%%%%%%%%%%
-...........................:=-==++++=++++*+++*##+:..:...=*#%%%%%##*+=----==+#%%%%%%%%%%%%%%%%%%%%%%%
-....:::::::::::..............====--==-=+*==++*##*......:+*#%%%%#*+=====--===*%%%%%%%%%#%###**+==--::
-.......:::::::...............-+==----====++**+#%*.......:*#%%%#++=======++===**-:::-----::::---::::-
-...........................:*=+***+++++******++#*........+##%%*===--++=+**#*===-:::-::::::::--=++===
-.......................-==+##==++******##*#####**:.......=#**#+===++===-=---==-:.:::..:::.::--+##+++
-.......:::..::-===:-=-=*####%#===++******#%#****#:.......=####*====--+=-=+*+=++++++-==++**+==+*+*++*
-.......:-:....-==+**######%%%%#===++*****%%%%#*++-.......:*##*+++=++*********+==++=-=--==+===+*=---=
-.....:--....:=+**######%%%%%%%%%*+++****#%%%%#%%#*-:.....:*####++++*#+===+++++*++++-===+==+=+++*##==
-......--..:=+**#####%%%%%%%%%%#%%%*+++*%%%%%%%%%%%%%#+:..:*#####++++==++++++*+==++=-=+++=+++****###+
-..-*=.:-+***#####%%%%%%%%%%%%%=-*%%%##%@#*%%%%%%%%%%%%%*-:+##*#*+***++==++**##*=**+-=++==+*=+++*####
-..-=::-*#######%%%%%%%%%%%%%%%#--#%%%%@#:-%%%%%%%%%%%%%%%*++#*==++***********#**++===++++*++***##%%#
-.::.::*###%%%%%%%%%%%%%%%%%%%%%#-=%%%%%=:+%%%%%%%%%%%%%%%#++*+====+++******+*#***+++++++===++++#%###
-*+--=*##%%%%%%%%%%%%%%%%%%%%%%%%+-+%%%%-:#%%%%%%%%%%%%#+=+*****====+++***+++*%%#*+++++++++=+**+#%%#+
-==+=*#%%%%%%%%%%%%%%%%%%%%%%%%%%%+=#%%#=+%%%%%%%%%%%*++++++*********=+++===+####*+++++++++++**=#%%#=
-*=+*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%=*%%*+%%%%%%%%%%%+++++++++*#%%%###*+====*##***++++++++**++++=*#%#+
-*=*%%%%%%%%%%%@%%%%%%%%%%%%%%%%%%%%*%%=%%%%%%%%%%%*++++++++++*********+--+#**++++++++++++*++++=++=+=
-**%%%%%%%%%%%@@@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#*++++++++++++++**+++===**++++++++++++==***+++#%%#*
-#%%%%%%%%%%%@@@@@%%%%%%%%%%%%%%%%%%%#%@%%%%%%%%%%*+++**+++++++++++++++++++++++++++++=::::+**++++#*--
-#%%%%%%%%%@@@@@%%%%%%%%%%%%%%%%%%%%%+*%%%%%%%%%@*+++++*+==++++++++++++++++++++++++++=:.:-=***+++**==
-%%%%%@%@@@@@@@%%%%%%%%%@@%%@@@@%%%%%%%%@%%%%%%%#*++++++==--+++==+++++++++++++++++++++=:::-+***++++=-
-%%%%@@@@@@@@%@@@@@@@@@%%@@@@%@@@%%%%@%%@@%%%@@%#+++++++=++------====+++++++++++++++++++===*#***+++=-
-%%%%@@@@@@#:#@@@@@@@%%@@@@@@@@@%%%%%#=#@@%%%@@%*+**+++++=:===+++++++++++++++++++++++++++***#******+-
-+#%@@@@@@*::@@@@@@%%%%@@@@@%@@%%%%%%%=*%@@@@@@#*+++**+++*+****+++++++++++++**++++++++++++**##*****+-
-==+*##%#-..=@@@%%%%%%@@@@@%@@%%%%%%%%--%@@@@@@***+***++*##**++++**++++++********++++++++++*##******=
--=+*##*:...#@@@%%%%%@@@@@%%@%%%%%%%%%#@%@@@@@%**********##**********************************%###****
--==++*-...:%%%%%%%%@@@@@%%@%%%%%%%%%%%#%@@@@@#**********##**********************************#####***
-===++*:...-%%%%%%%@@@@@%%%@%%%%%%%%%%%%%%%@@@***********###********##**********************#%%####**
-===+++....=%%%%%%@@@@@%%%@%%%%%%%%%##@@@@@@@%*********###%##**##**###****************#*****#%%######
-==++*=....=%%%%%@@@@%%%@%%@%@@%%%%%=+%%**++##********####%#*###**###*****************##*****%%%%##*+
-==++*:....=%%@%@@@@%%%@%@@@@@%@@@%%@@@@@@@@@#******######%####**###*******************##****#%%#*+=+
-==+*+:....*%%%@@@@@%@@@@@@@@@@@@@@%@@@@@@@@@*********###%####**###********************###****%#**+++
-==+*-....:*%%@@@@%%@@@@@@@@@@@@@@@@@@@@@@@@@################**###**********************###****%#*+++
-=+++.....-#%@@@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%#######%%###**###************************##****#%**+*
-=+*-.....+%%@@@@@@@@@@%@@@@@@@@@@@@@@@@@@@@@@@**+++==+*%#***###*************************###*****#**+
-=+*......#%@@@@@@@@@%%@@@@@@@@@@@@@@@@@@@@@@@@#+++++++*##**####**************************###****#**+
-=++:::...%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%++++++++##*###******************************##**+*#**
-+##:....-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*+++++++*###****************#*##*************##*+=#**
-%%%*:-+++@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+++++++*##*********############************###=--*#*
-##=---+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*++++++*###*****#######################*####%#=--=#*
-*+===+++%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%++=+++*%%%#########################%%%%%%#****=-=**
-#*+++*#@%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+==+++%@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%##******+-=**
-=*#*++++*%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%*+==++*%%%%###%#%%################*#***#**##*+--*#
-+===**+=-%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#++==+*%%##########**************************+=***
-=+=------@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+===++#%%#############**********************++***
-++-------@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*+==++*%%%#############**##*#**#************+#***
-#+=------%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+++++++*############################**********#*
-%#===----@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*++++++++*#######################**************#
-*+=-==--=@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*++++++++*###################****************+**
-    """
-    print(ascii_art)
-    
-def Doton():
-    ascii_art = r"""
-=====+======+=+++*****###%%%#********+******************************+++++++++++++++++++=------------
-++==+=======++**###%%%%%######%%#***++***************************************+++++++++++++=---------
-#*+=+====+*##%%%%%#*#%%%%%##%%%#%%###**+********************************++*******++++++++++++++==---
-#==*==+*##########*****#%#%%%%%%%%####%#***********************************************++++++++*++=-
-====+*###*++=--==-----==---==*#%%%#%####%%%#*********************************************+++++++++++
-*++-==---::---==------===-::::--+#%%%%#####%%%%#*********************************************+++++++
-----::::::::::-==+==----===::::::-=*%%%######%%%%%##******************************************++++++
----::::::::::::==+*+=====++=:::::::-+#%%###*##%%%%%%%%#*********************************************
-::::---:::::----=+**#*+++++++:::::::-+#%%###**#%%%%%###%##******************************************
-:::--------------++*##****++*=-:::::--+#%%%##*++++++*+*#######************************************+*
----------========-=++****+++++-::::----+%%%%##*+++++++**********#***********************************
---::----:--==++++=-=+==++++**+=--::----=*%%%%#*+==+=++++++++*******##*******************************
-======++==-----=+++=-::-==-:-+*+=-:-----+%%%%##++======++++++++++++****#****************************
-====-==**+=-::--=+%%+=-:::-==+***=----===#%%%%#++++++===++++++++++++++++***#************************
----------=*#*+=---+++++===++*******=-===+#%%%%#*++++++=======++++++++++++++*************************
-------====-=##*+=-=+*#*+==+*********====+#@%%%#+==++++++=========++++++++++++++*********************
------=++**+==*#**==+*%%#++*+##*+++**+=++*%@%%##+-==+++*+============++++++++++++++++***************+
-==---=++***+==*#*+==+**+++++*##++==+*+++#@%%##*=-====+++===============++++++++++++++***************
-+==-===++****+*##*+=+**+=-++#%%#*+++**+#@%%%#*+===++++======================+++++++++++++++*********
-*+=====+++*****##*+==++====+*###******#%@%%#*++=======-========================+++++++++++++++******
-***++++++++++*##*++=========+*##*****##%%%%*=========----===============================+++++++++++*
-****++++++*+++++*++==========+*****##*#%%#+==----------------==============================+++++++++
-******++++++++==++=++=====+===+**#%%%%%%*=---------------------------==-===================+++====++
-*********++++++++++++++++++++++#%%%%%%***+--=-------------------------=--=-=========================
-**************++++++++++++++**%%%%%#+++++++**+=-----------------------------=-======================
-#*************+**++********#%%%##*******++++++++++===--------------------------=====================
-###******************####**#***************++++++**++===-----------------------------===============
-####################****#**********************++++++****+=---------------------------==============
-###############**#*****+**************************++++++**+--------------------------------=========
-##**+++++++=++++++************************************+++++++***+=-----------------------------=-===
-#****+========++++++++************************************+=++++***+------------------------------==
-++**###**++=======+++++++************************************++++++**+===---------------------------
-++++++**###*++======+++++++++*******+:::-+***********************++++++****+=-----------------------
-+++++++++**###**++======+++++++++**=--::::-**************************+++++****+=--------------------
-+++*+++++++++*###**++=======+++++=--------:+*****************************+++++****+=----------------
-==+++**++++**+++**###**++=====++=---------=*********************************++++++*****+=-----------
-++++==+++**+++++++++**##**++===----==+==-=++***************#*++*****************+++++*****+===------
-%%#**++++++++*+++++===++***##+-=======--=++++++*************##**++*****************+++++****=-------
-#%%%%%#*+=+++=++**+++===++++---==++++===+++++++++++**********#****+++******************++++++*+====-
-####%%%%%%#*++===+****++++=----==++++==++====+++++++++*******************####%%%#####*****++++++**++
-#######%%%%%%#*++=++=++*+----=======+***++=======+++++++++************#%%%%%%%%%%%%%#####*****++++++
-############%%%%%#*+=++-----==+====++*******++======+++++++++******##%%%%%%%%%%%%%%%%%%####*******++
-###############%%%%%#+--==-==+====%@%#*+####****++=====++++++++++*#%%%%%%%%%%%%%%%%%%%%%#####*******
-#########***########-:----=+====+#%%#######%%%##***++======+++++*%%%%%%*++=========+*##%%%####******
--=*##*-::::::-*###+:::---=*+===+%%#***####***#%%%%#****++======*%%%%*+====-------------=+*#%###*****
-:::::::::::::--*#=::::---=====+####%%%##*+*++++*#%%%%##****++=+%%#*++===-------:::::::::--=*#%##****
-::-::::::::::--*=-------=----++==*%%%%%#*++*++++++**#%%%%#****%#*+++===-----::::::::::::----+####***
-:--::::::::::-=+------------=-:::::+##**###*****++++++*#%%%%###*+*#*******+==------::::::----=*###**
---:::::::::::-=-----------==-::::::-*####***#*++++**+++++**#%#**#**+=====++++==--==++**++=----=+****
-::::::::::::--:::--------=+-::::----*####%%#*+++++++++*+++++*****+++==---=+++=--==++++====+++=-=****
-::::::::::::::::-------=++-:::------*######%%%##*+++++++++++#++++****+++++=+=--:-=++==------=+=-=***
-::::::::::::::::------=++--:-------=*#########%%%%#*+++++++**+=====+++++==-=--:::-=+*++=-----==--+**
--:::::::-::::::-------=+-----------*###############%%##*+++*++==--::------=---::::::=+***++==----=++
------------:::::------+=-:--------*####################%%##*++==---:::::---===--::::::--------:--=++
-+++==-------:::::-------::------=*######################****++==---::::-++##*+=+*+---::::::::::--=+=
-**+++====---::::------::-------=#######################+****++===---::--=+====+=+++=--:::::::::--===
-****++++====------------------=*######################++++**+++===--------=--------:::::::::::::-=++
-********+++++========---------+#######################+++***+++=========++++++===-:::::::::::::--=+*
-*************+++======------==*#######################*+=***+++=====++*+=------==+==---::::::::--===
-**************++++++==----==-*#########################++***++++=======+++++==----=++==-----------=+
-*****************+++++=====-*#############################**+++++==+=====+++**++==---==------------=
-*******************+++++==-+****##########################**+++++========--======-----==---------=--
-***************++++++++=--=*********######################***+++++=====-----::::-------==---------:-
-*************+++++++++==-=**************##################***+++++++=====---=--::----------------=--
-**************+++++++====*******************#############*=-:----=+++++++======--------==-------=*++
-**************+++++=====+***********************####*+==--==++===-:-++++++++++++==---===--------+###
-*************+++++===++*********++++++++**********=-=+++++++=++===-:.-=+++++++++=...:-----------*###
-***********+++++++++********+=-:.......:-=+*****==+*#####*++==+==----::-======:::::..--:::-----=****
-*********++++++++++++++++++=::............:=+=-:-*####%###**+++======--::++=...:-::.:=**+=-::-=*****
-*******+++++++++++++++++++=:::...................-+#####****++++++===--..:..........-+**##*+==----==
-***++++++++++++++++++++++=-::::::..................:---==****+===-:..:..............:=*#####*+=====-
-+++++++++++++++++*+++=--=--::::::::::...................:+******+=.............::--------==----::::.
-+++++++++++++=-:-%***++::-----:::::::::::...............:=+*******=.........:-:-+-:==...............
-+++++++++=-:....=****-..--------::::::::::::............:=+*******+.......:===+=:-+-................
-++++++-:.......*#***=..-===-------:::::::::::...........:-==++****+:.....=::=+-:=+:.................
-+++-:.........:****=..:-====--------:::::::::...........:---=+++***:...""" 
-    print(ascii_art)
-
-def THE_autor():
-    ascii_art = r"""
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:::::::::::::::::::::::::::::::::::::::::::::::::------:::::::::::::::::::::::::::::::::::::::::::::
-:::::::::::::::::::::::::::::::::::::::::::::-+####****###*=-:::::::::::::::::::::::::::::::::::::::
-:::::::::::----------------------:::::::::-+#*+++++=+++++++=+#+:::::::::::::::::::::::::::::::::::::
-:::::::----------------------------------**++++++++++++++++++++**-::::::::::::::::::::::::::::::::::
-:--------------------------------------+*++****++++=+++++++++++++*+:::::::::::::::::::::::::::::::::
---------------------------------------**+*****+++++++++++++++++++++*-:::::::::::::::::::::::::::::::
--------------------------------------##****++++++==++=+==+++++++++++*-::::::::::::::::::::::::::::::
------------------------------------=%%*****#%%%%*++++++++*#%%#**++++*%::::::::::::::::::::::::::::::
-----------------------------------=#%%**#%%##******++++++******##*+=+*#-::::::::::::::::::::::::::::
------------------------------=====+%%**###***+***##*++++*****+++++*+=+#*::::::::::::::::::::::::::::
-----------------------------======#%#**#####%%#***#*+=++*#####*++++++=+#-:::::::::::::::::::::::::::
--------------------------=========%%***#%%%#%#******+++++***##*##*++==+#=:::::::::::::::::::::::::::
----------------------============+@%*****#####******++++++++***++++++==#+:::::::::::::::::::::::::::
---------------------=============+@#*****+**********++=+++++++++++=====*=:::::::::::::::::::::::::::
-----------------------============%#****++++++++*#@%#*#%#++++==========+=:::::::::::::::::::::::::::
-----------------------==========*%#******++++++*###********++++========++*=:::::::::::::::::::::::::
------------------------========+###*********++***********++++++++======++*=:::::::::::::::::::::::::
------------------------========+**#***********#######*****+++++++==+===+=*-:::::::::::::::::::::::::
-------------------------========*+#***###***###%%#*++*+**##**++++=====+++=-:::::::::::::::::::::::::
--------------------------=======******########%#####*******#**+++=====++++-:::::::::::::::::::::::::
--------------------------========*****####**********##**+++++++++++==++++=::::::::::::::::::::::::::
--------------------------==========**########******+++++++++++++++++==++=--:::::::::::::::::::::::::
--------------------------===========*########******++++++=++++++++++++==---:::::::::::::::::::::::::
-----------------=-------==-=========+*############*****+++++++++++++++===--:::::::::::::::::::::::::
-------------------------==-=========+*########%#######*****++++++++++====--:::::::::::::::::::::::::
----------------------=--============+*###%%%%%%%%%########*********+=====--:::::::::::::::::::::::::
-----------------------------========+**##%%%%%%%%%%########******+++=====--:::::::::::::::::::::::::
-----------------------------========+**####%%%%%%%%####*******++++++======-:::::::::::::::::::::::::
--------------------------------=====+**######%%%%%###*****++++++++++=====---::::::::::::::::::::::::
----------------------------------===++*########%####****+++++++++++======---::::::::::::::::::::::::
----------------------------------===++*#############****++++++++++++====----::::::::::::::::::::::::
---------------------------------=-==++*#############***++++++++++++#*===----::::::::::::::::::::::::
---------------------------------===+*#%###########*****++++++++++++%*====---::::::::::::::::::::::::
---------------------------=+++++**+***%######**********+++++++++++#%%*##++==-:::::::::::::::::::::::
-------------------==+++++++++*++*++****####************+++++++++*%%%%#%%*+++++=-::::::::::::::::::::
----------==+++++++++++++++++++++*++******#@@@@@%%%%%%%%%%%%%%%%%%@%%%%%%+=++=++++++=-:::::::::::::::
--------++++++++++++++++++++++**+++*++*******#%%%@@@@%%%%%%%%%%%%%%#%%#*+++++++++++++++==-:::::::::::
------=*++++++++=======-------------------------:::-::::::::::::----------========+++++++===-::::::::
-----=**+++**+++==---------------------------------------:--------:::::::::---------------=++===-::::
---=+***++*****==------------------------------------::--::------:::::-:::::::------------+++++====-:
-=+*****+******+--------------------------------------:--::---:::--::-:--:-:::------------++++++++++=
-******#*******=-------*:==#==-*=+--=-+-+-=+=-+---+--==---:--------:::::::-::-:-----------=++++++++++
-******#*******=-------=+*====-==+-=+:*=*-=-+-++--+--+::=-:::++-#-=+-+-=-::+------:-------=++++++++++
-**##*##*******-------=-#-*-+-*-==:++:*=#-==+-=*--=--+--=-:::==+===++++::-+::--:----------=++++++++++
-**#####*******::-----==--------------=---------+-=+-+===+-::=---=--===-:-==---:----------=++++++++++
-#######******+::-------------------::::::::::----::::::::::::::::--:--------:--:---------=++++**++++
-#######******+::::-------------------::::::----=--=-----::::-::::-:-::::----:------------=+++++**+++
-#######*#****=--:::--=+:++----*-*:==-:=-===-=:=--+---+--*-=-=-----:-:::-::--:--::-:------=+++++**+++
-######*#***++----::::-*===*+-:*==+-=++=-==+:=:+--++--*--*===-+=---:::-----:-:::::::::::--=*+++++*+++
-######******#------::--------------::------:--=-----=+------------:-::----------:--:::----*#*+++*+++
-######****%%#::-----:::----------------------------------------------:::------------------+##*+++++*
-#####%###%%#*:-------::---:----=-------------------------------------:::------------------*+#%*++++*
-####%%%#%%**+::---------==:++--+--+==:---+-=+=-=-++==--------------::::::--::-------------***%#*+++*
-###%%%%%####+-::-------=-+-=+-*---=+--::*---=-*=--+-=-------:-------:::--::--------:-:----+**#%**+**
-###%%%%%%##*=::::-------=----+---==+#+-+---+=*=+-+====---------------::::::::--::-::----::++**%##***
-%%%%%%@%%%##=:::::----------=---------==---------=-=*=-------------------:---:::----::--::++**#%%***
-%%%%%%%@%#**=-:::::------------------------------------------------------------:---:-:::::+++#%%#***
-%%%%%@%@@%##=--:::::---------------------------------------------------------------::::---=**%%%#***
-%%%%%@@@@##*=---:::::--------------------------------------------------::::::::::--:----::=*%%%#*##*
-%%%%%%@@@#*+=---::::-----------------------------------------------------::--------::----:=*%%%####*
-%%%%@@@@@%#*==---::::-------------------------------------------------------------------::=%%%#*###*
-%%%@@@@@@%#*===---::::-------------------------------------------------------------:-----:=%%%###%#*
-%%%@@@@@%%#*===---:::::-----------------------------------------------------:---::-::-:----%%%#%%#*#
-@@@@@@%%%%#*===----::::--------------------------------------------------------------::----%%%%%%###
-@@@@@%%%%##*====----::::-------------------------------------------------------------------#%%%%%###
-%@@%%%%%###*====-----:::--------------------------------------------------------------:-:--#%%%%%%%#
-%%%##%%#**+++===-----::::----------------------------------------------------------------:-*##%%%%%%
-#%#**+++++++=====-----::-------------------------------------------------------------------+###%%%%%
-#*+++++****++==++==----:------------------------------------------------------------====---+**###%@@
-+++=+**#####**++=====---:-----::::---------::-::::--------------------------------==+***++=++****#%%
-+++++++++++=+##*+===###################**********###***************************+=+*++++#**++=+++**%%
-++++++++++====+*%*+*%%%%%#################*##******************################*+=+#**++***+++===+#%
-++++*****++====+%%%%%%%%%###########****************************################*+=*#**+=+****++===*
-=====++*#%#+====+#%%%%%#########*****************++***************#############%#+==***+==+****++===
-=========+++*++++*%%%%%%#########***********************************#############*+=+***+++=*#*++===
-+==++========+*+++#%%%#########************+++++++****+++++++******##############*+++**#**++==**+++=
-+===+**+++====+**#%%%#########****************+++++++++*+++++++*****###############*+++##**++==+*+++
-+=======++*+==+*%%%%%%%##*****##************+*++++********+++++*******##############**++##**++==+*++
-*++========+**+#%%%%%%%####********************+++++++*****+++++*******###############*++*##**++==++
-    """
-    print(ascii_art)
-
-def Ezekiel():
-    ascii_art = r"""
-+======---------=*#*###########*++*****+++++=============-==-------------------::-=::::
-###*****++==---==========-----===+*++======-----------------------------------------:--
-######*========================---====+==----------------------------------------------
-%####***+==========--::::::::::::----=====+=------::::::::::::::::::::......:::::::----
-%%######***=======--::::::::::::::---=======-::-:::::::::::::.................::::--===
-%%%#######***+=======--------:-----=============-:::::::::::::::::::.......::.....:::::
-%%%%%#######***+===================================-:::::::::=#+==-::.................:
-%%%%%##########***=================================++-:::::::+#####***-................
-%%%%%######%#####*#*+==================+++++******++++-::::::+#**####*+==-::=+++===:...
-%%%%%%#####%###########*+====++++*********************-::::.::-*##***####*+==-:........
-%%%%%%###################**************#####****+****+##=:::::..:-=+*****###*+==-......
-%%%%%%#####################**####***########***+*##*#+#####=:.........=******###*+=-:..
-%%%%%%########%################***++=+*######**#####**########=:.........-******####*+=
-%%%%%#*#######%%################++####**#####*#######*###########=..........-*#*****###
-%%%%%#*########################*#######*#####+####*##***############=..........:*#*****
-%%%%%%##*%%####################*#####%#########**###*******############+..........:+##*
-%%###%###*#%###################*##%##*##############*===+****############*+:..........=
-####**####****######################################*-+---****###############+:........
-**##***#%###*#*##################################**++-=*=--*****################+:.....
-**###**##%###**#%################################*+=-=+=-=*+*******#################**+
-*##***#########*#%%#######################*##*=======**++##++********##################
-####%#####%##*###*%%####################+============*#*+*##+**********################
-%####%%############*#%#####****#%#*==================+##****=*************#########%###
-%%#####*#*####**####**%%%#*#*+===============++======+*+=*#*+***************##########%
-%%#####***####***#####**++============++*#*=#+=======##***#=+*****************#########
-%%###%#****#*#*****###***+=========+*##**#*-*========##*+***********************#######
-%%###**#*********##*##****+======+***+=*+#*-*=======+###**************************#####
-@@@%#####***#*+*##***#****+==========++#=#*=+=======*%###****************************##
-@@@@###**###*#**####*#****+=========++*#+##++========#####****************************#
-%@@@%###*####**+*###******+========+++*#**#*=*===**=--=###*****************************
-%%@@%**#**##########**#***+========++++**+##+=*#%%%#*----*#****************************
-%%%@%%###*########*++*#***+========++++*#**##=*%%%####*----****************************
-%%%%%%%###*#**+###***##***+========++*#%%%**#*=*#%%#####*--:-+*******+---+*************
-%%%%%%%#####*#**###**%###*+*#+===+#%%%%%%%#+###*=*#####*+---::-+**=-:::::::=***********
-%%%%%%%%#####****###%%%%%%%%%%*+===#%%%%%%%#*#####*==*+=------:-:::::--::::::+*********
-%%%%%%%%@%%####%%%%%%%%%%%%%%%%#+===+%%%%%###+#####*#+==#*=----:::-::::::::-=**********
-%%%%%%%%@@@%#%@%%%%%%%%%%%%%%%%%#*====#%%%####*+#*#*#*#*****-=**----::::-=+*****+=*****
-%%%%%%%%%@@@%%%%%%%%%%%%%%%%%%%%%%#+===+%*====+*+*##*****#******=-:---=+***###*****+*#*
-%%%%%%%%%%%%@%%%%%%%%%%%%%%%%%%%%%%#+===========*###***********=--==+###***###*****%##*
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#*===========+###*********#*+*++###++**************
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%##======--=+**%###***##*#####*#******+**********##
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#+==-=====#%%#+-*##*######**###*******##*****#%%##
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#+====-===----------+########**#*******##*++*#%%%####
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*======-====-------=++**#*###*+*#**###********%%%%####**
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#==========-===---=++#######*#*#***+####*##**%%%%#####****
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*========-----==+###**#*###****##%##*****%%%%#####*******
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#*======---==*#%###***##*##****###****#%%%%#####*********
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%##===-===*#%###***+**********####*#%%%%#######**********
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#*++*%%######*#****=##****##**%%%%%#######************
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%###%%######*###***##*#***#**#%%%%########**************
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#%########*####***##***#****#%%%%%#########***************
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#%####=-*##*#########****#%%%%%##############*************
-    """
-    print(ascii_art)
-def New_Year2026():
-    ascii_art = r"""
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%##**
-%%%%%%%####%%%%%%%%%%%%%#####%%%%%%%%%%%%%%%####%%%%%%##%%%%%%%%*:-..
-%%%%%#*+*+*#%%%%%%%%%#*++++++#%%%%%%%%%%%%#*+*+*#%%##+++**#%%%%#*****
-%%%%#+=++*********#*#++*++++**********####+*++*******++++********###*
-%%#+*+*+++++++++++=+*+**+=++++++++++++***+**+++++++**+++++++++++*####
-%%########**+++++++###**#########################**+++*#***##########
-%%%%%%%%###++++++*##%%%%#%%#%##%%#%%%#%%%##%#%%%%#++*##%%%%%#########
-%%%%%%#############%%%%#####*##%%%%%%%%%%%%%%%%%%####%%%%%%##########
-%#########%%%##%%%#%%%#%#*++++#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#######
-######%%%%####%%%%%%%%%#*++++***++*********#%%%%%#*******############
-##%%%##%#%%%%%%%%%%#**+====================+==+*#**************######
-#%%%%%%##%%%%%%#*+-::---=+****++++++*++++**+=---==--=++***********%%%
-%%%%%%%%%%%##+-:---=*****+*++++++++**+++++++++++-:::--=++*###**######
-%%%%%%%%%#+::--+****+**+*#+++***+++++++*#++++*=--------=+*#########%%
-%%%%%%%*-:-=+*****++#*+**+++++++++++++++++=++=---------=**##########*
-%%%%%*---=***++****+*+*++++--:::::-------=+++++*++*+++++**###########
-%%%*---+**+++++*+++++=:---=++************+**+*+=++*++++++**#***######
-%#=--+***++**+*+*=---=***##################---+=-==-----=+++++==##%##
-*--=*****+*++*+---+*#######################+==-=++=---=========+###+*
---+**+*+*+*++--+*###########################+===============-=+###*=-
-=**+**+*+++=-+*##############################+======--====++**#%%#**+
-**+***+++=-+*################################+=---====+++++++*####++*
-***+*+*+==*########*+*##################**###*=====+++++++===+***++*+
-+*#++*+-+###########+++++#+*#*+==*#####*==*****++++++++++===+++******
-++++++=+##########**##++#*==*#########*=*####+*#**++++++==++*#*+++===
-#++++=+############=**+#**-=**++=*###**#####*-=##**++++++***++*#*+=+=
-+++*==#########***##+=*++*-=#+=++*#####=--===-:=+++**++***+++++---==+
-++*==############+==--==-=-*#+=*#######+====-==-===++==+*==++=---=+++
-+++-*#############==--+=*+-##+=*#####*======-+==++*#**++=++++===+++++
-+*==#############++*=-*===+##*=#####+======+*+-====++=======+++++====
-*+=+############*##*--**=*###*+####*+========+=====++=========++===++
-*+-####################*##*########*+========-===+=-=========++==+*+=
-*==###############*-=####+:-#######+--======--++============--==+#+==
-*==%%%############*--****=:-*+=+##*++++=======*=-++========++=-=*====
--==%%%%%%##+--*##*+::=**#=:==-:-##**+++++====#+++*+======+**+=-++=-=*
-=---=++=-----*##*=+:+-=##=-###==#++*+++++++++*#*========+***++*#+=+**
---========--*%%+:=+-=####==+=-::-=++=--=+*****+==+++====+**+**##**++*
--------=--=#%%%%##*--+=**-*=*##*-+*+-::-+***##++++=-:--+**+*###%#+###
----------+%%%%%%%%#--###*=#*=*#*+**+=--=***#%*+*+=-----+**+*#######*=
-------+#%%%%%%%%%%*--#%+=####==+***+==++==+###**++=---=+**######****=
-###**#%%%%%%%%%%%%##*+=*#####*=++***+==++*%%*+**++=--=++*#########*+=
-%###*+#%%%%%%%%%%%%%%##%%###*++*####******##+++++=++***##########*++*
-#####++*%%%%%%%%%%%%%%%%%%%#++***####****+*++******#############*****
-#*##**+=*#%%%%%%%%%%%**#*#*#*+++=+*##*+==**+++***#############***+--+
-**##***+=+#%%%%%%%%%%###%###+++*******++*+**+-+**#####*==+*##%#**####
-*********==+#%%%%%%%%%%%#*#*=++++****+=+**+****=-+######**#####***###
-+****##***+--+#%%%%%%%%%%%%#==+++**#+--=+++#**=-===*#######*+++**+++*
--=**********+--=#%%%%%%%%%%#+=--=++*=---::-##++############***+++++==
-*:-+****##*****=--+#%%%%%%%#+=--=++++******########*####*+**#########
-@%=:=+************=---+#%%%#+======+*###########*+=+====-=+**####**##
-%%%#--=+*************+=----=*+--::--+*############*+-++=-+*******####
-%%%%%#=--+******##********++++=-:::-+#########*##*+=-=+--+**+**######
-%%%%%@%#=--=+***+++++++++++++++--::-=++*#####=-+*=-:---==+=--+######%
-####***++=====--+#%%%%%*=======------+**##*+*=--::----==++++###***#%%
-*****+======+==-==*#######======-:::-=*###+=-::-----===+++**###**#%%%
-#####*+=++++++*++=+###**+++=====---::::-=-::-----===+++++**#%%%%#%#**
-++++++++===--+***++=-===+++++**==-:::--=------===++++****#%%%%#*####+
-+==--========-+#####+=**##*%%#+------+#%#+--==++***#%%%%###*******##*
-+++=--=+*++==--+#####%%%#*%###*====--=#%%*+++#%#%%########**********#
-#*++=----===+==*#########*##*+====---==+**##%%%%%%#######****#*******
-=+*####+======+*****+==-----==========++***+##%@%%######***##*####***
-######*+=========---:--=-----==+++++*++++++==*#*%%#####*****####%#***
-######*+==--=+*+***+-===++=------=*#*++++++++*%#%#****++*****##*#****
-##*#**+=--===++**++++-------=++==+##########%%####*==--=+***********#
-*+++==+++==+++*******=-=++++++===+**###*##########*+=---=*##******###
-    """
-    print(ascii_art)
-    
-def forbidden_Currency():
-    ascii_art = r"""
-==*%@%%%%%%%####*+++++++++==-:::::-------:------====+++++****+++++++*===-------=*##+=--=*#%%%@@@@@@@@@@@@@@@@
-%*+*%%%%%%%%%####*+++++++++=-::::---------------====+++****+++++==++**+====**+=-=-=+*#%%@@@@@@@@@@@@@@@@@%%%@
-@@#*%@@%%%%%%%###**++++++++=::::::::----==----=====++***#+++*+==+++*#**###+---=*%%%@@@@@@@@@@@@@@@@@%%%@@@@@@
-@@@%@@@@%%%%%%####****++=-.:::::::-----===--======++**#*+++*++++*##%%%%*==+#%%%@@@@@@@@@@@@@@@@@%%%@@@@@@@@@@
-@@@@@%%@@%%%%%%%###**+=:...::::::-----==========++**#*++*#***#%%@@@%#*#%%%%%@@@@@@@@@@@@@@@%%%%@@@@@%@@@@@@@@
-@@@@@@@@@@%%%%%%####*+....:::::------==++======++**#***###%%@@@@@@%%%%%%%@@@@@@@@@@@@@%%%%%@%@%%%%@@@@@@@@@@@
-@@@@@@@@@@@%%%%%%#####+...::::-----===+*+=====+*##**#%%%@@@@@@@%%%%%%%%%%@@@@@@@@@%%%%%%%%%%@%@%%@@@@@@@@@@@@
-@@@@@@@@@@@%%%%%%%####*+:::::------==+**+===+**#*#%@@%#@@@%########%%%%%%@@@%%%%%%%%%%%%%%%%@%%@@@@@@@@@@@@@@
-@@@@@@@@@@@@%%%%%%#####*:::-------==+**+==+*##@@@@@#+++*%%%#*#######%%@@%%%%%%%%%%%%%%%%%%@%%%@@@%@%@@@@@@@@@
-%%%%#%%%%@@@%%%%%######----------==+#%@%%%@@@@@@@#+++++++*%@#####%%%%%%%%%%%%%%%%%%%%%%%%%%@%@@@@%@%@@@%@@@@@
-####%%%%@%%%%%%%%#####+-----=---==+*@@@@@@@@@@%#+++++++++++#@@%%%#%%%%%%%%%%%%%%%%%%%%%%%%%%%%@%%%@%%@@@@@@@@
-#%%%%%%%%%%%%%%%%####*------====++*@@@@@@@@@@#+====++**+*+++*#####%%%#%%%%%%%%%%%%%%%%%%%@%@@%%%%%@@@@@@@@@@@
-%%%%%%%%%%%%%%%%#####=--------=+#%@@@@@@@@@#+-----:-=++****++*+#####%%#%%%%%%%%%%%%%%%%%%%%@%%%%%%@@@%@@@@@@@
-%%%%%%%%%%%@%%%##**#*-:-------=+#@@@@@@@@@*-----::-=--++*****+++*#####%%%%%%%%%%%%%%%%%%%@@@%%%%%@%@%%@@@@%%%
-##%%%%%%%%%%%###%##*=::::----==*@@@@@@@@@%%+--::--::-:=+*++***++++*###%#%%#%%%%%%%%%%%%%%%%%%%%@@@@@@@@@%%%%%
-*###%%%%########%##=::::::---=+#@@@@@@@%%%##-----===-:=+++=*#***++++######%#%%%%#%%%%%%%%%%%%%@%@@@@@@%%%%%%%
-***#######%%#%###*-:::::---==+*%@@%%%%%%#%%#*+-=+*=-=++=====+*****+++*################%%%%%%@@@@@@%%%%@%%%%%%
-##%%%#%%##%####*=::::::---==+*%%%%%%%%%%##%###++=-=++======+*#*#***++++*#*#####%%%%%%%%%@@@@@%%%%%%%%%@%@@@%@
-%%%%%#%#######+:::::::---==+#%@@@%%%%%%###%%%%#-+++===-==+*#######*+++++*###%%%%%%%%%%%%%%%%%##%%%%%%%%%%@%%@
-#%%#**########*-:::::--==*%@@@%%%%%%%%%###%%%%%%*=-=-=-===*####%%#*+==++==*%%%%%%%%%%%%%%%%#@@%%##%%%%%%%%%%%
-*###############*====+*#%%%%%%%%%%@%########%%%%#+==-=--=********========-=+#%##%#%#%#%%%%###%%%%%*#%%%%%%%%%
-######################%%%%%%%@@%%%%%#########%%%%#*+---=++==-===-:-==---==*############%%##%%%%@@%##%%%%%%%%%
-######################%%%%%%%%%%%%#############%%%#++++=-------::------=+*#####*########%%###%%%%##%%%@%%%%%%
-#############%#####%%%%%%#%%%%%%#%%#%%%%%%%####%%#%%*==---------::-:-=*#**#*##****#*##*###%%%%#%%@%%%%%%%%%%%
-###*########%##%#%%##%%%%%%%#%%%%%%@%%%%%%%#####%%#%*=-----:-=:-===-*###**********########%%@%%%%%%%%%%%@@%@@
-#############%###%%%%%%%%%%%%%@@%%%%%%%%%%%##########=---:-==-+***#%#%###******######%@%%%##%%%%@@@@@@@@@@%%%
-#######%#######%%%%%%%%%%%%%%%%%%%%%%%%#%%#%######%##*=--=--=+***##%%%####**######%%%%%%%%%@@@@@@@@@%%%%%%%%@
-#######**###%%%%%%%%%%@%%%%%%%%%%%#%%%%%%%%%#%#####%#%*-+==+*##%###%##%#######%%%%%%%@@@@@@@%%%%%%%%%@@@@@@@@
-###***#####%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#%#%######%#%*==-*%@%%%###%##%%%##%%%%@@@@@@%%%%%%%%@@@@@@@@@@@@@@@
-+**######%%%%%%%#%%%%%%%%%%%%#%%%%%%%%%%#%%%%########%#%*%@@@@@%%%**##*#%%%%%@%%%%######**#%%@@@@@@@@@@@@@@@@
-#########%%#####%#%%%#%#%%%%%%%%#%%#%%%#%%#%%#%######%#%@@@@@@@%@%%##%%#%%%%%#***++++++**+*#%%@@@@@@@@@@@@@@@
-#####%#######%%%%%%%%#%%%%%%%%#%%%%%%#%%%%%%#%%%%#######@@@@@@@@%@@@%%%####*+++=========+*+*#%%@@@@@@@@@@@@@@
-####*######%##%%#%#%%%#%#%%%%%%%%%%%%%%%%%%%%#%%%#######%@@@@@%##**#****+**##*+==========+*++#%%%@@@@@@@@@@@@
-#**############%%#%%%%%#%%%%%%%%%%#%%%%#%%%%%%%%%%%####%%%@@@#++++++****+++***+++++=======+**+*#%%%@@@@@@@%%%
-################%%%###%%%%%%%%%%%#%%%%#%%%%%%%%%%%%%%##%%%@@%+++*******+++++===++++++====++##*+*#%%%%@@%%#%%%
-###########%#####%%%%##%#%%%#%%##%%%%%%%%%%%%%%#%%%%%%%%%%%*++++*******++++====++++++++**##%%%#++###%%%@%#%%%
-##################%%###%%%%#%%#%%%#%%%%%%%%%%%%%%%%%%%%#++++++++**+**##***++===+++**########%%%#++**##%%@@%%%
-###################%%##%%##%#%#%%%#%%#%#%#%%%%%%%%%#*++==++++++++*****###***++***##########%%####*=+**##%%@%%
-####################%%%#####%#%%####%##%%#%%%%%#+==++++=+++++++++****++*##**+*##%%###############*+==+*###%@@
-%####################%#%##########%###%%#%%#+++++==+**+++++++++++*************#############*+++==++===+**##%%
-%##################################%%%%#*+=====++===+++===++++++**####*********####*******###***+*###*==**###
-#%########**#*##*###########*####%%##+=++++==============++++++**#*******#*************###%%%%%%%%%%%%#===**#
-##%########*####*################*+++==++=++==========+++++*******######***********##**####%%%%%%%%%%%%%*++**
-##%%###########**########%###*+==++**+====+++===========++*####****####*###*####**###***####%%%%%%%%%%%%%#*+*
-    """
-    print(ascii_art)
-
-def Kaldag():
-    ascii_art = r"""
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#*+====+++**%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%*=-------------=++**##%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+=--==------------------==#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+==========------------====--*%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#===============================*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+===========--====================#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+==========-----===================*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+===========-----===================*%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+==============--====================*%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%=====================================*%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%=====================================+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+====================================*%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+===================================*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*+++================================*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%++++================================*%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%++===+==============================*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+==========+===+==================+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#+=========+===++=========++======+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%*+=======+====++++=====++++=====++%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#++++++++++++++++++++++++++++==+#%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@+==+++++++++++++++++++++++++==*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#=++++++++++++++++++++++++++++*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@+=+++++++++++++++++++++++++++#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%++++++++++++++++++++++++++++++#@@@@@@@@@@@@%%%%@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%++++++++++++++++++++++++++*+*+#@@@@%#*+++++++++**%@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*+++++++++++++++++************+++===++************#@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%*+++++++++++++***************+++*****************#@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#*++++++********************************##########@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@**+***************************####################@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%#****++***************#####***#######################%@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%*++++*****************#####################################%@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@#*++++++++-:-+****************###*###******###########################%@@@@
-@@@@@@@@@@@@@@@@@@@@@@#*+**++++***++===+++***####****###***#***+++++*******####################%@@@@
-@@@@@@@@@@@@@@@@@@@@%#*+=--=+*******++++**#############*+*##*+++++++++++++**####################%@@@
-@@@@@@@@@@@@@@@@@@@#**+===--====++**=+++*#****########*+*##*+++++++++++++++*#####################%@@
-@@@@@@@@@@@@@@@@@%**+==++++++++======+++*****########*+*##*++++++++++++++++**####################%@@
-@@@@@@@@@@@@@@@@#***=++++++++++++++++++**###########*+*##*++++++++++++*******#####################@@
-@@@@@@@@@@@@@@@#*+==++++++++++++++++++***##########*+*##**++++++++++*********#####################%@
-@@@@@@@@@@@@@@#**++++++++++++++++++++++**##########++##*++++++++++***********######################@
-@@@@@@@@@@@@%#*****++++++++++++++++++===*#########***#**+++++++++***********##%%%%#################%
-@@@@@@@@@@@%****##*+++++++++++++++**++++*############**++++++++++**********###%%%%%%%%%%%%%%%%#####%
-@@@@@@@@@@%****####******++++++******################**+++++++++**********##%%%%%%%%%%%%%%%%%%%%%%#%
-@@@@@@@@@@**###########*********####*#**####*#######***++++++++*******######%%%%%%%%%%%%%%%%%%%%%%%%
-@@@@@@@@@**#################***#####***###**########***++++++******######%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@@@@@@@@**#################%#####*##********####%%###**+*********#####%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@@@@@@@**################%%%%%%###*++++++**#####%%%##**********######%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@
-@@@@@%#*##############%%%%%##**+++++++++***####%%%%%##******####%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@
-@@@@%#*################**+++++++++++*******####%%%%%%#########%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@
-@@@%#########****++++++=====+++++**********####%%%%%%%%###%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@
-@@@#*#***++++===++++++++++++****************####%%%%%%%%#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@
-@@%*++====+++++++++++************************####%%%%%%%#%%#####%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@
-@%+==+++++++********************************########%%%###########%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@
-@*++++************************************########################%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@
-#+++***********************************############################%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@
-++***********************************#####%%########################%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@
-+*********************************######%%%%%#########################%##%%%%%%%%%%%%%%%%%%%%%@@@@@@
-******************************#######%%%%%%%%%########################%#####%%%%%%%%%%%%%%%%%@@@@@@@
-***************************#######%%%%%%%%%%%%%################################%%%%%%%%%%%%%%@@@@@@@
-**********************##########%%%%%%%%%%%%%%%%%#################################%%%%%%%%%%%@@@@@@@
-********************########%%%%%%%%%%%%%%%%%%%%%%%#################################%%%%%%%%%%@@@@@@
-#*************##########%%@@@%%%%%%%%%%%%%%%%%%%%%%%###################################%%%%%%%%@@@@@
-#####################%%@@@@@@%%%%%%%%%%%%%%%%%%%%%%%%%##################################%%%%%%%@@@@@
-############%%%%%@@@@@@@@@@@@%%%%%%%%%%%%%%#%%%%%%%%%%%%################################%%%%%%%@@@@@
-@%%%%%%@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%%%%#%%%%%%%%%%%%%#############################%%%%%%%%%@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%##########################%%%%%%%%%%@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%%%#%%%%%%%%%%%%%%%%%%######################%%%%%%%%%%%%%@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%%%%#%%%%%%%%%%%%%%%%%%%%###################%%%%%%%%%%%%%%@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%%%%%%#%%%%%%%%%%%%%%%%%%%%%##############%%%%%%%%%%%%%%%%@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%#*#%%%#####%%%%%%%%%%%%%%%%%%%%##########%%%%%%%%%%%%%%%%%%@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%##%%%%%%%%%%#%%%%%%%%%%%%%%%%%%%####%%%%%%%%%%%%%%%%%%%%%%@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%###*####%######%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%##****###%###%%##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%##****###%#######%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%#*##*#***********%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%***********++++*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%#######*********#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%#**#***#######%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@
-@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@
-@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@
-@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@
-@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@
-@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@
-@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@
-    """
-    print(ascii_art)
-
-def Close_Up():
-    ascii_art = r"""
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#-::...
-%%%%%%%%%%#*##**#%%%%%%%%%%%%%%%%%#***#%##%%%%%%%%%%%%%%%%%%%%%#*##**#%%%%%%%%#*#%%%%%%%%%%%%#::-:..
-%%%%%%%%#*++*++*#%%%%%%%%%%%%%%#**++++*+++#%%%%%#%%%%%%%%%%%%#*++**++#%%%%%#*++=*****%%%%%%%##******
-%%%%%%#**++*++*###%######%###%#*++*+++=++***######**####%%%%#*+*+*++*#######**+**++*#%###***########
-%%%#**#*=**++**+=+*+++*=+******=*#***==+**++==*++*++*+=*####*=**=+++=*+**+**+=**=+*=**++**==+*******
-%%%#++*=***=*+++=++=*==++=+=+**=***+=+=+=+=+++=++=++=+++**+*+***=+=++=++++**+++=++=++++++++++**#####
-%%%#****#%#******+=+*=***+=*###************************###***##************++==*********************
-%%%%%%%%%%%%%%##*+=+++*++=*####%%#%%%%##%%%%#%#%%%#%%###%%%%%%%##%%##%##*++*++*###%%%%%%%%%#########
-%%%%%%%%%%#####*+=*++**++*##%%%%##%###%##%%###########%%#######%##%%%%%#*+++*#%%%%%%%###############
-%%%%%%%%########**##*#%#####%%%%%%###%######%%%%%%%%%%%%%%%#%#%##%%%%%%####%%%%#####################
-%%#%%###########%%%####%%###%%%%#%%%%#*+=+=*##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#######
-%###########%#%#####%#%%#######%%%%#*++**+**#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%############
-#########%########%####%##%####%%%#*+++++********#*********#***%%%%%%%%%##****++**%%%%%%%%%%%%%%%%%#
-######%####%%###%##%#%%%%%%%%%%%%#*=+=++======+==+=+-===-==+=-+**##%%%%+=+**##*****++++***#%%%%%%%%#
-%%#%%###%##%#%##%%%%%%%%%%%%#*=:..+====+==+===+====-===++=====+=-:::-+******+**##************#######
-%%%%%%%%####%%%%%%%%%%%%#=:..:--:::-+****++++++++==+**++==++***+=::::-+=----=++***#************#%%%%
-%##%%%%#%%%%%%%%%%%%#=:.:-----+********+++*+++++==++++=+++++++***+++*+:::::--=++++**#*#*****##**#%%%
-%%%%%%%%%%%%%%%%#*-..:---=***+***+++=+***+*##++*++###+=*+*#*++*+*+=++-::::::---=+=**#####*#######%%%
-%%%%%%%%%%%%%%#-.:---=**+***++**++**##=+*++**++*+++++++*+*#*+=+=+#*=------------=+**##############%%
-%%%%%%%%%%%#+::---=*****+++*+##++*+++++*+++++*+++++++++++++++*+++*+--::::-------=+**##############%%
-%%%%%%%%%#=.:---**+**++++**=+**+*++=+***++++************++=++**+==---=====------=+**##############*=
-%%%%%%%#=:---+*+**++*+###++*+++**++**+-::::::---::::-----:::-++=++++**+************###############%%
-%%%%%#=:---+*+*+++*+*++++*++*+++=::::----==++***#####***+==--+*++**+==++*#*********#####***#######%#
-%%%#=:-=-**+*=*+##**+*++*++*=..----=*#########################+-=***===+*+=-------=+***+++++*####%%#
-%%*----+***+**+++*+++*+*+-::--=*##############################+::--+=--=*---------=+*+=+*=-=+###%###
-#=:--=*+*++++++*+*+*+*=::--+##################################*--=--===++-----======+=======*####++*
---=-***+***##+*+++*+::--+#######################################+++++++===============---=-*####*:-=
-=-=*******++*+++*+:--=*#########################################*===---======--======+=--=#%%%##**-:
--***++**++*++*++---=#############################################+===++=-==----====+++**+*#%%%##*+*=
-*+#+*+##+*+*+*---=###############################################*+==---==--=====++++++++*#%%%#+=+**
-+*+**+++*++*+--=*################################################*=----=====+++++++++++++*######+*+*
-*+=+=+*+*+*=--+#############+=+###########################**######========++++++++++=====+*#**+*=**+
-**##*++***-==################+=*##**##*######*==*########*=-+#######*++++++++++++++======++****+++++
-*+++*+*+*--=##########*+++++========#+==++=====+#########=--=+==+==--==++++++++++======+#*+**+***###
-=**+=***-=+################+*###*=+##+==+###############==*######=-+####*++++++++===+++**##+++=====-
-*+*+*+*--=#################+=*#*=*###+=-+#####*+#######=*#######*--=####**++++++++***+**++****+=+===
-#++++*=-+#############***++========--=--=++=----=#####+##+=+++**+--=+=-=***++**++++**++===+*+-==+===
-#*++#==-#####################+--#####+-=##+--############---+=*+==-:=++++++#*==*+***==+=+*+-:--====+
-++**+--##################+++=--------=-+##+--############+-====-:--=--====+*=-==*#*--=+*+--:--==++++
-**+*--+###################*+*---=+###=-+##+--##########========-=+*---#++++*====++++++++=-::-=++++++
-++#==-####################=-----*=-+#--###*-=#########+========--===+++=+#%*++*+=-=+==+++==+++++==++
-+**=-+###################=-+#=--+*-=+-*####-+########=========+*#*---+=====+++===+=-==+=++++++======
-**+=:###################=+#*==--+##+-######=+#######===========-=+--=+====+++=-=+==========++======+
-**=-=########################=--##==#######*=#######+=====-======+=======++==++===========++=====+++
-+*=-*############################+#################*=====--====+=---===++=--=-=======--==++====+**=-
-+*=-#######################==+#######-::*##########+---========---===+--==+=-==========--=====*#*==-
-++==#######################=::=######:::*#########*=--==========--=++=-==+==============-----+#*=--*
-++==#%%%###################=::+#####*::-+++=-:*##*+++++++========-++=-=++============+++=--=+**-==-=
--===#%%%%%%%%%%##+-:+#####*=::-*++*#*:::::::::+##***+++++========+#====**===========+**++=--+#----=+
-----*%%%%%%%%#+---:=#####-*+:-=:=####::####*:-##*++*+++++++++++++*****+============+***+===+#*=-=+**
-==----:----:---=-:-#%###--#=:=*-=####:=#####:-##==**+++==++++++++*##*==++======+==+****+=+*##+=+*#*+
----=============:=%%%%*::-#-:+*#####*-####*-::---++*+=-==++********+===++++===++=+****+++*###*##+=+*
---------======-:=%%%%%#=+##-:=:::---:---+*+-::::=***=-::--=********++++++==--===+*******#####*#++*##
------------=--:*%%%%%%%%%%%=:-+#####-=#=*+####-=+*#+-:-::=+****#%%*+++++=--:--:=+**+++*#####%#+*###+
-------------:=%%%%%%%%%%%%%=::+####*:###-=*##++*+*#+----=+=**+*%%*++**+=------:-+##+++*#####%#+*###+
-------------------=+*#%%%%%%%=::+####*+###-=*##++*+*#+----=+=**+*%%*++**+=------:-+##+++*#####%#+*###+
-"""
-    print(ascii_art)
+    main()
