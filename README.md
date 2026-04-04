@@ -6,7 +6,7 @@ A supernatural interactive storytelling experience set in the Philippines, where
 
 ---
 
-## 📖 Story Overview
+##  Story Overview
 
 You find yourself standing at the edge of a cryptic bridge shrouded in darkness. A mysterious voice calls to you. When you venture onto the bridge, you lose consciousness and awaken in a new life—as a beautiful maiden in the village of Pilapila, Binangonan, Rizal.
 
@@ -16,7 +16,7 @@ That night, demons emerge from the darkness, building the bridge together. You m
 
 ---
 
-## ✨ Key Features
+##  Key Features
 
 ### Interactive Storytelling
 - **Multiple branching paths** with consequences that affect the narrative
@@ -26,28 +26,28 @@ That night, demons emerge from the darkness, building the bridge together. You m
 
 ### Game Mechanics
 
-#### 🎒 Universal Inventory System
+####  Universal Inventory System
 - Collects items throughout your adventure (hardcoded for streamlined gameplay)
 - Track relics, keys, and holy items crucial to the final confrontation
 - Check inventory at any time to review what you've gathered
 
-#### 🧩 Puzzle Solving
+####  Puzzle Solving
 - **Confession Booth Riddle** - Solve a philosophical puzzle to unlock the bell room key
 - **Conviction Gates** - Cannot progress until certain conditions are met
 - **Timed Challenges** - Some decisions require quick thinking
 - **Logical Deduction** - Piece together clues from dialogue and exploration
 
-#### 🗺️ Exploration Hub
+####  Exploration Hub
 - **Church Locations** - Lobby, Library, Bell Room, Basement, Bedroom
 - **Multiple NPCs** - Sister Jean, Father John, Enabell, and mysterious strangers
 - **Environmental Storytelling** - Paintings, ledgers, and artifacts reveal the bridge's dark history
 
-#### ⏰ Time-Based Mechanics
+####  Time-Based Mechanics
 - **Timed Countdowns** - Add tension to critical moments
 - **Day/Night Cycle** - Story progresses through different times
 - **Real-time Decisions** - Some choices must be made quickly
 
-### 🎨 Immersive Presentation
+###  Immersive Presentation
 - **ASCII Art** - Custom illustrations for characters, locations, and moods
 - **Text Formatting** - Dialogue boxes, thought blocks, action scenes
 - **Slow-Print** - Creates dramatic pacing and tension
@@ -55,7 +55,7 @@ That night, demons emerge from the darkness, building the bridge together. You m
 
 ---
 
-## 🎮 How to Play
+##  How to Play
 
 ### Desktop Version
 ```bash
@@ -66,7 +66,7 @@ python TxtNovelPuente_del_Diablo.py
 ### Web Version (Streamlit)
 **Not fully polished, but fully playable as a plug-and-play alternative:**
 
-👉 [Play Online: Puento del Diablo Streamlit App](https://puento0del0diablo0visualnovel.streamlit.app/)
+ [Play Online: Puento del Diablo Streamlit App](https://puento0del0diablo0visualnovel.streamlit.app/)
 
 **Advantages:**
 - No installation required
@@ -76,7 +76,7 @@ python TxtNovelPuente_del_Diablo.py
 
 ---
 
-## 📖 Story Structure
+##  Story Structure
 
 ### Chapter Prologue: The Mysterious Bridge
 You begin at an enigmatic bridge and take your first steps into the unknown.
@@ -95,7 +95,7 @@ Demons emerge and begin construction. The final confrontation approaches. Will y
 
 ---
 
-## 🎯 Game Systems
+##  Game Systems
 
 ### State Management
 The game uses a comprehensive state dictionary tracking:
@@ -117,7 +117,7 @@ You cannot leave the church until you've:
 
 ---
 
-## 💡 Development Notes
+##  Development Notes
 
 **Created for:** Programming Logic and Design Class (01-CPE-12)  
 **Institution:** Universidad de Dagupan  
@@ -134,19 +134,19 @@ You cannot leave the church until you've:
 
 ---
 
-## 🌐 Web Version Information
+##  Web Version Information
 
 The **Streamlit Web Version** offers:
-- ✅ Full gameplay functionality
-- ✅ Persistent session state
-- ✅ Cross-platform compatibility
-- ⚠️ Ongoing UI/UX refinement
+-  Full gameplay functionality
+-  Persistent session state
+-  Cross-platform compatibility
+-  Ongoing UI/UX refinement
 
 **Note:** While the web version provides a working alternative to the desktop version, the desktop Python version offers the most refined experience.
 
 ---
 
-## 🎮 Controls
+##  Controls
 
 - **Type your choice** - Enter numbers (1, 2, 3, etc.) to select options
 - **Text input** - Follow prompts like "continue", "yes", "no"
@@ -155,7 +155,7 @@ The **Streamlit Web Version** offers:
 
 ---
 
-## 🌟 Themes
+##  Themes
 
 - **Faith & Temptation** - A tale exploring devotion under pressure
 - **Choice & Consequence** - Your decisions determine the ending
@@ -164,13 +164,13 @@ The **Streamlit Web Version** offers:
 
 ---
 
-## 📝 License
+## License
 
 See [LICENSE](LICENSE) file for details.
 
 ---
 
-## 🎬 What Happens Next?
+##  What Happens Next?
 
 The game continues to evolve. Future plans include:
 - Multiple endings expansion
@@ -181,7 +181,7 @@ The game continues to evolve. Future plans include:
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 - Python 3.x
@@ -199,7 +199,7 @@ The game continues to evolve. Future plans include:
 
 ---
 
-## 📞 Support
+##  Support
 
 For questions about the story or gameplay, refer to the in-game hints and dialogue with NPCs.
 
