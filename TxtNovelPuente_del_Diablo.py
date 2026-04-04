@@ -11,7 +11,7 @@
 # Engr Sean Gabriel Macapaggal 
 
 # The story
-from pydoc import text
+
 import time as t
 
 def thinkblock(text):
@@ -143,7 +143,7 @@ def bad_end(reason):
     slow_print(f"│  {reason}")
     print("└─────────────────────────────────────────────────────────────┘")
     pause(1)
-    End_main()
+    sc4()
     
 
 def End():
@@ -177,6 +177,9 @@ def End():
     print('|                                  Beta Version, Stay tune for Web Reliese with multiple endings                            |')
     print('|                                  Interactive Storytelling, Comprehensive Logic and almost feel open world!                |')
     print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    
+    THE_author()
+    narrate("The programer that codede this. P.S. not in jail.")
 
     
 
@@ -305,6 +308,7 @@ def character_shadow():
     print( "   (###)   ",  
           "   /|||\\   ",  
           "   /|||\\   ", sep="\n")
+
 def sign():
     print("╔════════════════════════════════╗")
     print("║      Puente del Diablo         ║")
@@ -334,6 +338,7 @@ def dialogue(text):
     slow_print(f"│ {text}")
     print("└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘")
 
+#For Future nalang hahahahah
 def End_sc4(): # for final saved point (working)
     delay = 2
 
@@ -492,10 +497,10 @@ def conviction_warning(reason):
 # GATE: player must have events["has_lobby_hint"] == True before entering.
 # RIDDLE answer is B (echo -- something that rings/repeats without a voice).
 # REWARD: adds "bell_room_key" to inventory, sets events["found_bell_key"].
-def puzzle_confession_booth(game_state):
+def puzzle_confession_booth(game_state):#forbidden_Currency()
     inventory = game_state["inventory"]
     events    = game_state["events"]
-
+    forbidden_Currency()
     print("\n" + "="*60)
     print("  The Confession Booth")
     print("="*60)
@@ -559,10 +564,10 @@ def puzzle_confession_booth(game_state):
 # SETS: events["bell_room_visited"] = True  <-- conviction gate checks this
 #       events["bell_warned"]       = True  <-- sc3 can read this
 # KEY is consumed on entry.
-def room_bell_room(game_state):
+def room_bell_room(game_state): #Kaldag()
     inventory = game_state["inventory"]
     events    = game_state["events"]
-
+    Kaldag()
     print("\n" + "="*60)
     print("  The Bell Room")
     print("="*60)
@@ -611,9 +616,9 @@ def room_bell_room(game_state):
 # ── Basement ──────────────────────────────────────────────────────────────────
 # GATE: events["bell_room_visited"] must be True.
 # SETS: events["found_ledger_hint"] = True
-def room_basement(game_state):
+def room_basement(game_state):#Ezekiel() 
     events = game_state["events"]
-
+    Ezekiel()
     print("\n" + "="*60)
     print("  The Basement")
     print("="*60)
@@ -647,10 +652,11 @@ def room_basement(game_state):
 # ── Lobby ─────────────────────────────────────────────────────────────────────
 # The elderly woman NPC gives the hint that unlocks the confession booth.
 # SETS: events["has_lobby_hint"] = True  (when player picks option 3)
-def room_lobby(game_state):
+def room_lobby(game_state): #mayor()
     inventory = game_state["inventory"]
     events    = game_state["events"]
-
+    mayor()
+    narrate("You saw a picture, labeled Mayor.")
     print("\n" + "="*60)
     print("  The Church Lobby")
     print("="*60)
@@ -868,6 +874,8 @@ def Roam_church(user, game_state):
 
 # sc4
 def final_confontation(player_state, Relics = True, Conviction = True): #not yet finished
+    
+    The_Devil()
     action_scene("You confront the demons with the relics and holy items you gathered from the church.")
     print("1. Use the relics to banish the demons")
     print("2. Try to reason with the demons")
@@ -878,6 +886,7 @@ def final_confontation(player_state, Relics = True, Conviction = True): #not yet
         if Relics == True and Conviction == True:
              narrate("With the help of Sister Jean's continuous ringing of the church bell, you are able to banish the demons back to the underworld.")
              good_end("You successfully banished the demons back to the underworld, and the bridge is safe once again. You have saved the village and uncovered the mystery of the bridge.")
+             return
         narrate("The demons laugh at you, and proceed to capture you and quickly finisehd the bridge.")
         player_state = 'dead'
         bad_end("You try to use the relics to banish the demons, but they are too powerful and they quickly return,\n the demons finished the bridge and they drag you down to the underworld with them.")
@@ -893,9 +902,9 @@ def final_confontation(player_state, Relics = True, Conviction = True): #not yet
         bad_end("You sacrifice yourself to stop the demons, but it is not enough and they continue their work on the bridge,\n the demons finished the bridge and they drag you down to the underworld with them.") 
 
 def Confont_Demon(player_state): #malapit na judz
+    Relics = False
+    Conviction = False
     while player_state == 'alive':
-        Relics = False
-        Conviction = False
         dialogue("You: Sister Jean, please help me to stop the demons!")
         dialogue("Sister Jean: Ara-Ara dear, I will do my best, how can I help?")
         print("1. Ask Sister Jean for help to gather relics and holy items from the church")
@@ -992,6 +1001,10 @@ def Path_Exit():#done
             break
         elif choice == "3":
             Close_Up()
+            narrate("Easter egg wowwww")
+        elif choice.lower() == 'kiss':
+            kiss()
+            narrate("Easter egg wowwww")
         else:
             print("Invalid choice, please try again.")
         
@@ -1090,7 +1103,7 @@ def sc1():#done
         t.sleep(delay)
         GaLim()
         narrate("The photo shows a two figure standing on the bridge, one of them is you, \n and the other is a shadowy figure that resembles the one you saw earlier...")
-        hasty_decision2("What do you do?", "Look back and confront", "Ignore and keep Walking", "You keep walking", "Praying", "taking deep breaths", "you found yourself unbalanced","you look around, you saw an amminous rock formation","You glance around","you see nothing","you sign of relief . . . " ,"you felt diizy, the voice gwrowing louder and eriee", "you fell unconscious ",End_main,sc2,timeout=5)
+        hasty_decision2("What do you do?", "Look back and confront", "Ignore and keep Walking", "You keep walking", "Praying", "taking deep breaths", "you found yourself unbalanced","you look around, you saw an amminous rock formation","You glance around","you see nothing","you sign of relief . . . " ,"you felt diizy, the voice gwrowing louder and eriee", "you fell unconscious ",End_main,lambda: sc2(),timeout=5)
         
 def sc2(): #Done just fix the roam_chruch part
     chapter_banner(2, "The Unfinished Mystery")
@@ -1237,14 +1250,24 @@ def sc2(): #Done just fix the roam_chruch part
     dialogue('Father John: ' + 'anway feel free to ask me anything else, or if you need help with anything else, I am here to help you.')
     dialogue('You: ' + "Thank you Father, I will keep that in mind.")
     dialogue('Father John: ' + "You're Welcome Lara, Feel free to roam around as I will discuss something with Sister Jean.")
-    user2 = input("Do you want to roam around the church? (yes/no): ") # Roam spot =
-    Roam_church(user2)
+    game_state = {
+        "inventory": ["Doton Note"],
+        "events":    {},
+        "chapter":   2
+    }
+    user2      = input("Do you want to roam around the church? (yes/no): ") # Roam spot =
     game_state = Roam_church(user2, game_state)
+    sc3(game_state)
     t.sleep(delay)
-    sc3()
+    
 
 
-def sc3(): # Done
+def sc3(game_state=None): # Done
+    if game_state is None:
+        game_state = {"inventory": [], "events": {}, "chapter": 3}
+    events = game_state["events"]
+    bell_warned  = events.get("bell_warned", False)
+    ledger_found = events.get("found_ledger_hint", False)
     chapter_banner(3, "Lara's Bargain") #The night when the devil in disquise try to take Lara as his bride.+ the bidge dairing construction before the sunrise.
     progress_saved()
     narrate("As the sun falls and  the night creeps in. you and Enabell arrived home safely")
@@ -1292,9 +1315,13 @@ def sc3(): # Done
     narrate("Everyone is shocked by his words, and you can't help but feel a sense of unease, as if something is wrong. . .")
     dialogue('You: ' + "Enough, words are just words. please everyone go home, and I will wait for the sunrise to see if you can keep your promise.")
     narrate("Everyone goes home, and you are left alone with your thoughts and your relatives. but you feel unease. . . but you try to shake it off, and you go to bed, confidendent that it was only a bluff.")
+    if bell_warned == True:
+        thinkblock("Lara: The bell. 'He who rings me calls not the hour, but the truth.' That stranger... he is not human.")
+    if ledger_found == True:
+        thinkblock("Lara: The construction records. 1887. This bridge was attempted before. And it was stopped.")
+    sc4()
 
-
-def sec4(): #finish this mother fuckerrrr!!!
+def sc4(): #finish this mother fuckerrrr!!!
      chapter_banner(4, "The Senerade of the Stranger")
      progress_saved()
      narrate("As the night creeps in, you sleeping peacefully, but you are awoken by a loud noise outside your window.")
@@ -1312,7 +1339,7 @@ def sec4(): #finish this mother fuckerrrr!!!
      
     
 # /// Secret ///
-def kiss():
+def kiss(): #kiss ng author
     ascii_art = r"""
 ...................................................................................................
 .                                                                  ........                         
@@ -1497,7 +1524,7 @@ def Lara(): # for sc2
   +        :==-=:#-  =+   :       +-+=*+=:+==.++  +.
 """)
 
-def The_Devil():
+def The_Devil():#done
     print(r"""
 :-                                            +                                        
                                            -.+                                         -*                                         
@@ -1545,7 +1572,7 @@ def The_Devil():
                 .:-%@:@:%.@@@@-%*.-     :*         %%#:++=+-#:#:%-+=*=+=*-%.@.@ %:#==+@%        .+      = *@-@@@%#@%#@%@@@@@
     """)
     
-def mayor():
+def mayor(): #done
     ascii_art = r"""
 ---:..............................::-:..............................................................
 ................................=***#%%#*+-:.............................................:-=====-...
@@ -1688,7 +1715,7 @@ def Doton():#done for sc2 interaction with enabell
 +++-:.........:****=..:-====--------:::::::::...........:---=+++***:...""" 
     print(ascii_art)
 
-def THE_author():
+def THE_author():#done
     ascii_art = r"""
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -1775,7 +1802,7 @@ def THE_author():
     """
     print(ascii_art)
 
-def Ezekiel():
+def Ezekiel():#done
     ascii_art = r"""
 +======---------=*#*###########*++*****+++++=============-==-------------------::-=::::
 ###*****++==---==========-----===+*++======-----------------------------------------:--
@@ -1904,7 +1931,7 @@ def New_Year2026(): #Done
     """
     print(ascii_art)
     
-def forbidden_Currency():
+def forbidden_Currency(): #proection against libog?!! Confesiion room
     ascii_art = r"""
 ==*%@%%%%%%%####*+++++++++==-:::::-------:------====+++++****+++++++*===-------=*##+=--=*#%%%@@@@@@@@@@@@@@@@
 %*+*%%%%%%%%%####*+++++++++=-::::---------------====+++****+++++==++**+====**+=-=-=+*#%%@@@@@@@@@@@@@@@@@%%%@
@@ -1953,7 +1980,7 @@ def forbidden_Currency():
     """
     print(ascii_art)
 
-def Kaldag():
+def Kaldag(): #Bell room sya ang taga bell ahhaha
     ascii_art = r"""
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#*+====+++**%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -2108,10 +2135,33 @@ def Close_Up(): #Done
     print(ascii_art)
     
 
-def start():
-    pass
+def start(): #done
+    title_screen()
+    narrate("You find yourself standing at the edge of a mysterious bridge, shrouded in darkness.")
+    narrate("Do you dare to step onto the bridge and uncover its secrets?")
+    
+    running = True
+    while running == True:
+        user = input("Type 'continue' to step on the bridge or 'no' to turn back: ")
+        if user.lower() == "continue":
+            narrate("You take a deep breath and step onto the bridge.")
+            main()
+            running = False
+        elif user.lower() == "no":
+            narrate("You decide to turn back, but the voice calls you again...")
+            t.sleep(2)
+            Path_Exit()
+            running = False
+        else:
+            narrate("The bridge waits silently...")
+
+
+
+
+
+
 
 
 
 if __name__ == "__main__": # Reminder to excecute everythin this thing should be at the very last line of the code lol or else oit wouldnt get called.
-   sc2()
+    start() #67 hawhawhawhawh
