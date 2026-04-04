@@ -235,6 +235,28 @@ def good_end(reason):
 def conviction_warning(text):
     st.markdown(f'<div class="warning-box">⚠️ {text}</div>', unsafe_allow_html=True)
 
+def music_player():
+    if "music_playing" not in st.session_state:
+        st.session_state["music_playing"] = False
+    
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        if st.button("🎵 Play Music", key="music_play_btn"):
+            st.session_state["music_playing"] = True
+            st.rerun()
+        if st.button("⏹️ Stop", key="music_stop_btn"):
+            st.session_state["music_playing"] = False
+            st.rerun()
+    with col2:
+        st.markdown("*Click to control background music*")
+    
+    if st.session_state["music_playing"]:
+        st.markdown("""
+        <audio autoplay controls style="width:100%;">
+            <source src="https://www.dropbox.com/scl/fi/7rrxoziza6e2orvoz4ply/Church-Puente-Del-Diablo.mp3?rlkey=0vc3lzafg4m7r999rqp4354ba&dl=1" type="audio/mp3">
+        </audio>
+        """, unsafe_allow_html=True)
+
 def ascii_display(art):
     st.markdown(f'<div class="ascii-art">{art}</div>', unsafe_allow_html=True)
 
@@ -1376,6 +1398,11 @@ def main():
         Web: Claude (Anthropic)<br>
         01-CPE-12 · Unibersidad de Dagupan
         </div>""", unsafe_allow_html=True)
+
+    # Music player - always available at top
+    st.markdown("---")
+    music_player()
+    st.markdown("---")
 
     # Render current scene
     renderer = SCENES.get(scene, scene_title)
