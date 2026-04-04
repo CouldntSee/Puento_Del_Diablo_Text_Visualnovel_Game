@@ -11,6 +11,7 @@
 # Engr Sean Gabriel Macapaggal 
 
 # The story
+from pydoc import text
 import time as t
 
 def thinkblock(text):
@@ -145,7 +146,49 @@ def bad_end(reason):
     End_main()
     
 
+def End():
+    dialogue(r"""
+╔══════════════════════════════════════════════════════════════════════════╗
+║                                                                          ║
+║    ██████╗ ██╗   ██╗███████╗███╗   ██╗████████╗███████╗                 ║
+║    ██╔══██╗██║   ██║██╔════╝████╗  ██║╚══██╔══╝██╔════╝                 ║
+║    ██████╔╝██║   ██║█████╗  ██╔██╗ ██║   ██║   █████╗                   ║
+║    ██╔═══╝ ██║   ██║██╔══╝  ██║╚██╗██║   ██║   ██╔══╝                   ║
+║    ██║     ╚██████╔╝███████╗██║ ╚████║   ██║   ███████╗                 ║
+║    ╚═╝      ╚═════╝ ╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝                 ║
+║                                                                          ║
+║           ██████╗ ███████╗██╗      ██████╗  █████╗ ██████╗              ║
+║           ██╔══██╗██╔════╝██║     ██╔════╝ ██╔══██╗██╔══██╗             ║
+║           ██║  ██║█████╗  ██║     ██║      ███████║██████╔╝             ║
+║           ██║  ██║██╔══╝  ██║     ██║      ██╔══██║██╔══██╗             ║
+║           ██████╔╝███████╗███████╗╚██████╗ ██║  ██║██║  ██║             ║
+║           ╚═════╝ ╚══════╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝            ║
+║                                                                          ║
+║              ~ P U E N T E   D E L   D I A B L O ~                      ║
+║                                                                          ║
+║         A tale of faith, temptation, and an unfinished bridge            ║
+║              Pilapila, Binangonan, Rizal — Philippines                   ║
+║                                                                          ║
+╚══════════════════════════════════════════════════════════════════════════╝
+    """)
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    print('|                                                Thank you for playing!                                                     |')
+    print("|                                           Stay Tune for more adventures!                                                  |")
+    print('|                                  Beta Version, Stay tune for Web Reliese with multiple endings                            |')
+    print('|                                  Interactive Storytelling, Comprehensive Logic and almost feel open world!                |')
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+
     
+
+def good_end(reason):
+    pause(1)
+    print()
+    print("┌─────────────────────────────────────────────────────────────┐")
+    print("│                        ~ GOOD END ~                         │")
+    slow_print(f"│  {reason}")
+    print("└─────────────────────────────────────────────────────────────┘")
+    pause(1)
+    End()   
  
 def hasty_decision2(prompt, option1, option2, S1, S2, S3, S4, S5, F1, F2, F3, F4, F5, exit_action, go_action, timeout=5):
     print("╔════════════════════════════════════════════════════════════╗")
@@ -822,6 +865,96 @@ def Roam_church(user, game_state):
     game_state["inventory"] = inventory
     game_state["events"]    = events
     return game_state
+
+# sc4
+def final_confontation(player_state, Relics = True, Conviction = True): #not yet finished
+    action_scene("You confront the demons with the relics and holy items you gathered from the church.")
+    print("1. Use the relics to banish the demons")
+    print("2. Try to reason with the demons")
+    print("3. Sacrifice yourself to stop the demons")
+    user = input("Enter your choice: ")
+    if user == "1":
+        narrate("You use the relics to banish the demons. at first it doesn't seem to work, but then you see the demons start to weaken.")
+        if Relics == True and Conviction == True:
+             narrate("With the help of Sister Jean's continuous ringing of the church bell, you are able to banish the demons back to the underworld.")
+             good_end("You successfully banished the demons back to the underworld, and the bridge is safe once again. You have saved the village and uncovered the mystery of the bridge.")
+        narrate("The demons laugh at you, and proceed to capture you and quickly finisehd the bridge.")
+        player_state = 'dead'
+        bad_end("You try to use the relics to banish the demons, but they are too powerful and they quickly return,\n the demons finished the bridge and they drag you down to the underworld with them.")
+    elif user == "2":
+        narrate("You try to reason with the demons, but they are not interested in talking and they quickly overwhelm you.")
+        narrate("The demons laughs at you, and proceed to capture you and quickly finisehd the bridge.")
+        player_state = 'dead'
+        bad_end("You try to reason with the demons, but they are not interested in talking and they quickly overwhelm you,\n the demons finished the bridge and they drag you down to the underworld with them.") 
+    elif user == "3":
+        narrate("You sacrifice yourself to stop the demons, but it is not enough and they continue their work on the bridge.")
+        narrate("The demons laughs at your sacrifice, and proceed to capture you and quickly finisehd the bridge.")
+        player_state = 'dead'
+        bad_end("You sacrifice yourself to stop the demons, but it is not enough and they continue their work on the bridge,\n the demons finished the bridge and they drag you down to the underworld with them.") 
+
+def Confont_Demon(player_state): #malapit na judz
+    while player_state == 'alive':
+        Relics = False
+        Conviction = False
+        dialogue("You: Sister Jean, please help me to stop the demons!")
+        dialogue("Sister Jean: Ara-Ara dear, I will do my best, how can I help?")
+        print("1. Ask Sister Jean for help to gather relics and holy items from the church")
+        print("2. Ask Sister Jean for help to Ring the Church Bell continuosly.")
+        print("3. Proceed to the battle.")
+        user = input("Enter your choice: ")
+        if user == "1":
+                narrate("You ask Sister Jean for help to gather relics and holy items from the church, and she agrees to help you.")
+                Relics = True
+                player_state = 'alive'
+                continue
+        elif user == "2":#I will try to make nested here for conversation for better immersion but in the future since im rushing everything at this point lol
+                narrate("You ask Sister Jean for help to Ring the Church Bell continuosly, and she agrees to help you.")
+                Conviction = True
+                player_state = 'alive'
+                continue
+        elif user == "3":
+            player_state = 'alive'
+            if Relics == True and Conviction == True:
+                narrate("You decide to proceed to the battle, with the help of Sister Jean and the relics and holy items you gathered from the church.")
+                final_confontation(player_state, Relics = True, Conviction = True)
+        else:
+            dialogue("Sister Jean: " + "I understand dear, but we need to act quickly, we need to stop them before they finish the bridge.")
+            dialogue("Sister Jean: " + "I don't want to see what will happen if they finish the bridge.")
+
+def fight_Demon(): #done
+    player_state = 'alive'
+
+    print("1. Pray for the demons to stop")
+    print("2. Try to confront the demons")
+    print("3. Hide and wait for the sunrise")
+    print("4.Go to church")
+    user = input("Enter your choice: ")
+    while player_state == 'alive': # True
+        if user == "1":
+            narrate("You kneel down and pray for the demons to stop, but they only grow stronger and more aggressive.")
+            narrate("The demons surround you, their voices echoing in your mind, driving you to the brink of madness.")
+            player_state = 'dead'
+            bad_end("You just pray and do nothing, the demons finished the bridge and they drag you down to the underworld with them.")
+        elif user == "2":
+            narrate("You try to confront the demons, but they are too powerful and you are quickly overwhelmed.")
+            narrate("The demons laughs at you, and proceed to capture you and quickly finisehd the bridge.")
+            player_state = 'dead'
+            bad_end("You confront the demons but you lack the neccesary relics to fight them, the demons finished the\n bridge and they drag you down to the underworld with them.") 
+        elif user == "3":
+            narrate("You hide and wait for the sunrise, but the demons are relentless and they find you before dawn.")
+            narrate("The demons capture you and quickly finisehd the bridge.")
+            player_state = 'dead'
+            bad_end("You try to hide and wait for the sunrise, but the demons are relentless and they find you before dawn,\n the demons finished the bridge and they drag you down to the underworld with them.")
+        elif user == "4":
+            narrate("You rush to the church, seeking refuge and protection from the demons.")
+            narrate("determine to stop the demons, You rush to the chruch, luckily sister Jean is there, but Father John is not.")
+            player_state = 'alive'
+            Confont_Demon(player_state)
+        else:
+            narrate("You hestitate, unsure of what to do. The demons take advantage of your indecision and quickly finisehd the bridge.")
+            player_state = 'dead'
+            bad_end("You hestitate, unsure of what to do. The demons take advantage of your indecision and quickly finisehd the bridge, the demons finished the bridge and they drag you down to the underworld with them.")
+            
 # // ______________________________________//
 # ||              Story poper              ||
 # // ______________________________________//
@@ -959,7 +1092,7 @@ def sc1():#done
         narrate("The photo shows a two figure standing on the bridge, one of them is you, \n and the other is a shadowy figure that resembles the one you saw earlier...")
         hasty_decision2("What do you do?", "Look back and confront", "Ignore and keep Walking", "You keep walking", "Praying", "taking deep breaths", "you found yourself unbalanced","you look around, you saw an amminous rock formation","You glance around","you see nothing","you sign of relief . . . " ,"you felt diizy, the voice gwrowing louder and eriee", "you fell unconscious ",End_main,sc2,timeout=5)
         
-def sc2(): 
+def sc2(): #Done just fix the roam_chruch part
     chapter_banner(2, "The Unfinished Mystery")
     pause()
     progress_saved()
@@ -1111,8 +1244,9 @@ def sc2():
     sc3()
 
 
-def sc3(): # dont forget to use While loop at choices lol
+def sc3(): # Done
     chapter_banner(3, "Lara's Bargain") #The night when the devil in disquise try to take Lara as his bride.+ the bidge dairing construction before the sunrise.
+    progress_saved()
     narrate("As the sun falls and  the night creeps in. you and Enabell arrived home safely")
     pause()
     narrate( 'As the two of you enter the house, you are greated by the warm aroma of home-cooked food.')
@@ -1126,25 +1260,56 @@ def sc3(): # dont forget to use While loop at choices lol
     narrate("As you eat, you can't help but feel a sense of unease, as if something is lurking in the shadows, watching your every move...")
     narrate("Then, the silence is broken by a suddned knock on the main door.")
     dialogue('You: ' + "Who could that be at this hour?")
-    
-    progress_saved()
-    
-    
-def sc4():# dont forget to use While loop at choices lol
-    chapter_banner(4, "The Final Revelation")
-    pause()
-    progress_saved()
-    
-    
-def final():# dont forget to use While loop at choices lol
-    chapter_banner("Final", "The Bridge's Secret")
-    pause()
+    narrate("You and Enabell exchange a glance, wondering who could be knocking at the door so late at night.")
+    narrate('Slow melodic music plays from outside.')
+    narrate("Senerade fills the air. . .")
+    dialogue('You: ' + "Is that music coming from outside?")
+    narrate("You and Enabell walk towards the door, and as you open you're greeted by swarm of men, holding flowers and serenading you with love songs.")
+    narrate("You are like a field of flowers, under the swarm of bees of mens. . .")
+    dialogue('Men 1 ' + ": " + "Lara, I have been in love with you since the day I saw you. Will you be my girlfriend?")
+    dialogue(' Men 2 ' + ": " + "Lara, I can't stop thinking about you. Will you go out with me?")
+    dialogue("Men 3 " + ": " + "Lara, you are the most beautiful girl I have ever seen. Will you be mine?")
+    narrate("You are overwhelmed by the swarm of men, and you don't know how to respond to their advances.")
+    dialogue('You: ' + "I... I don't know what to say. I'm flattered. . ")
+    dialogue('Mens: ' + "Heed our words of affection, Lara. We will do anything to make you happy. Just say yes, and we will be yours forever.")
+    narrate('You are like a field of flowers, under the swarm of bees of mens. . .')
+    narrate("Suddenly, your mounth move on its own, and you find yourself aggreeing to them. . .")
+    dialogue('You: ' + "Okay, I will be yours. . .")
+    dialogue('Men 1: Then pick me, Lara. I will give you the world if you choose me.')
+    dialogue("Men 2: " + "Pick me, Lara. I will love you more than anyone else if you choose me.")
+    narrate("The men continue to serenade you, their voices blending into a harmonious symphony of love.")
+    dialogue('You: ' + "I will pick one. . . as long you promise me to build a bridge for me. that  will link our village to the next province of Laguna.")
+    narrate('The men look at each other. . .')
+    narrate("They all argues that it will be impossible to build a bridge, but you insist that you want a bridge, and you will only choose one of them if they can build a bridge for you.")
+    narrate('You feel relieved that all of men seems lost of hope. . . ')
+    narrate("But then, one of them steps forward, and says: 'I will build")
+    narrate("Then, one of them steps forward, and says: 'I will build the bridge for you, Lara. I will make sure that it is the most beautiful and sturdy bridge that has ever been built.'")
+    dialogue('You: ' + "Another REquirement is that I want the bridge to be finished before the sunrise.")
+    narrate('Everyone dumbfounded by your last requirement, but the man seems confident that he can do it, and he promises to finish the bridge before the sunrise.')
+    narrate("You almost know everyone who senerade you from the village. But the man who stepped forward is a stranger, and you have never seen him before.")
+    narrate("He is tall, with dark hair and piercing eyes that seem to look right through you. He has a mysterious aura about him, and you can't help but feel drawn to him, not in affection, but in warry.")
+    narrate('He stepped forward, kneel and kiss your hand, and says: "Consider it done my Wife.')
+    narrate("Everyone is shocked by his words, and you can't help but feel a sense of unease, as if something is wrong. . .")
+    dialogue('You: ' + "Enough, words are just words. please everyone go home, and I will wait for the sunrise to see if you can keep your promise.")
+    narrate("Everyone goes home, and you are left alone with your thoughts and your relatives. but you feel unease. . . but you try to shake it off, and you go to bed, confidendent that it was only a bluff.")
 
-    progress_saved()
-    delay = 2
-    
-    
 
+def sec4(): #finish this mother fuckerrrr!!!
+     chapter_banner(4, "The Senerade of the Stranger")
+     progress_saved()
+     narrate("As the night creeps in, you sleeping peacefully, but you are awoken by a loud noise outside your window.")
+     narrate("You look outside through your window, and you see fellow villagers also awoken from the loud sound.")
+     narrate("You and Enabell went outside to see whatsgoing on.")
+     narrate("AS you step outside, you see a Man rushing to your house and yelling : Where is lara?!")
+     narrate("You and Enabell exchange a glance, wondering who could be yelling for you at this hour.")
+     dialogue('You: ' + "Who are you? What do you want?")
+     dialogue("Man: There's a lot of demon buikding a bridge outside.")
+     dialogue('You: ' + "What? what do you mean?")
+     dialogue('Man: no time to explain just come to village square, and see for yourself.')
+     narrate("You and Enabell quickly rush to the village square, and you see a group of demons building a bridge, just like the one you requested.")
+     narrate("Everyone is being hysterical, kneeling and praying on there doorstep, begging for mercy, but the demons continue to build the bridge, their voices blending into a harmonious symphony of construction.")
+     fight_Demon()
+     
     
 # /// Secret ///
 def kiss():
@@ -1942,6 +2107,11 @@ def Close_Up(): #Done
 """
     print(ascii_art)
     
+
+def start():
+    pass
+
+
 
 if __name__ == "__main__": # Reminder to excecute everythin this thing should be at the very last line of the code lol or else oit wouldnt get called.
    sc2()
