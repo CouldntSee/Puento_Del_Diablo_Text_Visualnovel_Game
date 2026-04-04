@@ -266,6 +266,23 @@ def set_event(key, val=True):
 def get_event(key):
     return st.session_state.get("events", {}).get(key, False)
 
+def get_progress():
+    progress = 0
+    if get_event("spoke_to_father"): progress += 20
+    if get_event("has_lobby_hint"): progress += 15
+    if get_event("found_bell_key"): progress += 20
+    if get_event("bell_room_visited"): progress += 25
+    if st.session_state.get("relics", False): progress += 20
+    return min(progress, 100)
+
+def unlock_achievement(name, desc):
+    if "achievements" not in st.session_state:
+        st.session_state["achievements"] = []
+    if name not in st.session_state["achievements"]:
+        st.session_state["achievements"].append(name)
+        st.balloons()
+        st.success(f"Achievement unlocked: {name} — {desc}")
+
 
 # ── ASCII Art strings ─────────────────────────────────────────
 
@@ -1287,6 +1304,31 @@ def main():
 
     # Sidebar — always available
     with st.sidebar:
+        st.markdown("### 🎵 Background Music")
+        st.audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", format="audio/mp3")
+        st.markdown("[Source: SoundHelix sample audio](https://www.soundhelix.com/audio-examples)")
+        st.markdown("---")
+        st.markdown("### 📊 Game Progress")
+        progress_value = get_progress() / 100
+        st.progress(progress_value)
+        st.markdown(f"**Progress: {int(progress_value * 100)}%**")
+        st.markdown("---")
+        st.markdown("### 💾 Save / Load")
+        if st.button("💾 Save Game", key="sidebar_save"):
+            save_data = {k: v for k, v in st.session_state.items() if k != "save_data"}
+            st.session_state["save_data"] = save_data
+            st.success("Game saved!")
+        if st.button("📂 Load Game", key="sidebar_load"):
+            if "save_data" in st.session_state:
+                save_data = st.session_state["save_data"]
+                for key in list(st.session_state.keys()):
+                    if key != "save_data":
+                        del st.session_state[key]
+                st.session_state.update(save_data)
+                st.rerun()
+            else:
+                st.warning("No saved game found.")
+        st.markdown("---")
         st.markdown("### 🎒 Inventory")
         inv = st.session_state.get("inventory", [])
         if inv:
@@ -1294,7 +1336,12 @@ def main():
                 st.markdown(f"- {item}")
         else:
             st.markdown("*Empty*")
-
+        achievements = st.session_state.get("achievements", [])
+        if achievements:
+            st.markdown("---")
+            st.markdown("### 🏆 Achievements")
+            for achievement in achievements:
+                st.markdown(f"- {achievement}")
         st.markdown("---")
         st.markdown("### 📖 Progress")
         scene_labels = {
@@ -1306,12 +1353,10 @@ def main():
             "confront_demon": "Chapter 4", "final_confrontation": "Final",
         }
         st.markdown(f"**{scene_labels.get(scene, scene)}**")
-
         st.markdown("---")
         if st.button("🔄  Restart game", key="sidebar_restart"):
             st.session_state.clear()
             st.rerun()
-
         st.markdown("---")
         st.markdown("""
         <div style="font-size:0.75rem; color:#4a3a20;">
