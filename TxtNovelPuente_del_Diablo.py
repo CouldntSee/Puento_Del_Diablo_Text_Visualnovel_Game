@@ -378,15 +378,28 @@ def sc2_Nun(user1):#done
         if user1.lower() == 'yes':
             dialogue('You: '+ "Sister Jean, can I know something?")
             dialogue('Jean: '+ "Ara-ara, sure.")
-            choices = input('About me/Chapel/Father/Thank you: ')
-            if choices.lower() == 'about me':
-                print('About me')
-            elif choices.lower() == 'chapel':
-                print('Chapel')
-            elif choices.lower() == 'father':
-                print('father')
-            elif choices.lower() == 'thank you':
-                print('your welcome')
+            choices = input('About me/Chapel/Father/Thank you: ').lower()
+            if choices == 'about me':
+                dialogue('Jean: '+ "hmm? about you?")
+                dialogue('Jean: '+ "Becasue of you many young men came to church everyday.")
+                dialogue('Jean: '+ "Becasue of you we improve our chapel.")
+                dialogue('Jean: '+ "But some part are still under renovation so becareful.")
+                dialogue('You: '+ "I mean thats no-.")
+                dialogue('Jean: '+ "Are you saying something??.")
+                t.sleep(1)
+                
+            elif choices == 'chapel':
+                dialogue('Jean: '+ "Among the vilage within our region. this is the most old.")
+                dialogue('Jean: '+ "aside this, this one of the 3 chapel of this region.") #i just made thiss up not cannon
+                t.sleep(1)
+                
+            elif choices == 'father':
+                dialogue('Jean: '+ "Father John is serving our chapel for a long time")
+                dialogue('Jean: '+ "He came from Manila, I dont know why he stayed here for a long time.")
+                dialogue('Jean: '+ "Don't worry he's from our culture not from a the. . .")
+                narrate("Sister Jane Hesistate to tell what it is. . .")
+            elif choices == 'thank you':
+                dialogue('Jean: '+ "Ara-ara, You're always welcome my dear.")
                 break
             else:
                 dialogue("Jean" + "Speak up honey.")
@@ -2164,4 +2177,4 @@ def start(): #done
 
 
 if __name__ == "__main__": # Reminder to excecute everythin this thing should be at the very last line of the code lol or else oit wouldnt get called.
-    start() #67 hawhawhawhawh
+   start() #67 hawhawhawhawh
